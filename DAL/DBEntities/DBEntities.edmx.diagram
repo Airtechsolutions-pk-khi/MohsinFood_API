@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="369d42ad6fa048d7a6e6ce3333ce8a78" Name="Diagram1">
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.ApplicationInfo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.AppSetting" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Banner" Width="1.5" PointX="3" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Brand" Width="1.5" PointX="0.75" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Category" Width="1.5" PointX="5.25" PointY="38.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Customer" Width="1.5" PointX="8.25" PointY="38.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.CustomerAddress" Width="1.5" PointX="10.5" PointY="35.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.CustomerDetail" Width="1.5" PointX="10.5" PointY="39.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.CustomerOrderDetail" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.CustomerOrder" Width="1.5" PointX="10.5" PointY="47" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.CustomerPayment" Width="1.5" PointX="10.5" PointY="43.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Delivery" Width="1.5" PointX="0.75" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.DeliveryAreaBrandJunc" Width="1.5" PointX="3" PointY="29" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Item" Width="1.5" PointX="7.5" PointY="31.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Location" Width="1.5" PointX="3" PointY="46.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Modifier" Width="1.5" PointX="9.75" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Offer" Width="1.5" PointX="12.75" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.OrderCheckout" Width="1.5" PointX="10.5" PointY="51.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.OrderDetail" Width="1.5" PointX="13.5" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.OrderDetailModifier" Width="1.5" PointX="15.75" PointY="36" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Order" Width="1.5" PointX="8.25" PointY="47.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.PushToken" Width="1.5" PointX="5.25" PointY="49.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Status" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.SubUser" Width="1.5" PointX="5.25" PointY="33.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.TodaySpecialItem" Width="1.5" PointX="9.75" PointY="56.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.TransferOrder" Width="1.5" PointX="13.5" PointY="49.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Unit" Width="1.5" PointX="5.25" PointY="29.625" IsExpanded="true" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Banners_Brand" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Category_Brand" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Customer_Brand" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_DeliveryAreaBrandJunc_Brand" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Locations_Brand" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Modifiers_Brand" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Offers_Brand" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_SubUser_Brand" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Category_Locations" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Items_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Customer_Locations" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_CustomerAddresses_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_CustomerDetail_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_CustomerPayment_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_CustomerOrders_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_DeliveryAreaBrandJunc_DeliveryAreaBrandJunc" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Items_Unit" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Offers_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetail_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TodaySpecialItems_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Orders_Locations" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_PushToken_Locations" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_SubUser_Locations" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Locations" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Locations1" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetailModifier_Modifiers" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderCheckout_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetail_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetailModifier_OrderDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Orders_SubUser" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Orders_SubUser1" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.ItemModifiersJunc" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
