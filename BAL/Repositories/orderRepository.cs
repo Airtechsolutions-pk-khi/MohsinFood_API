@@ -228,7 +228,7 @@ namespace BAL.Repositories
             var t1 = 1201;
             var t2 = 2359;
             var t3 = 0001;
-            var t4 = 0100;
+            var t4 = 0400;
             try
             {
                 var currDate = DateTime.UtcNow.AddMinutes(300);
