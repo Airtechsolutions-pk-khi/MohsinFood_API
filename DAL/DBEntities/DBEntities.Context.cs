@@ -422,11 +422,6 @@ namespace DAL.DBEntities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetLocationID_Admin_Result>("sp_GetLocationID_Admin", idParameter, brandidParameter);
         }
     
-        public virtual ObjectResult<sp_getLocations_api_Result> sp_getLocations_api()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getLocations_api_Result>("sp_getLocations_api");
-        }
-    
         public virtual ObjectResult<sp_GetMenu_api_Result> sp_GetMenu_api(Nullable<int> brandID)
         {
             var brandIDParameter = brandID.HasValue ?
@@ -1904,6 +1899,11 @@ namespace DAL.DBEntities
                 new ObjectParameter("brandid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getLocation_Result>("sp_getLocation", brandidParameter);
+        }
+    
+        public virtual ObjectResult<sp_getLocations_api_Result> sp_getLocations_api()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getLocations_api_Result>("sp_getLocations_api");
         }
     }
 }

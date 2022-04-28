@@ -3,10 +3,12 @@ using DAL.DBEntities;
 using DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Web;
 using System.Web.Http;
 
 namespace MohsinFoodAPI.Controllers
@@ -64,6 +66,21 @@ namespace MohsinFoodAPI.Controllers
             RspOrderPunch rsp = new RspOrderPunch();
             try
             {
+                try
+                {
+                    using (StreamWriter writer = File.AppendText(HttpContext.Current.Server.MapPath("~/Logs") + "\\" + "orderpunchjson.txt"))
+                    {
+                        writer.WriteLine("-----------------------------------------------------------------------------");
+                        writer.WriteLine("Date : " + DateTime.Now.ToString());
+                        writer.WriteLine("JSON###   " + Newtonsoft.Json.JsonConvert.SerializeObject(obj) + "   ###");
+                        writer.WriteLine();
+                        writer.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
                 rsp = repo.OrderPunch(obj);
             }
             catch (Exception ex)

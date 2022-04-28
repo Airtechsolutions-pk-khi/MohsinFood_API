@@ -106,3 +106,30 @@ D:\Project\Mohsin Food\Cafeela-API\DAL\obj\Release\DAL.csproj.CoreCompileInputs.
 D:\Project\Mohsin Food\Cafeela-API\DAL\obj\Release\DAL.csproj.CopyComplete
 D:\Project\Mohsin Food\Cafeela-API\DAL\obj\Release\DAL.dll
 D:\Project\Mohsin Food\Cafeela-API\DAL\obj\Release\DAL.pdb
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\DAL.dll.config
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\DAL.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\DAL.pdb
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\EntityFramework.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\EntityFramework.SqlServer.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\Newtonsoft.Json.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\System.Web.Helpers.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\System.Web.Mvc.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\System.Web.Razor.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\System.Web.WebPages.Deployment.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\System.Web.WebPages.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\System.Web.WebPages.Razor.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\EntityFramework.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\EntityFramework.SqlServer.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\Newtonsoft.Json.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\System.Web.Helpers.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\System.Web.Mvc.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\System.Web.Razor.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\System.Web.WebPages.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\System.Web.WebPages.Deployment.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\bin\Release\System.Web.WebPages.Razor.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\obj\Release\DAL.csprojAssemblyReference.cache
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\obj\Release\DAL.csproj.CoreCompileInputs.cache
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\obj\Release\DAL.csproj.CopyComplete
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\obj\Release\DAL.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\DAL\obj\Release\DAL.pdb

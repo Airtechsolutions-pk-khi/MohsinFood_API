@@ -218,8 +218,8 @@ namespace DAL.Models
         public string ImageURL { get; set; }
         public Nullable<int> BrandID { get; set; }
 
-        public int IsPickupAllowed { get; set; }
-        public int IsDeliveryAllowed { get; set; }
+        public int? IsPickupAllowed { get; set; }
+        public int? IsDeliveryAllowed { get; set; }
 
     }
 

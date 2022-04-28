@@ -162,3 +162,44 @@ D:\Project\Mohsin Food\Cafeela-API\BAL\obj\Release\BAL.csproj.CoreCompileInputs.
 D:\Project\Mohsin Food\Cafeela-API\BAL\obj\Release\BAL.csproj.CopyComplete
 D:\Project\Mohsin Food\Cafeela-API\BAL\obj\Release\BAL.dll
 D:\Project\Mohsin Food\Cafeela-API\BAL\obj\Release\BAL.pdb
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\BAL.dll.config
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\BAL.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\BAL.pdb
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\DAL.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\EntityFramework.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\EntityFramework.SqlServer.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\Newtonsoft.Json.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Configuration.ConfigurationManager.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Net.Http.Formatting.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Security.AccessControl.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Security.Permissions.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Security.Principal.Windows.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Web.Helpers.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Web.Mvc.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Web.Razor.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Web.WebPages.Deployment.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Web.WebPages.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Web.WebPages.Razor.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\WebApiContrib.Formatting.JavaScriptSerializer.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\DAL.pdb
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\DAL.dll.config
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\EntityFramework.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\EntityFramework.SqlServer.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\Newtonsoft.Json.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Configuration.ConfigurationManager.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Net.Http.Formatting.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Security.AccessControl.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Security.Permissions.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Security.Principal.Windows.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Web.Helpers.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Web.Mvc.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Web.Razor.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Web.WebPages.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Web.WebPages.Deployment.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\bin\Release\System.Web.WebPages.Razor.xml
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\obj\Release\BAL.csprojAssemblyReference.cache
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\obj\Release\BAL.csproj.CoreCompileInputs.cache
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\obj\Release\BAL.csproj.CopyComplete
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\obj\Release\BAL.dll
+D:\Rafi Data\Airtech\Mohsin Foods\API\BAL\obj\Release\BAL.pdb

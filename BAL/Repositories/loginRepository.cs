@@ -102,6 +102,8 @@ namespace BAL.Repositories
                             Discounts = j.Discounts,
                             Tax = j.Tax,
                             Description = j.Description,
+                            IsDeliveryAllowed=j.IsDeliveryAllowed,
+                            IsPickupAllowed=j.IsPickupAllowed
 
                         });
                     }

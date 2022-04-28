@@ -8,6 +8,8 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using WebAPICode.Helpers;
 
@@ -223,12 +225,12 @@ namespace BAL.Repositories
         }
         public RspOrderPunch OrderPunch(OrdersBLL obj)
         {
-
+           
             RspOrderPunch rsp;
-            var t1 = 1201;
+            var t1 = 1600;
             var t2 = 2359;
             var t3 = 0001;
-            var t4 = 0100;
+            var t4 = 0430;
             try
             {
                 var currDate = DateTime.UtcNow.AddMinutes(300);
@@ -249,12 +251,32 @@ namespace BAL.Repositories
                     {
                         if (settings.Opentime != null && settings.Closetime != null)
                         {
+                            //var a = TimeSpan.ParseExact(settings.Opentime, @"hh\:mm\:ss", CultureInfo.InvariantCulture, TimeSpanStyles.None);
+                            //t1 = int.Parse(TimeSpan.Parse(settings.Opentime).ToString("hhmm"));
+                            //t4 = int.Parse(TimeSpan.Parse(settings.Closetime).ToString("hhmm"));
                             //isAllowcheckout = int.Parse(Convert.ToDateTime(currDate).ToString("HHmm")) > int.Parse(Convert.ToDateTime(settings.Opentime).ToString("HHmm"))
                             //    && int.Parse(Convert.ToDateTime(currDate).ToString("HHmm")) < int.Parse(Convert.ToDateTime(settings.Closetime).ToString("HHmm"))
                             //    ? true : false;
                             var currTimeint = int.Parse(Convert.ToDateTime(currDate).ToString("HHmm"));
                             isAllowcheckout = (currTimeint > t1 && currTimeint < t2) || (currTimeint > t3 && currTimeint < t4) ? true : false;
 
+                        }
+
+                        if (settings.IsPickupAllowed == 0)
+                        {
+                            rsp = new RspOrderPunch();
+                            rsp.status = (int)eStatus.Exception;
+                            rsp.description = "Pickup is temporary closed!";
+                            rsp.OrderID = 0;
+                            return rsp;
+                        }
+                        if (settings.IsDeliveryAllowed == 0)
+                        {
+                            rsp = new RspOrderPunch();
+                            rsp.status = (int)eStatus.Exception;
+                            rsp.description = "Delivery is temporary closed!";
+                            rsp.OrderID = 0;
+                            return rsp;
                         }
                     }
                     catch { }
@@ -351,7 +373,7 @@ namespace BAL.Repositories
                             item.LastUpdatedDate = DateTime.UtcNow.AddMinutes(300);
                         }
 
-                        Order data = DBContext.Orders.Add(orders);
+                        Order data = new Order();// DBContext.Orders.Add(orders);
                         DBContext.SaveChanges();
                         dbContextTransaction.Commit();
 
