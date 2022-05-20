@@ -237,6 +237,8 @@
     <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_Items" FromRole="Items" ToRole="OrderDetail" />
     <NavigationProperty Name="TodaySpecialItems" Relationship="Self.FK_TodaySpecialItems_Items" FromRole="Items" ToRole="TodaySpecialItems" />
     <NavigationProperty Name="Modifiers" Relationship="Self.ItemModifiersJunc" FromRole="Items" ToRole="Modifiers" />
+    <Property Name="IsApplyDiscount" Type="Boolean" />
+    <NavigationProperty Name="Addons" Relationship="db_a842e1_mohsinfoodModel.ItemAddonsJunc" FromRole="Item" ToRole="Addon" />
   </EntityType>
   <EntityType Name="Location">
     <Key>
@@ -350,6 +352,7 @@
     <NavigationProperty Name="Item" Relationship="Self.FK_OrderDetail_Items" FromRole="OrderDetail" ToRole="Items" />
     <NavigationProperty Name="Order" Relationship="Self.FK_OrderDetail_Orders" FromRole="OrderDetail" ToRole="Orders" />
     <NavigationProperty Name="OrderDetailModifiers" Relationship="Self.FK_OrderDetailModifier_OrderDetail" FromRole="OrderDetail" ToRole="OrderDetailModifier" />
+    <NavigationProperty Name="OrderDetailAddons" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_OrderDetail" FromRole="OrderDetail" ToRole="OrderDetailAddon" />
   </EntityType>
   <EntityType Name="OrderDetailModifier">
     <Key>
@@ -1256,6 +1259,7 @@
       <Parameter Name="IsFeatured" Mode="In" Type="Boolean" />
       <Parameter Name="Calories" Mode="In" Type="Double" />
       <Parameter Name="ItemID" Mode="In" Type="Int32" />
+      <Parameter Name="IsApplyDiscount" Mode="In" Type="Boolean" />
     </FunctionImport>
     <FunctionImport Name="sp_insertItemModifiers_Admin">
       <Parameter Name="Modifiers" Mode="In" Type="String" />
@@ -1475,6 +1479,7 @@
       <Parameter Name="IsFeatured" Mode="In" Type="Boolean" />
       <Parameter Name="Calories" Mode="In" Type="Double" />
       <Parameter Name="ItemID" Mode="In" Type="Int32" />
+      <Parameter Name="IsApplyDiscount" Mode="In" Type="Boolean" />
     </FunctionImport>
     <FunctionImport Name="sp_updateLocation_Admin">
       <Parameter Name="Name" Mode="In" Type="String" />
@@ -1540,6 +1545,58 @@
     </FunctionImport>
     <FunctionImport Name="sp_getLocation" ReturnType="Collection(db_a842e1_mohsinfoodModel.sp_getLocation_Result)">
       <Parameter Name="brandid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="Addons" EntityType="db_a842e1_mohsinfoodModel.Addon" />
+    <EntitySet Name="OrderDetailAddons" EntityType="db_a842e1_mohsinfoodModel.OrderDetailAddon" />
+    <AssociationSet Name="FK_OrderDetailAddon_Addons" Association="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_Addons">
+      <End Role="Addon" EntitySet="Addons" />
+      <End Role="OrderDetailAddon" EntitySet="OrderDetailAddons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetailAddon_OrderDetail" Association="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_OrderDetail">
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+      <End Role="OrderDetailAddon" EntitySet="OrderDetailAddons" />
+    </AssociationSet>
+    <AssociationSet Name="ItemAddonsJunc" Association="db_a842e1_mohsinfoodModel.ItemAddonsJunc">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="Addon" EntitySet="Addons" />
+    </AssociationSet>
+    <FunctionImport Name="sp_DeleteItemAddons_Admin">
+      <Parameter Name="ItemID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_getAddons" ReturnType="Collection(db_a842e1_mohsinfoodModel.sp_getAddons_Result)">
+      <Parameter Name="brandid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_GetAddonsbyID_Admin" ReturnType="Collection(db_a842e1_mohsinfoodModel.sp_GetAddonsbyID_Admin_Result)">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="brandid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_insertAddon_Admin">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="ArabicName" Mode="In" Type="String" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="Image" Mode="In" Type="String" />
+      <Parameter Name="Price" Mode="In" Type="Double" />
+      <Parameter Name="LastUpdatedBy" Mode="In" Type="String" />
+      <Parameter Name="LastUpdatedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="StatusID" Mode="In" Type="Int32" />
+      <Parameter Name="BrandID" Mode="In" Type="Int32" />
+      <Parameter Name="AddonID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_insertItemAddons_Admin">
+      <Parameter Name="Addons" Mode="In" Type="String" />
+      <Parameter Name="ItemID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_updateAddon_Admin">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="ArabicName" Mode="In" Type="String" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="Image" Mode="In" Type="String" />
+      <Parameter Name="Price" Mode="In" Type="Double" />
+      <Parameter Name="LastUpdatedBy" Mode="In" Type="String" />
+      <Parameter Name="LastUpdatedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="StatusID" Mode="In" Type="Int32" />
+      <Parameter Name="BrandID" Mode="In" Type="Int32" />
+      <Parameter Name="AddonID" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="sp_authenticateUser_admin_Result">
@@ -2138,5 +2195,90 @@
     <Property Type="Double" Name="Tax" Nullable="true" />
     <Property Type="Int32" Name="IsPickupAllowed" Nullable="true" />
     <Property Type="Int32" Name="IsDeliveryAllowed" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="Addon">
+    <Key>
+      <PropertyRef Name="AddonID" />
+    </Key>
+    <Property Name="AddonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="ArabicName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Double" />
+    <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="StatusID" Type="Int32" />
+    <Property Name="BrandID" Type="Int32" />
+    <NavigationProperty Name="OrderDetailAddons" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_Addons" FromRole="Addon" ToRole="OrderDetailAddon" />
+    <NavigationProperty Name="Items" Relationship="db_a842e1_mohsinfoodModel.ItemAddonsJunc" FromRole="Addon" ToRole="Item" />
+  </EntityType>
+  <EntityType Name="OrderDetailAddon">
+    <Key>
+      <PropertyRef Name="OrderDetailAddonID" />
+    </Key>
+    <Property Name="OrderDetailAddonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderDetailID" Type="Int32" />
+    <Property Name="AddonID" Type="Int32" />
+    <Property Name="Quantity" Type="Double" />
+    <Property Name="Price" Type="Double" />
+    <Property Name="Cost" Type="Double" />
+    <Property Name="StatusID" Type="Int32" />
+    <Property Name="LastUpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastUpdateDT" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Addon" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_Addons" FromRole="OrderDetailAddon" ToRole="Addon" />
+    <NavigationProperty Name="OrderDetail" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_OrderDetail" FromRole="OrderDetailAddon" ToRole="OrderDetail" />
+  </EntityType>
+  <Association Name="FK_OrderDetailAddon_Addons">
+    <End Type="db_a842e1_mohsinfoodModel.Addon" Role="Addon" Multiplicity="0..1" />
+    <End Type="db_a842e1_mohsinfoodModel.OrderDetailAddon" Role="OrderDetailAddon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Addon">
+        <PropertyRef Name="AddonID" />
+      </Principal>
+      <Dependent Role="OrderDetailAddon">
+        <PropertyRef Name="AddonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetailAddon_OrderDetail">
+    <End Type="db_a842e1_mohsinfoodModel.OrderDetail" Role="OrderDetail" Multiplicity="0..1" />
+    <End Type="db_a842e1_mohsinfoodModel.OrderDetailAddon" Role="OrderDetailAddon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderDetail">
+        <PropertyRef Name="OrderDetailID" />
+      </Principal>
+      <Dependent Role="OrderDetailAddon">
+        <PropertyRef Name="OrderDetailID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ItemAddonsJunc">
+    <End Type="db_a842e1_mohsinfoodModel.Item" Role="Item" Multiplicity="*" />
+    <End Type="db_a842e1_mohsinfoodModel.Addon" Role="Addon" Multiplicity="*" />
+  </Association>
+  <ComplexType Name="sp_getAddons_Result">
+    <Property Type="Int32" Name="AddonID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="300" />
+    <Property Type="String" Name="ArabicName" Nullable="true" MaxLength="300" />
+    <Property Type="String" Name="Description" Nullable="true" />
+    <Property Type="String" Name="Image" Nullable="true" />
+    <Property Type="Double" Name="Price" Nullable="true" />
+    <Property Type="String" Name="LastUpdatedBy" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="LastUpdatedDate" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="StatusID" Nullable="true" />
+    <Property Type="Int32" Name="BrandID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_GetAddonsbyID_Admin_Result">
+    <Property Type="Int32" Name="AddonID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="300" />
+    <Property Type="String" Name="ArabicName" Nullable="true" MaxLength="300" />
+    <Property Type="String" Name="Description" Nullable="true" />
+    <Property Type="String" Name="Image" Nullable="true" />
+    <Property Type="Double" Name="Price" Nullable="true" />
+    <Property Type="String" Name="LastUpdatedBy" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="LastUpdatedDate" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="StatusID" Nullable="true" />
+    <Property Type="Int32" Name="BrandID" Nullable="true" />
   </ComplexType>
 </Schema>

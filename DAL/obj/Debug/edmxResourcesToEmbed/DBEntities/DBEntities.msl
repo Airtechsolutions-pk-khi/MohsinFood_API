@@ -202,6 +202,7 @@
     <EntitySetMapping Name="Items">
       <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Item">
         <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="IsApplyDiscount" ColumnName="IsApplyDiscount" />
           <ScalarProperty Name="ItemID" ColumnName="ItemID" />
           <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
           <ScalarProperty Name="UnitID" ColumnName="UnitID" />
@@ -1253,5 +1254,80 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="Addons">
+      <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Addon">
+        <MappingFragment StoreEntitySet="Addons">
+          <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ArabicName" ColumnName="ArabicName" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AddonID" ColumnName="AddonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetailAddons">
+      <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.OrderDetailAddon">
+        <MappingFragment StoreEntitySet="OrderDetailAddon">
+          <ScalarProperty Name="LastUpdateDT" ColumnName="LastUpdateDT" />
+          <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="AddonID" ColumnName="AddonID" />
+          <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
+          <ScalarProperty Name="OrderDetailAddonID" ColumnName="OrderDetailAddonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ItemAddonsJunc" TypeName="db_a842e1_mohsinfoodModel.ItemAddonsJunc" StoreEntitySet="ItemAddonsJunc">
+      <EndProperty Name="Addon">
+        <ScalarProperty Name="AddonID" ColumnName="AddonID" />
+      </EndProperty>
+      <EndProperty Name="Item">
+        <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="sp_DeleteItemAddons_Admin" FunctionName="db_a842e1_mohsinfoodModel.Store.sp_DeleteItemAddons_Admin" />
+    <FunctionImportMapping FunctionImportName="sp_getAddons" FunctionName="db_a842e1_mohsinfoodModel.Store.sp_getAddons">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="db_a842e1_mohsinfoodModel.sp_getAddons_Result">
+          <ScalarProperty Name="AddonID" ColumnName="AddonID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ArabicName" ColumnName="ArabicName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetAddonsbyID_Admin" FunctionName="db_a842e1_mohsinfoodModel.Store.sp_GetAddonsbyID_Admin">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="db_a842e1_mohsinfoodModel.sp_GetAddonsbyID_Admin_Result">
+          <ScalarProperty Name="AddonID" ColumnName="AddonID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ArabicName" ColumnName="ArabicName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_insertAddon_Admin" FunctionName="db_a842e1_mohsinfoodModel.Store.sp_insertAddon_Admin" />
+    <FunctionImportMapping FunctionImportName="sp_insertItemAddons_Admin" FunctionName="db_a842e1_mohsinfoodModel.Store.sp_insertItemAddons_Admin" />
+    <FunctionImportMapping FunctionImportName="sp_updateAddon_Admin" FunctionName="db_a842e1_mohsinfoodModel.Store.sp_updateAddon_Admin" />
   </EntityContainerMapping>
 </Mapping>

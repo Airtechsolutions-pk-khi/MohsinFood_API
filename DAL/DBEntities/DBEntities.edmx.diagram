@@ -65,6 +65,11 @@
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Orders_SubUser1" ManuallyRouted="false" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Orders" ManuallyRouted="false" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.ItemModifiersJunc" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Addon" Width="1.5" PointX="9.75" PointY="26.25" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.OrderDetailAddon" Width="1.5" PointX="15.75" PointY="31.75" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_Addons" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_OrderDetail" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.ItemAddonsJunc" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -54,6 +54,8 @@ namespace DAL.DBEntities
         public virtual DbSet<TodaySpecialItem> TodaySpecialItems { get; set; }
         public virtual DbSet<TransferOrder> TransferOrders { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<Addon> Addons { get; set; }
+        public virtual DbSet<OrderDetailAddon> OrderDetailAddons { get; set; }
     
         public virtual ObjectResult<sp_authenticateUser_admin_Result> sp_authenticateUser_admin(string email, string password)
         {
@@ -782,7 +784,7 @@ namespace DAL.DBEntities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("sp_insertDelivery_Admin", nameParameter, amountParameter, statusIDParameter, deliveryAreaIDParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> sp_insertItem_Admin(Nullable<int> categoryID, Nullable<int> unitID, string name, string arabicName, string description, string image, string barcode, string sKU, Nullable<int> displayOrder, Nullable<double> price, Nullable<double> cost, string itemType, string lastUpdatedBy, Nullable<System.DateTime> lastUpdatedDate, Nullable<int> statusID, Nullable<bool> isFeatured, Nullable<double> calories, Nullable<int> itemID)
+        public virtual ObjectResult<Nullable<decimal>> sp_insertItem_Admin(Nullable<int> categoryID, Nullable<int> unitID, string name, string arabicName, string description, string image, string barcode, string sKU, Nullable<int> displayOrder, Nullable<double> price, Nullable<double> cost, string itemType, string lastUpdatedBy, Nullable<System.DateTime> lastUpdatedDate, Nullable<int> statusID, Nullable<bool> isFeatured, Nullable<double> calories, Nullable<int> itemID, Nullable<bool> isApplyDiscount)
         {
             var categoryIDParameter = categoryID.HasValue ?
                 new ObjectParameter("CategoryID", categoryID) :
@@ -856,7 +858,11 @@ namespace DAL.DBEntities
                 new ObjectParameter("ItemID", itemID) :
                 new ObjectParameter("ItemID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("sp_insertItem_Admin", categoryIDParameter, unitIDParameter, nameParameter, arabicNameParameter, descriptionParameter, imageParameter, barcodeParameter, sKUParameter, displayOrderParameter, priceParameter, costParameter, itemTypeParameter, lastUpdatedByParameter, lastUpdatedDateParameter, statusIDParameter, isFeaturedParameter, caloriesParameter, itemIDParameter);
+            var isApplyDiscountParameter = isApplyDiscount.HasValue ?
+                new ObjectParameter("IsApplyDiscount", isApplyDiscount) :
+                new ObjectParameter("IsApplyDiscount", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("sp_insertItem_Admin", categoryIDParameter, unitIDParameter, nameParameter, arabicNameParameter, descriptionParameter, imageParameter, barcodeParameter, sKUParameter, displayOrderParameter, priceParameter, costParameter, itemTypeParameter, lastUpdatedByParameter, lastUpdatedDateParameter, statusIDParameter, isFeaturedParameter, caloriesParameter, itemIDParameter, isApplyDiscountParameter);
         }
     
         public virtual int sp_insertItemModifiers_Admin(string modifiers, Nullable<int> itemID)
@@ -1587,7 +1593,7 @@ namespace DAL.DBEntities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_updateDelivery_Admin", deliveryAreaIDParameter, nameParameter, amountParameter, statusIDParameter);
         }
     
-        public virtual int sp_updateItem_Admin(Nullable<int> categoryID, Nullable<int> unitID, string name, string arabicName, string description, string image, string barcode, string sKU, Nullable<int> displayOrder, Nullable<double> price, Nullable<double> cost, string itemType, string lastUpdatedBy, Nullable<System.DateTime> lastUpdatedDate, Nullable<int> statusID, Nullable<bool> isFeatured, Nullable<double> calories, Nullable<int> itemID)
+        public virtual int sp_updateItem_Admin(Nullable<int> categoryID, Nullable<int> unitID, string name, string arabicName, string description, string image, string barcode, string sKU, Nullable<int> displayOrder, Nullable<double> price, Nullable<double> cost, string itemType, string lastUpdatedBy, Nullable<System.DateTime> lastUpdatedDate, Nullable<int> statusID, Nullable<bool> isFeatured, Nullable<double> calories, Nullable<int> itemID, Nullable<bool> isApplyDiscount)
         {
             var categoryIDParameter = categoryID.HasValue ?
                 new ObjectParameter("CategoryID", categoryID) :
@@ -1661,7 +1667,11 @@ namespace DAL.DBEntities
                 new ObjectParameter("ItemID", itemID) :
                 new ObjectParameter("ItemID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_updateItem_Admin", categoryIDParameter, unitIDParameter, nameParameter, arabicNameParameter, descriptionParameter, imageParameter, barcodeParameter, sKUParameter, displayOrderParameter, priceParameter, costParameter, itemTypeParameter, lastUpdatedByParameter, lastUpdatedDateParameter, statusIDParameter, isFeaturedParameter, caloriesParameter, itemIDParameter);
+            var isApplyDiscountParameter = isApplyDiscount.HasValue ?
+                new ObjectParameter("IsApplyDiscount", isApplyDiscount) :
+                new ObjectParameter("IsApplyDiscount", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_updateItem_Admin", categoryIDParameter, unitIDParameter, nameParameter, arabicNameParameter, descriptionParameter, imageParameter, barcodeParameter, sKUParameter, displayOrderParameter, priceParameter, costParameter, itemTypeParameter, lastUpdatedByParameter, lastUpdatedDateParameter, statusIDParameter, isFeaturedParameter, caloriesParameter, itemIDParameter, isApplyDiscountParameter);
         }
     
         public virtual int sp_updateLocation_Admin(string name, string description, string address, string contactNo, string email, Nullable<int> licenseID, Nullable<bool> deliveryServices, Nullable<double> deliveryCharges, string deliveryTime, Nullable<double> minOrderAmount, string longitude, string latitude, string lastUpdatedBy, Nullable<System.DateTime> lastUpdatedDate, Nullable<int> statusID, string imageURL, Nullable<int> brandID, string opentime, string closetime, Nullable<int> locationID, string currency, string passcode, Nullable<double> discounts, Nullable<double> tax, Nullable<int> isPickupAllowed, Nullable<int> isDeliveryAllowed)
@@ -1904,6 +1914,140 @@ namespace DAL.DBEntities
                 new ObjectParameter("brandid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getLocation_Result>("sp_getLocation", brandidParameter);
+        }
+    
+        public virtual int sp_DeleteItemAddons_Admin(Nullable<int> itemID)
+        {
+            var itemIDParameter = itemID.HasValue ?
+                new ObjectParameter("ItemID", itemID) :
+                new ObjectParameter("ItemID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DeleteItemAddons_Admin", itemIDParameter);
+        }
+    
+        public virtual ObjectResult<sp_getAddons_Result> sp_getAddons(Nullable<int> brandid)
+        {
+            var brandidParameter = brandid.HasValue ?
+                new ObjectParameter("brandid", brandid) :
+                new ObjectParameter("brandid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getAddons_Result>("sp_getAddons", brandidParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetAddonsbyID_Admin_Result> sp_GetAddonsbyID_Admin(Nullable<int> id, Nullable<int> brandid)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var brandidParameter = brandid.HasValue ?
+                new ObjectParameter("brandid", brandid) :
+                new ObjectParameter("brandid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetAddonsbyID_Admin_Result>("sp_GetAddonsbyID_Admin", idParameter, brandidParameter);
+        }
+    
+        public virtual int sp_insertAddon_Admin(string name, string arabicName, string description, string image, Nullable<double> price, string lastUpdatedBy, Nullable<System.DateTime> lastUpdatedDate, Nullable<int> statusID, Nullable<int> brandID, Nullable<int> addonID)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var arabicNameParameter = arabicName != null ?
+                new ObjectParameter("ArabicName", arabicName) :
+                new ObjectParameter("ArabicName", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var imageParameter = image != null ?
+                new ObjectParameter("Image", image) :
+                new ObjectParameter("Image", typeof(string));
+    
+            var priceParameter = price.HasValue ?
+                new ObjectParameter("Price", price) :
+                new ObjectParameter("Price", typeof(double));
+    
+            var lastUpdatedByParameter = lastUpdatedBy != null ?
+                new ObjectParameter("LastUpdatedBy", lastUpdatedBy) :
+                new ObjectParameter("LastUpdatedBy", typeof(string));
+    
+            var lastUpdatedDateParameter = lastUpdatedDate.HasValue ?
+                new ObjectParameter("LastUpdatedDate", lastUpdatedDate) :
+                new ObjectParameter("LastUpdatedDate", typeof(System.DateTime));
+    
+            var statusIDParameter = statusID.HasValue ?
+                new ObjectParameter("StatusID", statusID) :
+                new ObjectParameter("StatusID", typeof(int));
+    
+            var brandIDParameter = brandID.HasValue ?
+                new ObjectParameter("BrandID", brandID) :
+                new ObjectParameter("BrandID", typeof(int));
+    
+            var addonIDParameter = addonID.HasValue ?
+                new ObjectParameter("AddonID", addonID) :
+                new ObjectParameter("AddonID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_insertAddon_Admin", nameParameter, arabicNameParameter, descriptionParameter, imageParameter, priceParameter, lastUpdatedByParameter, lastUpdatedDateParameter, statusIDParameter, brandIDParameter, addonIDParameter);
+        }
+    
+        public virtual int sp_insertItemAddons_Admin(string addons, Nullable<int> itemID)
+        {
+            var addonsParameter = addons != null ?
+                new ObjectParameter("Addons", addons) :
+                new ObjectParameter("Addons", typeof(string));
+    
+            var itemIDParameter = itemID.HasValue ?
+                new ObjectParameter("ItemID", itemID) :
+                new ObjectParameter("ItemID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_insertItemAddons_Admin", addonsParameter, itemIDParameter);
+        }
+    
+        public virtual int sp_updateAddon_Admin(string name, string arabicName, string description, string image, Nullable<double> price, string lastUpdatedBy, Nullable<System.DateTime> lastUpdatedDate, Nullable<int> statusID, Nullable<int> brandID, Nullable<int> addonID)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var arabicNameParameter = arabicName != null ?
+                new ObjectParameter("ArabicName", arabicName) :
+                new ObjectParameter("ArabicName", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var imageParameter = image != null ?
+                new ObjectParameter("Image", image) :
+                new ObjectParameter("Image", typeof(string));
+    
+            var priceParameter = price.HasValue ?
+                new ObjectParameter("Price", price) :
+                new ObjectParameter("Price", typeof(double));
+    
+            var lastUpdatedByParameter = lastUpdatedBy != null ?
+                new ObjectParameter("LastUpdatedBy", lastUpdatedBy) :
+                new ObjectParameter("LastUpdatedBy", typeof(string));
+    
+            var lastUpdatedDateParameter = lastUpdatedDate.HasValue ?
+                new ObjectParameter("LastUpdatedDate", lastUpdatedDate) :
+                new ObjectParameter("LastUpdatedDate", typeof(System.DateTime));
+    
+            var statusIDParameter = statusID.HasValue ?
+                new ObjectParameter("StatusID", statusID) :
+                new ObjectParameter("StatusID", typeof(int));
+    
+            var brandIDParameter = brandID.HasValue ?
+                new ObjectParameter("BrandID", brandID) :
+                new ObjectParameter("BrandID", typeof(int));
+    
+            var addonIDParameter = addonID.HasValue ?
+                new ObjectParameter("AddonID", addonID) :
+                new ObjectParameter("AddonID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_updateAddon_Admin", nameParameter, arabicNameParameter, descriptionParameter, imageParameter, priceParameter, lastUpdatedByParameter, lastUpdatedDateParameter, statusIDParameter, brandIDParameter, addonIDParameter);
         }
     }
 }

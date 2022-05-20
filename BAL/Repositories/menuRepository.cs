@@ -120,6 +120,7 @@ namespace BAL.Repositories
             var bll = new List<CategoryBLL>();
             var lstItem = new List<ItemBLL>();
             var lstModifier = new List<ModifierBLL>();
+            var lstAddon = new List<AddonsBLL>();
             var rsp = new RspMenu();
             try
             {
@@ -127,6 +128,7 @@ namespace BAL.Repositories
                 var _dsCategory = JArray.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[0])).ToObject<List<CategoryBLL>>();
                 var _dsItem = JArray.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[1])).ToObject<List<ItemBLL>>();
                 var _dsModifier = JArray.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[2])).ToObject<List<ModifierBLL>>();
+                var _dsAddon = JArray.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[3])).ToObject<List<AddonsBLL>>();
 
                 foreach (var i in _dsCategory.OrderBy(x=>x.DisplayOrder))
                 {
@@ -151,6 +153,23 @@ namespace BAL.Repositories
                                 ModifierID=k.ModifierID
                             });
                         }
+                        lstAddon = new List<AddonsBLL>();
+                        foreach (var k in _dsAddon.Where(x => x.StatusID == 1 && x.ItemID == j.ItemID))
+                        {
+                            lstAddon.Add(new AddonsBLL
+                            {
+                                Name = k.Name,
+                                StatusID = k.StatusID,
+                                ArabicName = k.ArabicName,
+                                Description = k.Description,
+                                Image = k.Image == null ? "" : ConfigurationManager.AppSettings["AdminURL"].ToString() + k.Image,
+                                LastUpdatedBy = k.LastUpdatedBy,
+                                LastUpdatedDate = k.LastUpdatedDate,
+                                Price = k.Price,
+                                BrandID = k.BrandID,
+                                AddonID = k.AddonID
+                            });
+                        }
 
                         lstItem.Add(new ItemBLL
                         {
@@ -172,7 +191,9 @@ namespace BAL.Repositories
                             UnitID = j.UnitID,
                             Calories=j.Calories,
                             IsSoldOut=false,
-                            modifiers =lstModifier
+                            modifiers =lstModifier,
+                            IsApplyDiscount = j.IsApplyDiscount ?? true,
+                            addons = lstAddon
                         });
                     }
                     bll.Add(new CategoryBLL
@@ -211,7 +232,7 @@ namespace BAL.Repositories
             {
                 SqlParameter[] p = new SqlParameter[1];
                 p[0] = new SqlParameter("@BrandID", BrandID);
-                ds = (new DBHelper().GetDatasetFromSP)("sp_GetMenu_apiv2", p);
+                ds = (new DBHelper().GetDatasetFromSP)("sp_GetMenu_api", p);
                 return ds;
             }
             catch (Exception ex)

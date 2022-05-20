@@ -258,9 +258,25 @@ namespace DAL.Models
         public Nullable<System.DateTime> LastUpdatedDate { get; set; }
         public Nullable<int> StatusID { get; set; }
         public Nullable<double> Calories { get; set; }
-
+        public Nullable<bool> IsApplyDiscount { get; set; }
         public Nullable<bool> IsSoldOut { get; set; }
         public List<ModifierBLL> modifiers { get; set; }
+        public List<AddonsBLL> addons { get; set; }
+    }
+    public class AddonsBLL
+    {
+        public int ItemID { get; set; }
+        public int AddonID { get; set; }
+        public string Name { get; set; }
+        public string ArabicName { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
+        public double Price { get; set; }
+        public string LastUpdatedBy { get; set; }
+        public Nullable<System.DateTime> LastUpdatedDate { get; set; }
+        public int StatusID { get; set; }
+        public Nullable<int> BrandID { get; set; }
+
     }
     public class ModifierBLL
     {
@@ -276,7 +292,19 @@ namespace DAL.Models
         public Nullable<int> StatusID { get; set; }
         public Nullable<int> BrandID { get; set; }
     }
-
+    public class OrderAddonsBLL
+    {
+        public int OrderDetailAddonID { get; set; }
+        public Nullable<int> OrderDetailID { get; set; }
+        public Nullable<int> AddonID { get; set; }
+        public string AddonName { get; set; }
+        public Nullable<double> Quantity { get; set; }
+        public Nullable<double> Price { get; set; }
+        public Nullable<double> Cost { get; set; }
+        public Nullable<int> StatusID { get; set; }
+        public string LastUpdateBy { get; set; }
+        public Nullable<System.DateTime> LastUpdateDT { get; set; }
+    }
     public class CustomerBLL
     {
         public float DiscountApplied { get; set; }
@@ -412,6 +440,7 @@ namespace DAL.Models
         public Nullable<System.DateTime> LastUpdateDT { get; set; }
 
         public List<OrderModifiersBLL> OrderDetailModifiers { get; set; }
+        public List<OrderAddonsBLL> OrderDetailAddons { get; set; }
     }
     public class OrderModifiersBLL
     {

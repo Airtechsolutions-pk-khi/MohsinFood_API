@@ -78,6 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DBEntities\Addon.cs">
+      <DependentUpon>DBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBEntities\ApplicationInfo.cs">
       <DependentUpon>DBEntities.tt</DependentUpon>
     </Compile>
@@ -154,6 +157,9 @@
     <Compile Include="DBEntities\OrderDetail.cs">
       <DependentUpon>DBEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBEntities\OrderDetailAddon.cs">
+      <DependentUpon>DBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBEntities\OrderDetailModifier.cs">
       <DependentUpon>DBEntities.tt</DependentUpon>
     </Compile>
@@ -161,6 +167,12 @@
       <DependentUpon>DBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DBEntities\sp_authenticateUser_admin_Result.cs">
+      <DependentUpon>DBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBEntities\sp_GetAddonsbyID_Admin_Result.cs">
+      <DependentUpon>DBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBEntities\sp_getAddons_Result.cs">
       <DependentUpon>DBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DBEntities\sp_GetAdminOrdersv2_api_Result.cs">

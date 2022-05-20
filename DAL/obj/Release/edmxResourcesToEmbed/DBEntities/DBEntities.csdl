@@ -274,6 +274,8 @@
     <NavigationProperty Name="SubUsers" Relationship="Self.FK_SubUser_Locations" FromRole="Locations" ToRole="SubUser" />
     <NavigationProperty Name="TransferOrders" Relationship="Self.FK_TransferOrder_Locations" FromRole="Locations" ToRole="TransferOrder" />
     <NavigationProperty Name="TransferOrders1" Relationship="Self.FK_TransferOrder_Locations1" FromRole="Locations" ToRole="TransferOrder" />
+    <Property Name="IsPickupAllowed" Type="Int32" />
+    <Property Name="IsDeliveryAllowed" Type="Int32" />
   </EntityType>
   <EntityType Name="Modifier">
     <Key>
@@ -1130,9 +1132,6 @@
     <FunctionImport Name="sp_GetItemSettingsTitle_Admin" ReturnType="Collection(db_a842e1_mohsinfoodModel.sp_GetItemSettingsTitle_Admin_Result)">
       <Parameter Name="AppInfoID" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_getLocation" ReturnType="Collection(db_a842e1_mohsinfoodModel.sp_getLocation_Result)">
-      <Parameter Name="brandid" Mode="In" Type="Int32" />
-    </FunctionImport>
     <FunctionImport Name="sp_GetLocationID_Admin" ReturnType="Collection(db_a842e1_mohsinfoodModel.sp_GetLocationID_Admin_Result)">
       <Parameter Name="id" Mode="In" Type="Int32" />
       <Parameter Name="brandid" Mode="In" Type="Int32" />
@@ -1291,6 +1290,8 @@
       <Parameter Name="Passcode" Mode="In" Type="String" />
       <Parameter Name="Discounts" Mode="In" Type="Double" />
       <Parameter Name="Tax" Mode="In" Type="Double" />
+      <Parameter Name="IsPickupAllowed" Mode="In" Type="Int32" />
+      <Parameter Name="IsDeliveryAllowed" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="sp_insertModifier_Admin">
       <Parameter Name="Name" Mode="In" Type="String" />
@@ -1500,6 +1501,8 @@
       <Parameter Name="Passcode" Mode="In" Type="String" />
       <Parameter Name="Discounts" Mode="In" Type="Double" />
       <Parameter Name="Tax" Mode="In" Type="Double" />
+      <Parameter Name="IsPickupAllowed" Mode="In" Type="Int32" />
+      <Parameter Name="IsDeliveryAllowed" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="sp_updateModifier_Admin">
       <Parameter Name="Name" Mode="In" Type="String" />
@@ -1534,6 +1537,9 @@
     <FunctionImport Name="sp_UpdateTodaySpecial_Admin">
       <Parameter Name="ItemSettingTitle" Mode="In" Type="String" />
       <Parameter Name="IsItemSetting" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="sp_getLocation" ReturnType="Collection(db_a842e1_mohsinfoodModel.sp_getLocation_Result)">
+      <Parameter Name="brandid" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="sp_authenticateUser_admin_Result">
@@ -1842,32 +1848,6 @@
     <Property Type="String" Name="ItemSettingTitle" Nullable="true" MaxLength="150" />
     <Property Type="Boolean" Name="IsItemSetting" Nullable="true" />
   </ComplexType>
-  <ComplexType Name="sp_getLocation_Result">
-    <Property Type="Int32" Name="LocationID" Nullable="false" />
-    <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="Address" Nullable="true" MaxLength="200" />
-    <Property Type="String" Name="ContactNo" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="Email" Nullable="true" MaxLength="500" />
-    <Property Type="Int32" Name="LicenseID" Nullable="false" />
-    <Property Type="Boolean" Name="DeliveryServices" Nullable="true" />
-    <Property Type="Double" Name="DeliveryCharges" Nullable="true" />
-    <Property Type="String" Name="DeliveryTime" Nullable="true" MaxLength="250" />
-    <Property Type="Double" Name="MinOrderAmount" Nullable="true" />
-    <Property Type="String" Name="Longitude" Nullable="true" MaxLength="20" />
-    <Property Type="String" Name="Latitude" Nullable="true" MaxLength="20" />
-    <Property Type="String" Name="LastUpdatedBy" Nullable="true" MaxLength="50" />
-    <Property Type="DateTime" Name="LastUpdatedDate" Nullable="true" Precision="23" />
-    <Property Type="Int32" Name="StatusID" Nullable="true" />
-    <Property Type="String" Name="ImageURL" Nullable="true" />
-    <Property Type="Int32" Name="BrandID" Nullable="true" />
-    <Property Type="String" Name="Opentime" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="Closetime" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="Passcode" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="Currency" Nullable="true" MaxLength="50" />
-    <Property Type="Double" Name="Discounts" Nullable="true" />
-    <Property Type="Double" Name="Tax" Nullable="true" />
-  </ComplexType>
   <ComplexType Name="sp_GetLocationID_Admin_Result">
     <Property Type="Int32" Name="LocationID" Nullable="false" />
     <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
@@ -2130,5 +2110,33 @@
   <ComplexType Name="sp_SalesMAEN_Result">
     <Property Type="String" Name="TimeSlot" Nullable="false" MaxLength="32" />
     <Property Type="Double" Name="Sales" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_getLocation_Result">
+    <Property Type="Int32" Name="LocationID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Address" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="ContactNo" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="500" />
+    <Property Type="Int32" Name="LicenseID" Nullable="false" />
+    <Property Type="Boolean" Name="DeliveryServices" Nullable="true" />
+    <Property Type="Double" Name="DeliveryCharges" Nullable="true" />
+    <Property Type="String" Name="DeliveryTime" Nullable="true" MaxLength="250" />
+    <Property Type="Double" Name="MinOrderAmount" Nullable="true" />
+    <Property Type="String" Name="Longitude" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Latitude" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="LastUpdatedBy" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="LastUpdatedDate" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="StatusID" Nullable="true" />
+    <Property Type="String" Name="ImageURL" Nullable="true" />
+    <Property Type="Int32" Name="BrandID" Nullable="true" />
+    <Property Type="String" Name="Opentime" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Closetime" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Passcode" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Currency" Nullable="true" MaxLength="50" />
+    <Property Type="Double" Name="Discounts" Nullable="true" />
+    <Property Type="Double" Name="Tax" Nullable="true" />
+    <Property Type="Int32" Name="IsPickupAllowed" Nullable="true" />
+    <Property Type="Int32" Name="IsDeliveryAllowed" Nullable="true" />
   </ComplexType>
 </Schema>
