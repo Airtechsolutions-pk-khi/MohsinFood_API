@@ -373,7 +373,7 @@ namespace BAL.Repositories
                             item.LastUpdatedDate = DateTime.UtcNow.AddMinutes(300);
                         }
 
-                        Order data = new Order();// DBContext.Orders.Add(orders);
+                        Order data = DBContext.Orders.Add(orders);
                         DBContext.SaveChanges();
                         dbContextTransaction.Commit();
 
