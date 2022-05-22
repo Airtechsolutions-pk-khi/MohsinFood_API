@@ -1,5 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="db_a842e1_mohsinfoodModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Addons">
+    <Key>
+      <PropertyRef Name="AddonID" />
+    </Key>
+    <Property Name="AddonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="300" />
+    <Property Name="ArabicName" Type="nvarchar" MaxLength="300" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Image" Type="nvarchar(max)" />
+    <Property Name="Price" Type="float" />
+    <Property Name="LastUpdatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastUpdatedDate" Type="datetime" />
+    <Property Name="StatusID" Type="int" />
+    <Property Name="BrandID" Type="int" />
+  </EntityType>
   <EntityType Name="ApplicationInfo">
     <Key>
       <PropertyRef Name="AppInfoID" />
@@ -185,6 +200,14 @@
     <Property Name="DeliveryAreaID" Type="int" />
     <Property Name="BrandID" Type="int" />
   </EntityType>
+  <EntityType Name="ItemAddonsJunc">
+    <Key>
+      <PropertyRef Name="ItemID" />
+      <PropertyRef Name="AddonID" />
+    </Key>
+    <Property Name="ItemID" Type="int" Nullable="false" />
+    <Property Name="AddonID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="ItemModifiersJunc">
     <Key>
       <PropertyRef Name="ItemID" />
@@ -215,6 +238,7 @@
     <Property Name="StatusID" Type="int" />
     <Property Name="IsFeatured" Type="bit" />
     <Property Name="Calories" Type="float" />
+    <Property Name="IsApplyDiscount" Type="bit" />
   </EntityType>
   <EntityType Name="Locations">
     <Key>
@@ -308,6 +332,20 @@
     <Property Name="Price" Type="float" />
     <Property Name="Cost" Type="float" />
     <Property Name="OrderMode" Type="nvarchar" MaxLength="10" />
+    <Property Name="StatusID" Type="int" />
+    <Property Name="LastUpdateBy" Type="varchar" MaxLength="50" />
+    <Property Name="LastUpdateDT" Type="datetime" />
+  </EntityType>
+  <EntityType Name="OrderDetailAddon">
+    <Key>
+      <PropertyRef Name="OrderDetailAddonID" />
+    </Key>
+    <Property Name="OrderDetailAddonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderDetailID" Type="int" />
+    <Property Name="AddonID" Type="int" />
+    <Property Name="Quantity" Type="float" />
+    <Property Name="Price" Type="float" />
+    <Property Name="Cost" Type="float" />
     <Property Name="StatusID" Type="int" />
     <Property Name="LastUpdateBy" Type="varchar" MaxLength="50" />
     <Property Name="LastUpdateDT" Type="datetime" />
@@ -548,6 +586,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ItemAddons-Junc_Items">
+    <End Role="Items" Type="Self.Items" Multiplicity="1" />
+    <End Role="ItemAddonsJunc" Type="Self.ItemAddonsJunc" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="ItemAddonsJunc">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemAddons-Junc_Modifiers">
+    <End Role="Addons" Type="Self.Addons" Multiplicity="1" />
+    <End Role="ItemAddonsJunc" Type="Self.ItemAddonsJunc" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Addons">
+        <PropertyRef Name="AddonID" />
+      </Principal>
+      <Dependent Role="ItemAddonsJunc">
+        <PropertyRef Name="AddonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ItemModifiers-Junc_Items">
     <End Role="Items" Type="Self.Items" Multiplicity="1" />
     <End Role="ItemModifiersJunc" Type="Self.ItemModifiersJunc" Multiplicity="*" />
@@ -677,6 +739,30 @@
       </Principal>
       <Dependent Role="OrderDetail">
         <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetailAddon_Addons">
+    <End Role="Addons" Type="Self.Addons" Multiplicity="0..1" />
+    <End Role="OrderDetailAddon" Type="Self.OrderDetailAddon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Addons">
+        <PropertyRef Name="AddonID" />
+      </Principal>
+      <Dependent Role="OrderDetailAddon">
+        <PropertyRef Name="AddonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetailAddon_OrderDetail">
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="0..1" />
+    <End Role="OrderDetailAddon" Type="Self.OrderDetailAddon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderDetail">
+        <PropertyRef Name="OrderDetailID" />
+      </Principal>
+      <Dependent Role="OrderDetailAddon">
+        <PropertyRef Name="OrderDetailID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -847,6 +933,9 @@
     <Parameter Name="id" Type="int" Mode="In" />
     <Parameter Name="LastUpdatedDate" Type="datetime" Mode="In" />
   </Function>
+  <Function Name="sp_DeleteItemAddons_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ItemID" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_DeleteItemModifiers_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ItemID" Type="int" Mode="In" />
   </Function>
@@ -865,6 +954,13 @@
   <Function Name="sp_DeleteTodaySpecial_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="BrandID" Type="int" Mode="In" />
     <Parameter Name="Items" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_getAddons" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="brandid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetAddonsbyID_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+    <Parameter Name="brandid" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_GetAdminOrders_api" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="LocationID" Type="int" Mode="In" />
@@ -965,6 +1061,18 @@
   <Function Name="sp_GetOrdersbyID_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="OrderID" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_insertAddon_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+    <Parameter Name="ArabicName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Image" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Price" Type="float" Mode="In" />
+    <Parameter Name="LastUpdatedBy" Type="nvarchar" Mode="In" />
+    <Parameter Name="LastUpdatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="StatusID" Type="int" Mode="In" />
+    <Parameter Name="BrandID" Type="int" Mode="In" />
+    <Parameter Name="AddonID" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_insertAppInfo_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="AppDescription" Type="nvarchar" Mode="In" />
     <Parameter Name="Facebook" Type="nvarchar" Mode="In" />
@@ -1060,6 +1168,11 @@
     <Parameter Name="StatusID" Type="int" Mode="In" />
     <Parameter Name="IsFeatured" Type="bit" Mode="In" />
     <Parameter Name="Calories" Type="float" Mode="In" />
+    <Parameter Name="ItemID" Type="int" Mode="In" />
+    <Parameter Name="IsApplyDiscount" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="sp_insertItemAddons_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Addons" Type="nvarchar" Mode="In" />
     <Parameter Name="ItemID" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_insertItemModifiers_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1185,6 +1298,18 @@
     <Parameter Name="LocationID" Type="int" Mode="In" />
     <Parameter Name="BusinessDate" Type="date" Mode="In" />
   </Function>
+  <Function Name="sp_updateAddon_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+    <Parameter Name="ArabicName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Image" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Price" Type="float" Mode="In" />
+    <Parameter Name="LastUpdatedBy" Type="nvarchar" Mode="In" />
+    <Parameter Name="LastUpdatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="StatusID" Type="int" Mode="In" />
+    <Parameter Name="BrandID" Type="int" Mode="In" />
+    <Parameter Name="AddonID" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_updateAppInfo_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="AppInfoID" Type="int" Mode="In" />
     <Parameter Name="AppDescription" Type="nvarchar(max)" Mode="In" />
@@ -1280,6 +1405,7 @@
     <Parameter Name="IsFeatured" Type="bit" Mode="In" />
     <Parameter Name="Calories" Type="float" Mode="In" />
     <Parameter Name="ItemID" Type="int" Mode="In" />
+    <Parameter Name="IsApplyDiscount" Type="bit" Mode="In" />
   </Function>
   <Function Name="sp_updateLocation_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Name" Type="nvarchar" Mode="In" />
@@ -1344,6 +1470,7 @@
     <Parameter Name="IsItemSetting" Type="bit" Mode="In" />
   </Function>
   <EntityContainer Name="db_a842e1_mohsinfoodModelStoreContainer">
+    <EntitySet Name="Addons" EntityType="Self.Addons" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ApplicationInfo" EntityType="Self.ApplicationInfo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AppSetting" EntityType="Self.AppSetting" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Banners" EntityType="Self.Banners" Schema="dbo" store:Type="Tables" />
@@ -1357,6 +1484,7 @@
     <EntitySet Name="CustomerPayment" EntityType="Self.CustomerPayment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DeliveryAreaBrandJunc" EntityType="Self.DeliveryAreaBrandJunc" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ItemAddonsJunc" EntityType="Self.ItemAddonsJunc" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ItemModifiersJunc" EntityType="Self.ItemModifiersJunc" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
@@ -1364,6 +1492,7 @@
     <EntitySet Name="Offers" EntityType="Self.Offers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderCheckout" EntityType="Self.OrderCheckout" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetailAddon" EntityType="Self.OrderDetailAddon" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetailModifier" EntityType="Self.OrderDetailModifier" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PushToken" EntityType="Self.PushToken" Schema="dbo" store:Type="Tables" />
@@ -1416,6 +1545,14 @@
       <End Role="Delivery" EntitySet="Delivery" />
       <End Role="DeliveryAreaBrandJunc" EntitySet="DeliveryAreaBrandJunc" />
     </AssociationSet>
+    <AssociationSet Name="FK_ItemAddons-Junc_Items" Association="Self.FK_ItemAddons-Junc_Items">
+      <End Role="Items" EntitySet="Items" />
+      <End Role="ItemAddonsJunc" EntitySet="ItemAddonsJunc" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemAddons-Junc_Modifiers" Association="Self.FK_ItemAddons-Junc_Modifiers">
+      <End Role="Addons" EntitySet="Addons" />
+      <End Role="ItemAddonsJunc" EntitySet="ItemAddonsJunc" />
+    </AssociationSet>
     <AssociationSet Name="FK_ItemModifiers-Junc_Items" Association="Self.FK_ItemModifiers-Junc_Items">
       <End Role="Items" EntitySet="Items" />
       <End Role="ItemModifiersJunc" EntitySet="ItemModifiersJunc" />
@@ -1459,6 +1596,14 @@
     <AssociationSet Name="FK_OrderDetail_Orders" Association="Self.FK_OrderDetail_Orders">
       <End Role="Orders" EntitySet="Orders" />
       <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetailAddon_Addons" Association="Self.FK_OrderDetailAddon_Addons">
+      <End Role="Addons" EntitySet="Addons" />
+      <End Role="OrderDetailAddon" EntitySet="OrderDetailAddon" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetailAddon_OrderDetail" Association="Self.FK_OrderDetailAddon_OrderDetail">
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+      <End Role="OrderDetailAddon" EntitySet="OrderDetailAddon" />
     </AssociationSet>
     <AssociationSet Name="FK_OrderDetailModifier_Modifiers" Association="Self.FK_OrderDetailModifier_Modifiers">
       <End Role="Modifiers" EntitySet="Modifiers" />

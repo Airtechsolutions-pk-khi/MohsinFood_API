@@ -39,6 +39,7 @@ namespace BAL.Repositories
             var bll = new List<OrdersBLL>();
             var lstOD = new List<OrderDetailBLL>();
             var lstODM = new List<OrderModifiersBLL>();
+            var lstODA = new List<OrderAddonsBLL>();
             var oc = new OrderCheckoutBLL();
             var ocustomer = new OrderCustomerBLL();
             var lstOrderStatus = new OrderStatusBLL();
@@ -51,6 +52,7 @@ namespace BAL.Repositories
                 var _dsorderdetailmodifier = JArray.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[2])).ToObject<List<OrderModifiersBLL>>();
                 var _dsOrdercheckout = JArray.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[3])).ToObject<List<OrderCheckoutBLL>>();
                 var _dsOrderCustomerData = JArray.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[4])).ToObject<List<OrderCustomerBLL>>();
+                var _dsorderdetailaddon = JArray.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[5])).ToObject<List<OrderAddonsBLL>>();
                 //var _dsLocation = JObject.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[5])).ToObject<LocationsBLL>();
                 //var _dsBrand = JArray.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[5])).ToObject< List<BrandsBLL>>().FirstOrDefault();
 
@@ -77,7 +79,23 @@ namespace BAL.Repositories
                                 ModifierName = k.ModifierName
                             });
                         }
-
+                        lstODA = new List<OrderAddonsBLL>();
+                        foreach (var ad in _dsorderdetailaddon.Where(x => x.StatusID == 201 && x.OrderDetailID == j.OrderDetailID))
+                        {
+                            lstODA.Add(new OrderAddonsBLL
+                            {
+                                StatusID = ad.StatusID,
+                                Price = ad.Price,
+                                AddonID = ad.AddonID,
+                                Cost = ad.Cost,
+                                LastUpdateBy = ad.LastUpdateBy,
+                                LastUpdateDT = ad.LastUpdateDT,
+                                OrderDetailID = ad.OrderDetailID,
+                                OrderDetailAddonID = ad.OrderDetailAddonID,
+                                Quantity = ad.Quantity,
+                                AddonName = ad.AddonName
+                            });
+                        }
                         lstOD.Add(new OrderDetailBLL
                         {
                             StatusID = j.StatusID,
@@ -87,6 +105,7 @@ namespace BAL.Repositories
                             OrderDetailID = j.OrderDetailID,
                             LastUpdateDT = j.LastUpdateDT,
                             LastUpdateBy = j.LastUpdateBy,
+                            OrderDetailAddons = lstODA,
                             ItemID = j.ItemID,
                             ItemName = j.ItemName,
                             OrderDetailModifiers = lstODM,
@@ -365,6 +384,15 @@ namespace BAL.Repositories
                                     j.LastUpdateDT = DateTime.UtcNow.AddMinutes(300);
                                 }
                             }
+                            if (i.OrderDetailAddons != null)
+                            {
+                                foreach (var j in i.OrderDetailAddons)
+                                {
+                                    j.StatusID = 201;
+                                    j.LastUpdateBy = orders.CustomerID.ToString();
+                                    j.LastUpdateDT = DateTime.UtcNow.AddMinutes(300);
+                                }
+                            }
                         }
                         foreach (var item in orders.CustomerOrders)
                         {
@@ -427,6 +455,7 @@ namespace BAL.Repositories
             var bll = new List<OrdersBLL>();
             var lstOD = new List<OrderDetailBLL>();
             var lstODM = new List<OrderModifiersBLL>();
+            var lstODA = new List<OrderAddonsBLL>();
             var oc = new OrderCheckoutBLL();
             var ocustomer = new OrderCustomerBLL();
             var rsp = new RspOrdersAdmin();
@@ -455,7 +484,22 @@ namespace BAL.Repositories
                                 Quantity = k.Quantity
                             });
                         }
-
+                        lstODA = new List<OrderAddonsBLL>();
+                        foreach (var k in j.OrderDetailAddons.Where(x => x.StatusID == 1))
+                        {
+                            lstODA.Add(new OrderAddonsBLL
+                            {
+                                StatusID = k.StatusID,
+                                Price = k.Price,
+                                AddonID = k.AddonID,
+                                Cost = k.Cost,
+                                LastUpdateBy = k.LastUpdateBy,
+                                LastUpdateDT = k.LastUpdateDT,
+                                OrderDetailID = k.OrderDetailID,
+                                OrderDetailAddonID = k.OrderDetailAddonID,
+                                Quantity = k.Quantity
+                            });
+                        }
                         lstOD.Add(new OrderDetailBLL
                         {
                             StatusID = j.StatusID,
@@ -465,6 +509,7 @@ namespace BAL.Repositories
                             OrderDetailID = j.OrderDetailID,
                             LastUpdateDT = j.LastUpdateDT,
                             LastUpdateBy = j.LastUpdateBy,
+                            OrderDetailAddons = lstODA,
                             ItemID = j.ItemID,
                             OrderDetailModifiers = lstODM,
                             OrderID = j.OrderID,
