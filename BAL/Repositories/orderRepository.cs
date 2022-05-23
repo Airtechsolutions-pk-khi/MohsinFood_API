@@ -244,12 +244,12 @@ namespace BAL.Repositories
         }
         public RspOrderPunch OrderPunch(OrdersBLL obj)
         {
-           
+
             RspOrderPunch rsp;
-            var t1 = 1600;
-            var t2 = 2359;
-            var t3 = 0001;
-            var t4 = 0430;
+            //var t1 = 1600;
+            //var t2 = 2359;
+            //var t3 = 0001;
+            //var t4 = 0430;
             try
             {
                 var currDate = DateTime.UtcNow.AddMinutes(300);
@@ -270,18 +270,20 @@ namespace BAL.Repositories
                     {
                         if (settings.Opentime != null && settings.Closetime != null)
                         {
-                            //var a = TimeSpan.ParseExact(settings.Opentime, @"hh\:mm\:ss", CultureInfo.InvariantCulture, TimeSpanStyles.None);
-                            //t1 = int.Parse(TimeSpan.Parse(settings.Opentime).ToString("hhmm"));
-                            //t4 = int.Parse(TimeSpan.Parse(settings.Closetime).ToString("hhmm"));
-                            //isAllowcheckout = int.Parse(Convert.ToDateTime(currDate).ToString("HHmm")) > int.Parse(Convert.ToDateTime(settings.Opentime).ToString("HHmm"))
-                            //    && int.Parse(Convert.ToDateTime(currDate).ToString("HHmm")) < int.Parse(Convert.ToDateTime(settings.Closetime).ToString("HHmm"))
-                            //    ? true : false;
+                            var t1 = int.Parse(TimeSpan.Parse(settings.Opentime).ToString("hhmm"));
+                            var t2 = 2359;
+                            var t3 = 0001;
+                            var t4 = int.Parse(TimeSpan.Parse(settings.Closetime).ToString("hhmm"));
                             var currTimeint = int.Parse(Convert.ToDateTime(currDate).ToString("HHmm"));
                             isAllowcheckout = (currTimeint > t1 && currTimeint < t2) || (currTimeint > t3 && currTimeint < t4) ? true : false;
 
+                            //old logic
+                            //var currTimeint = int.Parse(Convert.ToDateTime(currDate).ToString("HHmm"));
+                            //isAllowcheckout = (currTimeint > t1 && currTimeint < t2) || (currTimeint > t3 && currTimeint < t4) ? true : false;
+
                         }
 
-                        if (settings.IsPickupAllowed == 0)
+                        if (settings.IsPickupAllowed != 1 && obj.OrderType=="2")
                         {
                             rsp = new RspOrderPunch();
                             rsp.status = (int)eStatus.Exception;
@@ -289,7 +291,7 @@ namespace BAL.Repositories
                             rsp.OrderID = 0;
                             return rsp;
                         }
-                        if (settings.IsDeliveryAllowed == 0)
+                        if (settings.IsDeliveryAllowed != 1 && obj.OrderType == "1")
                         {
                             rsp = new RspOrderPunch();
                             rsp.status = (int)eStatus.Exception;

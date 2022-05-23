@@ -5,33 +5,36 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="369d42ad6fa048d7a6e6ce3333ce8a78" Name="Diagram1">
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Addon" Width="1.5" PointX="9.75" PointY="62" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.ApplicationInfo" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.AppSetting" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Banner" Width="1.5" PointX="3" PointY="29.125" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Brand" Width="1.5" PointX="0.75" PointY="27.5" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Category" Width="1.5" PointX="5.25" PointY="33.125" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Customer" Width="1.5" PointX="5.25" PointY="28" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.CustomerAddress" Width="1.5" PointX="7.5" PointY="38.125" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.CustomerDetail" Width="1.5" PointX="7.5" PointY="28.25" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Banner" Width="1.5" PointX="3" PointY="28.875" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Brand" Width="1.5" PointX="0.75" PointY="31.625" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Category" Width="1.5" PointX="5.25" PointY="43.125" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Customer" Width="1.5" PointX="8.25" PointY="43" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.CustomerAddress" Width="1.5" PointX="10.5" PointY="43.25" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.CustomerDetail" Width="1.5" PointX="10.5" PointY="47.25" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.CustomerOrderDetail" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.CustomerOrder" Width="1.5" PointX="12.75" PointY="33.25" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.CustomerPayment" Width="1.5" PointX="7.5" PointY="24.5" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Delivery" Width="1.5" PointX="0.75" PointY="24" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.DeliveryAreaBrandJunc" Width="1.5" PointX="3" PointY="26" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Item" Width="1.5" PointX="10.5" PointY="28.125" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Location" Width="1.5" PointX="3" PointY="35" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Modifier" Width="1.5" PointX="15.75" PointY="28.875" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Offer" Width="1.5" PointX="12.75" PointY="28.875" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.OrderCheckout" Width="1.5" PointX="12.75" PointY="41.125" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.OrderDetail" Width="1.5" PointX="18.75" PointY="32.5" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.OrderDetailModifier" Width="1.5" PointX="21" PointY="30.875" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Order" Width="1.5" PointX="10.5" PointY="34.75" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.PushToken" Width="1.5" PointX="5.25" PointY="52.625" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.CustomerOrder" Width="1.5" PointX="9.75" PointY="51.625" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.CustomerPayment" Width="1.5" PointX="10.5" PointY="39.5" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Delivery" Width="1.5" PointX="0.75" PointY="28.125" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.DeliveryAreaBrandJunc" Width="1.5" PointX="3" PointY="33.125" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Item" Width="1.5" PointX="7.5" PointY="36" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Location" Width="1.5" PointX="3" PointY="50.75" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Modifier" Width="1.5" PointX="12.75" PointY="35.125" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Offer" Width="1.5" PointX="9.75" PointY="35.125" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.OrderCheckout" Width="1.5" PointX="9.75" PointY="56.625" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.OrderDetail" Width="1.5" PointX="12.75" PointY="43" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.OrderDetailAddon" Width="1.5" PointX="15" PointY="52.625" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.OrderDetailModifier" Width="1.5" PointX="15" PointY="39.375" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Order" Width="1.5" PointX="7.5" PointY="48.125" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.PushToken" Width="1.5" PointX="5.25" PointY="68.375" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Status" Width="1.5" PointX="0.75" PointY="4.75" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.SubUser" Width="1.5" PointX="8.25" PointY="32.625" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.TodaySpecialItem" Width="1.5" PointX="12.75" PointY="38.375" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.TransferOrder" Width="1.5" PointX="15.75" PointY="37.5" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Unit" Width="1.5" PointX="8.25" PointY="20.875" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.SubUser" Width="1.5" PointX="5.25" PointY="37.625" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.TodaySpecialItem" Width="1.5" PointX="9.75" PointY="66.125" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.TransferOrder" Width="1.5" PointX="12.75" PointY="52.125" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Unit" Width="1.5" PointX="5.25" PointY="33.875" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_Addons" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Banners_Brand" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Category_Brand" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Customer_Brand" />
@@ -60,10 +63,12 @@
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetailModifier_Modifiers" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderCheckout_Orders" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetail_Orders" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_OrderDetail" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetailModifier_OrderDetail" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Orders_SubUser" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Orders_SubUser1" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Orders" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.ItemAddonsJunc" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.ItemModifiersJunc" />
       </Diagram>
     </edmx:Diagrams>

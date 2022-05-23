@@ -780,6 +780,54 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_getLocations_api" FunctionName="db_a842e1_mohsinfoodModel.Store.sp_getLocations_api">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="db_a842e1_mohsinfoodModel.sp_getLocations_api_Result">
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="LicenseID" ColumnName="LicenseID" />
+          <ScalarProperty Name="DeliveryServices" ColumnName="DeliveryServices" />
+          <ScalarProperty Name="DeliveryCharges" ColumnName="DeliveryCharges" />
+          <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
+          <ScalarProperty Name="MinOrderAmount" ColumnName="MinOrderAmount" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+          <ScalarProperty Name="Opentime" ColumnName="Opentime" />
+          <ScalarProperty Name="Closetime" ColumnName="Closetime" />
+          <ScalarProperty Name="Passcode" ColumnName="Passcode" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="Discounts" ColumnName="Discounts" />
+          <ScalarProperty Name="Tax" ColumnName="Tax" />
+          <ScalarProperty Name="IsPickupAllowed" ColumnName="IsPickupAllowed" />
+          <ScalarProperty Name="IsDeliveryAllowed" ColumnName="IsDeliveryAllowed" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="Addons">
+      <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Addon">
+        <MappingFragment StoreEntitySet="Addons">
+          <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ArabicName" ColumnName="ArabicName" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AddonID" ColumnName="AddonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ApplicationInfoes">
       <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.ApplicationInfo">
         <MappingFragment StoreEntitySet="ApplicationInfo">
@@ -981,6 +1029,7 @@
     <EntitySetMapping Name="Items">
       <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Item">
         <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="IsApplyDiscount" ColumnName="IsApplyDiscount" />
           <ScalarProperty Name="Calories" ColumnName="Calories" />
           <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
           <ScalarProperty Name="StatusID" ColumnName="StatusID" />
@@ -1103,6 +1152,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetailAddons">
+      <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.OrderDetailAddon">
+        <MappingFragment StoreEntitySet="OrderDetailAddon">
+          <ScalarProperty Name="LastUpdateDT" ColumnName="LastUpdateDT" />
+          <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="AddonID" ColumnName="AddonID" />
+          <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
+          <ScalarProperty Name="OrderDetailAddonID" ColumnName="OrderDetailAddonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="OrderDetailModifiers">
       <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.OrderDetailModifier">
         <MappingFragment StoreEntitySet="OrderDetailModifier">
@@ -1215,6 +1279,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="ItemAddonsJunc" TypeName="db_a842e1_mohsinfoodModel.ItemAddonsJunc" StoreEntitySet="ItemAddonsJunc">
+      <EndProperty Name="Addon">
+        <ScalarProperty Name="AddonID" ColumnName="AddonID" />
+      </EndProperty>
+      <EndProperty Name="Item">
+        <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+      </EndProperty>
+    </AssociationSetMapping>
     <AssociationSetMapping Name="ItemModifiersJunc" TypeName="db_a842e1_mohsinfoodModel.ItemModifiersJunc" StoreEntitySet="ItemModifiersJunc">
       <EndProperty Name="Modifier">
         <ScalarProperty Name="ModifierID" ColumnName="ModifierID" />
@@ -1223,37 +1295,5 @@
         <ScalarProperty Name="ItemID" ColumnName="ItemID" />
       </EndProperty>
     </AssociationSetMapping>
-    <FunctionImportMapping FunctionImportName="sp_getLocations_api" FunctionName="db_a842e1_mohsinfoodModel.Store.sp_getLocations_api">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="db_a842e1_mohsinfoodModel.sp_getLocations_api_Result">
-          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="LicenseID" ColumnName="LicenseID" />
-          <ScalarProperty Name="DeliveryServices" ColumnName="DeliveryServices" />
-          <ScalarProperty Name="DeliveryCharges" ColumnName="DeliveryCharges" />
-          <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
-          <ScalarProperty Name="MinOrderAmount" ColumnName="MinOrderAmount" />
-          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-          <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
-          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
-          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
-          <ScalarProperty Name="BrandID" ColumnName="BrandID" />
-          <ScalarProperty Name="Opentime" ColumnName="Opentime" />
-          <ScalarProperty Name="Closetime" ColumnName="Closetime" />
-          <ScalarProperty Name="Passcode" ColumnName="Passcode" />
-          <ScalarProperty Name="Currency" ColumnName="Currency" />
-          <ScalarProperty Name="Discounts" ColumnName="Discounts" />
-          <ScalarProperty Name="Tax" ColumnName="Tax" />
-          <ScalarProperty Name="IsPickupAllowed" ColumnName="IsPickupAllowed" />
-          <ScalarProperty Name="IsDeliveryAllowed" ColumnName="IsDeliveryAllowed" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

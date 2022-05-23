@@ -933,9 +933,6 @@
     <Parameter Name="id" Type="int" Mode="In" />
     <Parameter Name="LastUpdatedDate" Type="datetime" Mode="In" />
   </Function>
-  <Function Name="sp_DeleteItemAddons_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="ItemID" Type="int" Mode="In" />
-  </Function>
   <Function Name="sp_DeleteItemModifiers_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ItemID" Type="int" Mode="In" />
   </Function>
@@ -954,13 +951,6 @@
   <Function Name="sp_DeleteTodaySpecial_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="BrandID" Type="int" Mode="In" />
     <Parameter Name="Items" Type="nvarchar" Mode="In" />
-  </Function>
-  <Function Name="sp_getAddons" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="brandid" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_GetAddonsbyID_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="id" Type="int" Mode="In" />
-    <Parameter Name="brandid" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_GetAdminOrders_api" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="LocationID" Type="int" Mode="In" />
@@ -1061,18 +1051,6 @@
   <Function Name="sp_GetOrdersbyID_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="OrderID" Type="int" Mode="In" />
   </Function>
-  <Function Name="sp_insertAddon_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="ArabicName" Type="nvarchar" Mode="In" />
-    <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
-    <Parameter Name="Image" Type="nvarchar(max)" Mode="In" />
-    <Parameter Name="Price" Type="float" Mode="In" />
-    <Parameter Name="LastUpdatedBy" Type="nvarchar" Mode="In" />
-    <Parameter Name="LastUpdatedDate" Type="datetime" Mode="In" />
-    <Parameter Name="StatusID" Type="int" Mode="In" />
-    <Parameter Name="BrandID" Type="int" Mode="In" />
-    <Parameter Name="AddonID" Type="int" Mode="In" />
-  </Function>
   <Function Name="sp_insertAppInfo_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="AppDescription" Type="nvarchar" Mode="In" />
     <Parameter Name="Facebook" Type="nvarchar" Mode="In" />
@@ -1170,10 +1148,6 @@
     <Parameter Name="Calories" Type="float" Mode="In" />
     <Parameter Name="ItemID" Type="int" Mode="In" />
     <Parameter Name="IsApplyDiscount" Type="bit" Mode="In" />
-  </Function>
-  <Function Name="sp_insertItemAddons_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Addons" Type="nvarchar" Mode="In" />
-    <Parameter Name="ItemID" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_insertItemModifiers_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Modifiers" Type="nvarchar" Mode="In" />
@@ -1297,18 +1271,6 @@
   <Function Name="sp_SalesMAEN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="LocationID" Type="int" Mode="In" />
     <Parameter Name="BusinessDate" Type="date" Mode="In" />
-  </Function>
-  <Function Name="sp_updateAddon_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Name" Type="nvarchar" Mode="In" />
-    <Parameter Name="ArabicName" Type="nvarchar" Mode="In" />
-    <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
-    <Parameter Name="Image" Type="nvarchar(max)" Mode="In" />
-    <Parameter Name="Price" Type="float" Mode="In" />
-    <Parameter Name="LastUpdatedBy" Type="nvarchar" Mode="In" />
-    <Parameter Name="LastUpdatedDate" Type="datetime" Mode="In" />
-    <Parameter Name="StatusID" Type="int" Mode="In" />
-    <Parameter Name="BrandID" Type="int" Mode="In" />
-    <Parameter Name="AddonID" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_updateAppInfo_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="AppInfoID" Type="int" Mode="In" />

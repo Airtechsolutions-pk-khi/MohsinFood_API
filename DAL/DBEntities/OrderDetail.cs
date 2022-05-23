@@ -17,8 +17,8 @@ namespace DAL.DBEntities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public OrderDetail()
         {
-            this.OrderDetailModifiers = new HashSet<OrderDetailModifier>();
             this.OrderDetailAddons = new HashSet<OrderDetailAddon>();
+            this.OrderDetailModifiers = new HashSet<OrderDetailModifier>();
         }
     
         public int OrderDetailID { get; set; }
@@ -35,8 +35,8 @@ namespace DAL.DBEntities
         public virtual Item Item { get; set; }
         public virtual Order Order { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetailModifier> OrderDetailModifiers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetailAddon> OrderDetailAddons { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderDetailModifier> OrderDetailModifiers { get; set; }
     }
 }

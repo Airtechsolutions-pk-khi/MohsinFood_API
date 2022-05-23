@@ -5,6 +5,21 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="db_a842e1_mohsinfoodModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Addons">
+          <Key>
+            <PropertyRef Name="AddonID" />
+          </Key>
+          <Property Name="AddonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="300" />
+          <Property Name="ArabicName" Type="nvarchar" MaxLength="300" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Image" Type="nvarchar(max)" />
+          <Property Name="Price" Type="float" />
+          <Property Name="LastUpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="StatusID" Type="int" />
+          <Property Name="BrandID" Type="int" />
+        </EntityType>
         <EntityType Name="ApplicationInfo">
           <Key>
             <PropertyRef Name="AppInfoID" />
@@ -190,6 +205,14 @@
           <Property Name="DeliveryAreaID" Type="int" />
           <Property Name="BrandID" Type="int" />
         </EntityType>
+        <EntityType Name="ItemAddonsJunc">
+          <Key>
+            <PropertyRef Name="ItemID" />
+            <PropertyRef Name="AddonID" />
+          </Key>
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="AddonID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="ItemModifiersJunc">
           <Key>
             <PropertyRef Name="ItemID" />
@@ -220,6 +243,7 @@
           <Property Name="StatusID" Type="int" />
           <Property Name="IsFeatured" Type="bit" />
           <Property Name="Calories" Type="float" />
+          <Property Name="IsApplyDiscount" Type="bit" />
         </EntityType>
         <EntityType Name="Locations">
           <Key>
@@ -313,6 +337,20 @@
           <Property Name="Price" Type="float" />
           <Property Name="Cost" Type="float" />
           <Property Name="OrderMode" Type="nvarchar" MaxLength="10" />
+          <Property Name="StatusID" Type="int" />
+          <Property Name="LastUpdateBy" Type="varchar" MaxLength="50" />
+          <Property Name="LastUpdateDT" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OrderDetailAddon">
+          <Key>
+            <PropertyRef Name="OrderDetailAddonID" />
+          </Key>
+          <Property Name="OrderDetailAddonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderDetailID" Type="int" />
+          <Property Name="AddonID" Type="int" />
+          <Property Name="Quantity" Type="float" />
+          <Property Name="Price" Type="float" />
+          <Property Name="Cost" Type="float" />
           <Property Name="StatusID" Type="int" />
           <Property Name="LastUpdateBy" Type="varchar" MaxLength="50" />
           <Property Name="LastUpdateDT" Type="datetime" />
@@ -553,6 +591,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ItemAddons-Junc_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="ItemAddonsJunc" Type="Self.ItemAddonsJunc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="ItemAddonsJunc">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemAddons-Junc_Modifiers">
+          <End Role="Addons" Type="Self.Addons" Multiplicity="1" />
+          <End Role="ItemAddonsJunc" Type="Self.ItemAddonsJunc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addons">
+              <PropertyRef Name="AddonID" />
+            </Principal>
+            <Dependent Role="ItemAddonsJunc">
+              <PropertyRef Name="AddonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ItemModifiers-Junc_Items">
           <End Role="Items" Type="Self.Items" Multiplicity="1" />
           <End Role="ItemModifiersJunc" Type="Self.ItemModifiersJunc" Multiplicity="*" />
@@ -682,6 +744,30 @@
             </Principal>
             <Dependent Role="OrderDetail">
               <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetailAddon_Addons">
+          <End Role="Addons" Type="Self.Addons" Multiplicity="0..1" />
+          <End Role="OrderDetailAddon" Type="Self.OrderDetailAddon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addons">
+              <PropertyRef Name="AddonID" />
+            </Principal>
+            <Dependent Role="OrderDetailAddon">
+              <PropertyRef Name="AddonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetailAddon_OrderDetail">
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="0..1" />
+          <End Role="OrderDetailAddon" Type="Self.OrderDetailAddon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderDetail">
+              <PropertyRef Name="OrderDetailID" />
+            </Principal>
+            <Dependent Role="OrderDetailAddon">
+              <PropertyRef Name="OrderDetailID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1066,6 +1152,7 @@
           <Parameter Name="IsFeatured" Type="bit" Mode="In" />
           <Parameter Name="Calories" Type="float" Mode="In" />
           <Parameter Name="ItemID" Type="int" Mode="In" />
+          <Parameter Name="IsApplyDiscount" Type="bit" Mode="In" />
         </Function>
         <Function Name="sp_insertItemModifiers_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Modifiers" Type="nvarchar" Mode="In" />
@@ -1285,6 +1372,7 @@
           <Parameter Name="IsFeatured" Type="bit" Mode="In" />
           <Parameter Name="Calories" Type="float" Mode="In" />
           <Parameter Name="ItemID" Type="int" Mode="In" />
+          <Parameter Name="IsApplyDiscount" Type="bit" Mode="In" />
         </Function>
         <Function Name="sp_updateLocation_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Name" Type="nvarchar" Mode="In" />
@@ -1349,6 +1437,7 @@
           <Parameter Name="IsItemSetting" Type="bit" Mode="In" />
         </Function>
         <EntityContainer Name="db_a842e1_mohsinfoodModelStoreContainer">
+          <EntitySet Name="Addons" EntityType="Self.Addons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApplicationInfo" EntityType="Self.ApplicationInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AppSetting" EntityType="Self.AppSetting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Banners" EntityType="Self.Banners" Schema="dbo" store:Type="Tables" />
@@ -1362,6 +1451,7 @@
           <EntitySet Name="CustomerPayment" EntityType="Self.CustomerPayment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeliveryAreaBrandJunc" EntityType="Self.DeliveryAreaBrandJunc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemAddonsJunc" EntityType="Self.ItemAddonsJunc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemModifiersJunc" EntityType="Self.ItemModifiersJunc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
@@ -1369,6 +1459,7 @@
           <EntitySet Name="Offers" EntityType="Self.Offers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderCheckout" EntityType="Self.OrderCheckout" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetailAddon" EntityType="Self.OrderDetailAddon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetailModifier" EntityType="Self.OrderDetailModifier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PushToken" EntityType="Self.PushToken" Schema="dbo" store:Type="Tables" />
@@ -1421,6 +1512,14 @@
             <End Role="Delivery" EntitySet="Delivery" />
             <End Role="DeliveryAreaBrandJunc" EntitySet="DeliveryAreaBrandJunc" />
           </AssociationSet>
+          <AssociationSet Name="FK_ItemAddons-Junc_Items" Association="Self.FK_ItemAddons-Junc_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="ItemAddonsJunc" EntitySet="ItemAddonsJunc" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemAddons-Junc_Modifiers" Association="Self.FK_ItemAddons-Junc_Modifiers">
+            <End Role="Addons" EntitySet="Addons" />
+            <End Role="ItemAddonsJunc" EntitySet="ItemAddonsJunc" />
+          </AssociationSet>
           <AssociationSet Name="FK_ItemModifiers-Junc_Items" Association="Self.FK_ItemModifiers-Junc_Items">
             <End Role="Items" EntitySet="Items" />
             <End Role="ItemModifiersJunc" EntitySet="ItemModifiersJunc" />
@@ -1464,6 +1563,14 @@
           <AssociationSet Name="FK_OrderDetail_Orders" Association="Self.FK_OrderDetail_Orders">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetailAddon_Addons" Association="Self.FK_OrderDetailAddon_Addons">
+            <End Role="Addons" EntitySet="Addons" />
+            <End Role="OrderDetailAddon" EntitySet="OrderDetailAddon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetailAddon_OrderDetail" Association="Self.FK_OrderDetailAddon_OrderDetail">
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+            <End Role="OrderDetailAddon" EntitySet="OrderDetailAddon" />
           </AssociationSet>
           <AssociationSet Name="FK_OrderDetailModifier_Modifiers" Association="Self.FK_OrderDetailModifier_Modifiers">
             <End Role="Modifiers" EntitySet="Modifiers" />
@@ -1752,6 +1859,7 @@
             <Parameter Name="IsFeatured" Mode="In" Type="Boolean" />
             <Parameter Name="Calories" Mode="In" Type="Double" />
             <Parameter Name="ItemID" Mode="In" Type="Int32" />
+            <Parameter Name="IsApplyDiscount" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="sp_insertItemModifiers_Admin">
             <Parameter Name="Modifiers" Mode="In" Type="String" />
@@ -1971,6 +2079,7 @@
             <Parameter Name="IsFeatured" Mode="In" Type="Boolean" />
             <Parameter Name="Calories" Mode="In" Type="Double" />
             <Parameter Name="ItemID" Mode="In" Type="Int32" />
+            <Parameter Name="IsApplyDiscount" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="sp_updateLocation_Admin">
             <Parameter Name="Name" Mode="In" Type="String" />
@@ -2037,6 +2146,8 @@
           <FunctionImport Name="sp_getLocation" ReturnType="Collection(db_a842e1_mohsinfoodModel.sp_getLocation_Result)">
           <Parameter Name="brandid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_getLocations_api" ReturnType="Collection(db_a842e1_mohsinfoodModel.sp_getLocations_api_Result)" />
+          <EntitySet Name="Addons" EntityType="db_a842e1_mohsinfoodModel.Addon" />
           <EntitySet Name="ApplicationInfoes" EntityType="db_a842e1_mohsinfoodModel.ApplicationInfo" />
           <EntitySet Name="AppSettings" EntityType="db_a842e1_mohsinfoodModel.AppSetting" />
           <EntitySet Name="Banners" EntityType="db_a842e1_mohsinfoodModel.Banner" />
@@ -2056,6 +2167,7 @@
           <EntitySet Name="Offers" EntityType="db_a842e1_mohsinfoodModel.Offer" />
           <EntitySet Name="OrderCheckouts" EntityType="db_a842e1_mohsinfoodModel.OrderCheckout" />
           <EntitySet Name="OrderDetails" EntityType="db_a842e1_mohsinfoodModel.OrderDetail" />
+          <EntitySet Name="OrderDetailAddons" EntityType="db_a842e1_mohsinfoodModel.OrderDetailAddon" />
           <EntitySet Name="OrderDetailModifiers" EntityType="db_a842e1_mohsinfoodModel.OrderDetailModifier" />
           <EntitySet Name="Orders" EntityType="db_a842e1_mohsinfoodModel.Order" />
           <EntitySet Name="PushTokens" EntityType="db_a842e1_mohsinfoodModel.PushToken" />
@@ -2064,6 +2176,10 @@
           <EntitySet Name="TodaySpecialItems" EntityType="db_a842e1_mohsinfoodModel.TodaySpecialItem" />
           <EntitySet Name="TransferOrders" EntityType="db_a842e1_mohsinfoodModel.TransferOrder" />
           <EntitySet Name="Units" EntityType="db_a842e1_mohsinfoodModel.Unit" />
+          <AssociationSet Name="FK_OrderDetailAddon_Addons" Association="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_Addons">
+            <End Role="Addon" EntitySet="Addons" />
+            <End Role="OrderDetailAddon" EntitySet="OrderDetailAddons" />
+          </AssociationSet>
           <AssociationSet Name="FK_Banners_Brand" Association="db_a842e1_mohsinfoodModel.FK_Banners_Brand">
             <End Role="Brand" EntitySet="Brands" />
             <End Role="Banner" EntitySet="Banners" />
@@ -2176,6 +2292,10 @@
             <End Role="Order" EntitySet="Orders" />
             <End Role="OrderDetail" EntitySet="OrderDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_OrderDetailAddon_OrderDetail" Association="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_OrderDetail">
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+            <End Role="OrderDetailAddon" EntitySet="OrderDetailAddons" />
+          </AssociationSet>
           <AssociationSet Name="FK_OrderDetailModifier_OrderDetail" Association="db_a842e1_mohsinfoodModel.FK_OrderDetailModifier_OrderDetail">
             <End Role="OrderDetail" EntitySet="OrderDetails" />
             <End Role="OrderDetailModifier" EntitySet="OrderDetailModifiers" />
@@ -2192,11 +2312,14 @@
             <End Role="Order" EntitySet="Orders" />
             <End Role="TransferOrder" EntitySet="TransferOrders" />
           </AssociationSet>
+          <AssociationSet Name="ItemAddonsJunc" Association="db_a842e1_mohsinfoodModel.ItemAddonsJunc">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="Addon" EntitySet="Addons" />
+          </AssociationSet>
           <AssociationSet Name="ItemModifiersJunc" Association="db_a842e1_mohsinfoodModel.ItemModifiersJunc">
             <End Role="Item" EntitySet="Items" />
             <End Role="Modifier" EntitySet="Modifiers" />
           </AssociationSet>
-          <FunctionImport Name="sp_getLocations_api" ReturnType="Collection(db_a842e1_mohsinfoodModel.sp_getLocations_api_Result)" />
         </EntityContainer>
         <ComplexType Name="sp_authenticateUser_admin_Result">
           <Property Type="Int32" Name="BrandID" Nullable="false" />
@@ -2769,6 +2892,51 @@
           <Property Type="Int32" Name="IsPickupAllowed" Nullable="true" />
           <Property Type="Int32" Name="IsDeliveryAllowed" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="sp_getLocations_api_Result">
+          <Property Type="Int32" Name="LocationID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ContactNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="LicenseID" Nullable="false" />
+          <Property Type="Boolean" Name="DeliveryServices" Nullable="true" />
+          <Property Type="Double" Name="DeliveryCharges" Nullable="true" />
+          <Property Type="String" Name="DeliveryTime" Nullable="true" MaxLength="250" />
+          <Property Type="Double" Name="MinOrderAmount" Nullable="true" />
+          <Property Type="String" Name="Longitude" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Latitude" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="LastUpdatedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="LastUpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="StatusID" Nullable="true" />
+          <Property Type="String" Name="ImageURL" Nullable="true" />
+          <Property Type="Int32" Name="BrandID" Nullable="true" />
+          <Property Type="String" Name="Opentime" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Closetime" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Passcode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Currency" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="Discounts" Nullable="true" />
+          <Property Type="Double" Name="Tax" Nullable="true" />
+          <Property Type="Int32" Name="IsPickupAllowed" Nullable="true" />
+          <Property Type="Int32" Name="IsDeliveryAllowed" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Addon">
+          <Key>
+            <PropertyRef Name="AddonID" />
+          </Key>
+          <Property Name="AddonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ArabicName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="BrandID" Type="Int32" />
+          <NavigationProperty Name="OrderDetailAddons" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_Addons" FromRole="Addon" ToRole="OrderDetailAddon" />
+          <NavigationProperty Name="Items" Relationship="db_a842e1_mohsinfoodModel.ItemAddonsJunc" FromRole="Addon" ToRole="Item" />
+        </EntityType>
         <EntityType Name="ApplicationInfo">
           <Key>
             <PropertyRef Name="AppInfoID" />
@@ -3000,11 +3168,13 @@
           <Property Name="StatusID" Type="Int32" />
           <Property Name="IsFeatured" Type="Boolean" />
           <Property Name="Calories" Type="Double" />
+          <Property Name="IsApplyDiscount" Type="Boolean" />
           <NavigationProperty Name="Category" Relationship="db_a842e1_mohsinfoodModel.FK_Items_Items" FromRole="Item" ToRole="Category" />
           <NavigationProperty Name="Unit" Relationship="db_a842e1_mohsinfoodModel.FK_Items_Unit" FromRole="Item" ToRole="Unit" />
           <NavigationProperty Name="Offers" Relationship="db_a842e1_mohsinfoodModel.FK_Offers_Items" FromRole="Item" ToRole="Offer" />
           <NavigationProperty Name="OrderDetails" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetail_Items" FromRole="Item" ToRole="OrderDetail" />
           <NavigationProperty Name="TodaySpecialItems" Relationship="db_a842e1_mohsinfoodModel.FK_TodaySpecialItems_Items" FromRole="Item" ToRole="TodaySpecialItem" />
+          <NavigationProperty Name="Addons" Relationship="db_a842e1_mohsinfoodModel.ItemAddonsJunc" FromRole="Item" ToRole="Addon" />
           <NavigationProperty Name="Modifiers" Relationship="db_a842e1_mohsinfoodModel.ItemModifiersJunc" FromRole="Item" ToRole="Modifier" />
         </EntityType>
         <EntityType Name="Location">
@@ -3118,7 +3288,24 @@
           <Property Name="LastUpdateDT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Item" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetail_Items" FromRole="OrderDetail" ToRole="Item" />
           <NavigationProperty Name="Order" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetail_Orders" FromRole="OrderDetail" ToRole="Order" />
+          <NavigationProperty Name="OrderDetailAddons" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_OrderDetail" FromRole="OrderDetail" ToRole="OrderDetailAddon" />
           <NavigationProperty Name="OrderDetailModifiers" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetailModifier_OrderDetail" FromRole="OrderDetail" ToRole="OrderDetailModifier" />
+        </EntityType>
+        <EntityType Name="OrderDetailAddon">
+          <Key>
+            <PropertyRef Name="OrderDetailAddonID" />
+          </Key>
+          <Property Name="OrderDetailAddonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDetailID" Type="Int32" />
+          <Property Name="AddonID" Type="Int32" />
+          <Property Name="Quantity" Type="Double" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="Cost" Type="Double" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="LastUpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastUpdateDT" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Addon" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_Addons" FromRole="OrderDetailAddon" ToRole="Addon" />
+          <NavigationProperty Name="OrderDetail" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_OrderDetail" FromRole="OrderDetailAddon" ToRole="OrderDetail" />
         </EntityType>
         <EntityType Name="OrderDetailModifier">
           <Key>
@@ -3243,6 +3430,18 @@
           <Property Name="StatusID" Type="Int32" />
           <NavigationProperty Name="Items" Relationship="db_a842e1_mohsinfoodModel.FK_Items_Unit" FromRole="Unit" ToRole="Item" />
         </EntityType>
+        <Association Name="FK_OrderDetailAddon_Addons">
+          <End Type="db_a842e1_mohsinfoodModel.Addon" Role="Addon" Multiplicity="0..1" />
+          <End Type="db_a842e1_mohsinfoodModel.OrderDetailAddon" Role="OrderDetailAddon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addon">
+              <PropertyRef Name="AddonID" />
+            </Principal>
+            <Dependent Role="OrderDetailAddon">
+              <PropertyRef Name="AddonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Banners_Brand">
           <End Type="db_a842e1_mohsinfoodModel.Brand" Role="Brand" Multiplicity="0..1" />
           <End Type="db_a842e1_mohsinfoodModel.Banner" Role="Banner" Multiplicity="*" />
@@ -3579,6 +3778,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrderDetailAddon_OrderDetail">
+          <End Type="db_a842e1_mohsinfoodModel.OrderDetail" Role="OrderDetail" Multiplicity="0..1" />
+          <End Type="db_a842e1_mohsinfoodModel.OrderDetailAddon" Role="OrderDetailAddon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderDetail">
+              <PropertyRef Name="OrderDetailID" />
+            </Principal>
+            <Dependent Role="OrderDetailAddon">
+              <PropertyRef Name="OrderDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrderDetailModifier_OrderDetail">
           <End Type="db_a842e1_mohsinfoodModel.OrderDetail" Role="OrderDetail" Multiplicity="0..1" />
           <End Type="db_a842e1_mohsinfoodModel.OrderDetailModifier" Role="OrderDetailModifier" Multiplicity="*" />
@@ -3627,38 +3838,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="ItemAddonsJunc">
+          <End Type="db_a842e1_mohsinfoodModel.Item" Role="Item" Multiplicity="*" />
+          <End Type="db_a842e1_mohsinfoodModel.Addon" Role="Addon" Multiplicity="*" />
+        </Association>
         <Association Name="ItemModifiersJunc">
           <End Type="db_a842e1_mohsinfoodModel.Item" Role="Item" Multiplicity="*" />
           <End Type="db_a842e1_mohsinfoodModel.Modifier" Role="Modifier" Multiplicity="*" />
         </Association>
-        <ComplexType Name="sp_getLocations_api_Result">
-          <Property Type="Int32" Name="LocationID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Address" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="ContactNo" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="500" />
-          <Property Type="Int32" Name="LicenseID" Nullable="false" />
-          <Property Type="Boolean" Name="DeliveryServices" Nullable="true" />
-          <Property Type="Double" Name="DeliveryCharges" Nullable="true" />
-          <Property Type="String" Name="DeliveryTime" Nullable="true" MaxLength="250" />
-          <Property Type="Double" Name="MinOrderAmount" Nullable="true" />
-          <Property Type="String" Name="Longitude" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="Latitude" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="LastUpdatedBy" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="LastUpdatedDate" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="StatusID" Nullable="true" />
-          <Property Type="String" Name="ImageURL" Nullable="true" />
-          <Property Type="Int32" Name="BrandID" Nullable="true" />
-          <Property Type="String" Name="Opentime" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Closetime" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Passcode" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Currency" Nullable="true" MaxLength="50" />
-          <Property Type="Double" Name="Discounts" Nullable="true" />
-          <Property Type="Double" Name="Tax" Nullable="true" />
-          <Property Type="Int32" Name="IsPickupAllowed" Nullable="true" />
-          <Property Type="Int32" Name="IsDeliveryAllowed" Nullable="true" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4444,6 +4631,54 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_getLocations_api" FunctionName="db_a842e1_mohsinfoodModel.Store.sp_getLocations_api">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="db_a842e1_mohsinfoodModel.sp_getLocations_api_Result">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LicenseID" ColumnName="LicenseID" />
+                <ScalarProperty Name="DeliveryServices" ColumnName="DeliveryServices" />
+                <ScalarProperty Name="DeliveryCharges" ColumnName="DeliveryCharges" />
+                <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
+                <ScalarProperty Name="MinOrderAmount" ColumnName="MinOrderAmount" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="Opentime" ColumnName="Opentime" />
+                <ScalarProperty Name="Closetime" ColumnName="Closetime" />
+                <ScalarProperty Name="Passcode" ColumnName="Passcode" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="Discounts" ColumnName="Discounts" />
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="IsPickupAllowed" ColumnName="IsPickupAllowed" />
+                <ScalarProperty Name="IsDeliveryAllowed" ColumnName="IsDeliveryAllowed" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Addons">
+            <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Addon">
+              <MappingFragment StoreEntitySet="Addons">
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ArabicName" ColumnName="ArabicName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AddonID" ColumnName="AddonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ApplicationInfoes">
             <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.ApplicationInfo">
               <MappingFragment StoreEntitySet="ApplicationInfo">
@@ -4645,6 +4880,7 @@
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Item">
               <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="IsApplyDiscount" ColumnName="IsApplyDiscount" />
                 <ScalarProperty Name="Calories" ColumnName="Calories" />
                 <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
                 <ScalarProperty Name="StatusID" ColumnName="StatusID" />
@@ -4767,6 +5003,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetailAddons">
+            <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.OrderDetailAddon">
+              <MappingFragment StoreEntitySet="OrderDetailAddon">
+                <ScalarProperty Name="LastUpdateDT" ColumnName="LastUpdateDT" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="AddonID" ColumnName="AddonID" />
+                <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
+                <ScalarProperty Name="OrderDetailAddonID" ColumnName="OrderDetailAddonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="OrderDetailModifiers">
             <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.OrderDetailModifier">
               <MappingFragment StoreEntitySet="OrderDetailModifier">
@@ -4879,6 +5130,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="ItemAddonsJunc" TypeName="db_a842e1_mohsinfoodModel.ItemAddonsJunc" StoreEntitySet="ItemAddonsJunc">
+            <EndProperty Name="Addon">
+              <ScalarProperty Name="AddonID" ColumnName="AddonID" />
+            </EndProperty>
+            <EndProperty Name="Item">
+              <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+            </EndProperty>
+          </AssociationSetMapping>
           <AssociationSetMapping Name="ItemModifiersJunc" TypeName="db_a842e1_mohsinfoodModel.ItemModifiersJunc" StoreEntitySet="ItemModifiersJunc">
             <EndProperty Name="Modifier">
               <ScalarProperty Name="ModifierID" ColumnName="ModifierID" />
@@ -4887,38 +5146,6 @@
               <ScalarProperty Name="ItemID" ColumnName="ItemID" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="sp_getLocations_api" FunctionName="db_a842e1_mohsinfoodModel.Store.sp_getLocations_api">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="db_a842e1_mohsinfoodModel.sp_getLocations_api_Result">
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="LicenseID" ColumnName="LicenseID" />
-                <ScalarProperty Name="DeliveryServices" ColumnName="DeliveryServices" />
-                <ScalarProperty Name="DeliveryCharges" ColumnName="DeliveryCharges" />
-                <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
-                <ScalarProperty Name="MinOrderAmount" ColumnName="MinOrderAmount" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
-                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
-                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
-                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
-                <ScalarProperty Name="Opentime" ColumnName="Opentime" />
-                <ScalarProperty Name="Closetime" ColumnName="Closetime" />
-                <ScalarProperty Name="Passcode" ColumnName="Passcode" />
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="Discounts" ColumnName="Discounts" />
-                <ScalarProperty Name="Tax" ColumnName="Tax" />
-                <ScalarProperty Name="IsPickupAllowed" ColumnName="IsPickupAllowed" />
-                <ScalarProperty Name="IsDeliveryAllowed" ColumnName="IsDeliveryAllowed" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
