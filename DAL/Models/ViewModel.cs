@@ -392,6 +392,7 @@ namespace DAL.Models
         public Nullable<int> OrderNo { get; set; }
         public string OrderType { get; set; }
         public string OrderDate { get; set; }
+        public string AppVersion { get; set; }
         public string OrderDeliveryDate { get; set; }
         public Nullable<System.DateTime> OrderPreparedDate { get; set; }
         public Nullable<System.DateTime> OrderOFDDate { get; set; }

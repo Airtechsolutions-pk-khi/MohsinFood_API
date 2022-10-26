@@ -254,6 +254,15 @@ namespace BAL.Repositories
             {
                 var currDate = DateTime.UtcNow.AddMinutes(300);
                 var isAllowcheckout = true;
+                string pram = "26";
+                if (obj.AppVersion.Equals(pram))
+                {
+                    rsp = new RspOrderPunch();
+                    rsp.status = 1006;
+                    rsp.description = "Your App Version is not Updated";
+                    rsp.OrderID = 0;
+                    return rsp;
+                }
                 if (obj.OrderDetails.Count == 0)
                 {
                     rsp = new RspOrderPunch();
