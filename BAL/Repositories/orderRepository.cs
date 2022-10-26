@@ -254,7 +254,7 @@ namespace BAL.Repositories
             {
                 var currDate = DateTime.UtcNow.AddMinutes(300);
                 var isAllowcheckout = true;
-                string pram = "26";
+                string pram = "27";
                 if (obj.AppVersion.Equals(pram))
                 {
                     rsp = new RspOrderPunch();
