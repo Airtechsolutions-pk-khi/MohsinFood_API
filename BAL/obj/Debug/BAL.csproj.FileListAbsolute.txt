@@ -285,3 +285,44 @@ C:\Office\Airtech\Mohsin Foods\API\BAL\obj\Debug\BAL.csproj.CoreCompileInputs.ca
 C:\Office\Airtech\Mohsin Foods\API\BAL\obj\Debug\BAL.csproj.CopyComplete
 C:\Office\Airtech\Mohsin Foods\API\BAL\obj\Debug\BAL.dll
 C:\Office\Airtech\Mohsin Foods\API\BAL\obj\Debug\BAL.pdb
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\BAL.dll.config
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\BAL.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\BAL.pdb
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\DAL.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\EntityFramework.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Configuration.ConfigurationManager.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Security.AccessControl.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Security.Permissions.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Security.Principal.Windows.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Web.Helpers.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Web.Mvc.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Web.Razor.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Web.WebPages.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\WebApiContrib.Formatting.JavaScriptSerializer.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\DAL.pdb
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\DAL.dll.config
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\EntityFramework.xml
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Configuration.ConfigurationManager.xml
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Security.AccessControl.xml
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Security.Permissions.xml
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Security.Principal.Windows.xml
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Web.Helpers.xml
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Web.Mvc.xml
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Web.Razor.xml
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Web.WebPages.xml
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\obj\Debug\BAL.csproj.AssemblyReference.cache
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\obj\Debug\BAL.csproj.CoreCompileInputs.cache
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\obj\Debug\BAL.csproj.CopyComplete
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\obj\Debug\BAL.dll
+C:\Users\Ammad\Desktop\MohsinAPI\BAL\obj\Debug\BAL.pdb

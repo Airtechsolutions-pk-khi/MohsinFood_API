@@ -187,3 +187,30 @@ C:\Office\Airtech\Mohsin Foods\API\DAL\obj\Release\DAL.csproj.CoreCompileInputs.
 C:\Office\Airtech\Mohsin Foods\API\DAL\obj\Release\DAL.csproj.CopyComplete
 C:\Office\Airtech\Mohsin Foods\API\DAL\obj\Release\DAL.dll
 C:\Office\Airtech\Mohsin Foods\API\DAL\obj\Release\DAL.pdb
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\DAL.dll.config
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\DAL.dll
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\DAL.pdb
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\EntityFramework.dll
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\Microsoft.Web.Infrastructure.dll
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\Newtonsoft.Json.dll
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\System.Web.Helpers.dll
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\System.Web.Mvc.dll
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\System.Web.Razor.dll
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\System.Web.WebPages.Deployment.dll
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\System.Web.WebPages.dll
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\System.Web.WebPages.Razor.dll
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\EntityFramework.xml
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\Newtonsoft.Json.xml
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\System.Web.Helpers.xml
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\System.Web.Mvc.xml
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\System.Web.Razor.xml
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\System.Web.WebPages.xml
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\System.Web.WebPages.Deployment.xml
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\bin\Release\System.Web.WebPages.Razor.xml
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\obj\Release\DAL.csproj.AssemblyReference.cache
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\obj\Release\DAL.csproj.CoreCompileInputs.cache
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\obj\Release\DAL.csproj.CopyComplete
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\obj\Release\DAL.dll
+C:\Users\Ammad\Desktop\MohsinAPI\DAL\obj\Release\DAL.pdb
