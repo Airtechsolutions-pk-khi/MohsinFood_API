@@ -432,7 +432,22 @@ namespace BAL.Repositories
                         catch (Exception)
                         {
                         }
-
+                        try
+                        {
+                            var getTokens = DBContext.PushTokens.Where(x => x.CustomerID == orders.CustomerID).ToList();
+                            foreach (var item in getTokens)
+                            {
+                                var token = new PushNoticationBLL();
+                                //order.BrandName = obj.BrandName ?? "";
+                                token.Title = "Mohsin Foods | Order Status";
+                                token.Message = "Your Order is now on Preparing";
+                                token.DeviceID = item.Token;
+                                PushNotificationAndroidCustomer(token);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
                         rsp = new RspOrderPunch();
                         rsp.status = (int)eStatus.Success;
                         rsp.description = "Your order has been punched successfully.";
@@ -931,6 +946,16 @@ namespace BAL.Repositories
 
                         Order order = DBContext.Orders.Where(x => x.OrderID == obj.OrderID).FirstOrDefault();
                         order.StatusID = 104;
+                        var getTokens = DBContext.PushTokens.Where(x => x.CustomerID == order.CustomerID).ToList();
+                        foreach (var item in getTokens)
+                        {
+                            var token = new PushNoticationBLL();
+                            //order.BrandName = obj.BrandName ?? "";
+                            token.Title = "Mohsin Foods | Order Cancelled";
+                            token.Message = "Your Order is Cancelled";
+                            token.DeviceID = item.Token;
+                            PushNotificationAndroidCustomer(token);
+                        }
                         order.LastUpdateDT = currDate;
                         DBContext.Orders.AddOrUpdate(order);
                         DBContext.SaveChanges();
@@ -974,10 +999,42 @@ namespace BAL.Repositories
                         if (StatusID == 102)
                         {
                             order.OrderPreparedDate = currDate;
+                            try
+                            {
+                                var getTokens = DBContext.PushTokens.Where(x => x.CustomerID == order.CustomerID).ToList();
+                                foreach (var item in getTokens)
+                                {
+                                    var token = new PushNoticationBLL();
+                                    //order.BrandName = obj.BrandName ?? "";
+                                    token.Title = "Mohsin Foods | Order Status";
+                                    token.Message = "Your Order is now on Preparing";
+                                    token.DeviceID = item.Token;
+                                    PushNotificationAndroidCustomer(token);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                            }
                         }
                         if (StatusID == 103)
                         {
                             order.OrderOFDDate = currDate;
+                            try
+                            {
+                                var getTokens = DBContext.PushTokens.Where(x => x.CustomerID == order.CustomerID).ToList();
+                                foreach (var item in getTokens)
+                                {
+                                    var token = new PushNoticationBLL();
+                                    //order.BrandName = obj.BrandName ?? "";
+                                    token.Title = "Mohsin Foods | Order Status";
+                                    token.Message = "Your Order is ready to be Delivered";
+                                    token.DeviceID = item.Token;
+                                    PushNotificationAndroidCustomer(token);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                            }
                         }
 
                         order.StatusID = StatusID;

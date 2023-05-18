@@ -20,6 +20,7 @@ namespace DAL.DBEntities
             this.CustomerAddresses = new HashSet<CustomerAddress>();
             this.CustomerDetails = new HashSet<CustomerDetail>();
             this.CustomerPayments = new HashSet<CustomerPayment>();
+            this.PushTokens = new HashSet<PushToken>();
         }
     
         public int CustomerID { get; set; }
@@ -42,5 +43,7 @@ namespace DAL.DBEntities
         public virtual ICollection<CustomerDetail> CustomerDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerPayment> CustomerPayments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PushToken> PushTokens { get; set; }
     }
 }

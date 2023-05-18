@@ -13,7 +13,7 @@ namespace MohsinFoodAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class NotificationController : ApiController
+    public class notificationController : ApiController
     {
         /// <summary>
         /// 
@@ -24,8 +24,6 @@ namespace MohsinFoodAPI.Controllers
         {
             try
             {
-                //var applicationID = "AAAArE69nn0:APA91bFqI80DpPrdb1s0lT8tf4xUfoigYvGVXQOlBAIq7tCB3224CjqOTyvxiP7L_eKN4uoRWsTVw0661yX4CooMBPgIsddZSMxpypJCKg6l5Q7xgHTGYDlqeVV-HTCn9ud94a5X5a2e";
-                //var senderId = "740055424637"; 
                 var applicationID = "AAAAdW_YYNU:APA91bHKMOSd6H-VUNDnanbzXURegrZA5S6dSDWQCDagwJh5v-g94hv1_i-j7iJNpD3loWZ-VdUpOM1okpuUFGzOzO7A7eEFpNz3lwiRukyDMRZYvB4DVZY39a2bSTYmtqgULvcb84OW";
                 var senderId = "504387625173";
                 string deviceId = "fVXI6Og7iJS899D-BXnsy0:APA91bGL5FDcbaVAeWGIFaHJBiXFpydnG5niaq3yT3rXlkaE3VDjpGAu8vi8qLwr1_PMs3DevyXw_QYacpwobqxjysuTu-tuF3yZkiMMAVo4VaMbjXSmwVBpz827m3kSFCwAjOqydPcj";

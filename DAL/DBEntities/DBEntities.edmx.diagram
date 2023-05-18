@@ -28,7 +28,6 @@
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.OrderDetailAddon" Width="1.5" PointX="15" PointY="52.625" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.OrderDetailModifier" Width="1.5" PointX="15" PointY="39.375" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Order" Width="1.5" PointX="7.5" PointY="48.125" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.PushToken" Width="1.5" PointX="5.25" PointY="68.375" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Status" Width="1.5" PointX="0.75" PointY="4.75" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.SubUser" Width="1.5" PointX="5.25" PointY="37.625" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.TodaySpecialItem" Width="1.5" PointX="9.75" PointY="66.125" />
@@ -56,7 +55,6 @@
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetail_Items" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TodaySpecialItems_Items" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Orders_Locations" />
-        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_PushToken_Locations" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_SubUser_Locations" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Locations" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Locations1" />
@@ -70,6 +68,10 @@
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Orders" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.ItemAddonsJunc" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.ItemModifiersJunc" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.PushToken" Width="1.5" PointX="13.5" PointY="48.375" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Reservation" Width="1.5" PointX="3.375" PointY="4.75" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_PushToken_Customer" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_PushToken_Locations" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

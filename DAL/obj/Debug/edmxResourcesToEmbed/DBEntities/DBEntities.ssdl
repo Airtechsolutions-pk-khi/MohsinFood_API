@@ -392,9 +392,28 @@
     </Key>
     <Property Name="TokenID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Token" Type="nvarchar(max)" />
+    <Property Name="CustomerID" Type="int" />
     <Property Name="LocationID" Type="int" />
     <Property Name="StatusID" Type="int" />
     <Property Name="Device" Type="int" />
+  </EntityType>
+  <EntityType Name="Reservation">
+    <Key>
+      <PropertyRef Name="ReservationID" />
+    </Key>
+    <Property Name="ReservationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+    <Property Name="MobileNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="BrandID" Type="int" />
+    <Property Name="LocationID" Type="int" />
+    <Property Name="NumberPerson" Type="int" />
+    <Property Name="ReservationDate" Type="datetime" />
+    <Property Name="LastUpdatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastUpdatedDate" Type="datetime" />
+    <Property Name="SittingArea" Type="nvarchar" MaxLength="50" />
+    <Property Name="StatusID" Type="int" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="ReservationStatus" Type="int" />
   </EntityType>
   <EntityType Name="Status">
     <Key>
@@ -823,6 +842,18 @@
       </Principal>
       <Dependent Role="Orders">
         <PropertyRef Name="DeliverUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PushToken_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="PushToken" Type="Self.PushToken" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="PushToken">
+        <PropertyRef Name="CustomerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1458,6 +1489,7 @@
     <EntitySet Name="OrderDetailModifier" EntityType="Self.OrderDetailModifier" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PushToken" EntityType="Self.PushToken" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SubUser" EntityType="Self.SubUser" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TodaySpecialItems" EntityType="Self.TodaySpecialItems" Schema="dbo" store:Type="Tables" />
@@ -1586,6 +1618,10 @@
     <AssociationSet Name="FK_Orders_SubUser1" Association="Self.FK_Orders_SubUser1">
       <End Role="SubUser" EntitySet="SubUser" />
       <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PushToken_Customer" Association="Self.FK_PushToken_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="PushToken" EntitySet="PushToken" />
     </AssociationSet>
     <AssociationSet Name="FK_PushToken_Locations" Association="Self.FK_PushToken_Locations">
       <End Role="Locations" EntitySet="Locations" />

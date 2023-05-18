@@ -374,6 +374,7 @@ namespace DAL.Models
         public int TokenID { get; set; }
         public string Token { get; set; }
         public Nullable<int> LocationID { get; set; }
+        public Nullable<int> CustomerID { get; set; }
         public Nullable<int> StatusID { get; set; }
 
     }

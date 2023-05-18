@@ -1205,17 +1205,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PushTokens">
-      <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.PushToken">
-        <MappingFragment StoreEntitySet="PushToken">
-          <ScalarProperty Name="Device" ColumnName="Device" />
-          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-          <ScalarProperty Name="Token" ColumnName="Token" />
-          <ScalarProperty Name="TokenID" ColumnName="TokenID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Status">
       <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Status">
         <MappingFragment StoreEntitySet="Status">
@@ -1295,5 +1284,36 @@
         <ScalarProperty Name="ItemID" ColumnName="ItemID" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="PushTokens">
+      <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.PushToken">
+        <MappingFragment StoreEntitySet="PushToken">
+          <ScalarProperty Name="Device" ColumnName="Device" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="Token" ColumnName="Token" />
+          <ScalarProperty Name="TokenID" ColumnName="TokenID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reservations">
+      <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Reservation">
+        <MappingFragment StoreEntitySet="Reservation">
+          <ScalarProperty Name="ReservationStatus" ColumnName="ReservationStatus" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="SittingArea" ColumnName="SittingArea" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          <ScalarProperty Name="ReservationDate" ColumnName="ReservationDate" />
+          <ScalarProperty Name="NumberPerson" ColumnName="NumberPerson" />
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="ReservationID" ColumnName="ReservationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

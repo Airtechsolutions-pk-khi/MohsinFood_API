@@ -16,10 +16,12 @@ namespace DAL.DBEntities
     {
         public int TokenID { get; set; }
         public string Token { get; set; }
+        public Nullable<int> CustomerID { get; set; }
         public Nullable<int> LocationID { get; set; }
         public Nullable<int> StatusID { get; set; }
         public Nullable<int> Device { get; set; }
     
+        public virtual Customer Customer { get; set; }
         public virtual Location Location { get; set; }
     }
 }

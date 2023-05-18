@@ -397,9 +397,28 @@
           </Key>
           <Property Name="TokenID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Token" Type="nvarchar(max)" />
+          <Property Name="CustomerID" Type="int" />
           <Property Name="LocationID" Type="int" />
           <Property Name="StatusID" Type="int" />
           <Property Name="Device" Type="int" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="ReservationID" />
+          </Key>
+          <Property Name="ReservationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MobileNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="BrandID" Type="int" />
+          <Property Name="LocationID" Type="int" />
+          <Property Name="NumberPerson" Type="int" />
+          <Property Name="ReservationDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="SittingArea" Type="nvarchar" MaxLength="50" />
+          <Property Name="StatusID" Type="int" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="ReservationStatus" Type="int" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -828,6 +847,18 @@
             </Principal>
             <Dependent Role="Orders">
               <PropertyRef Name="DeliverUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PushToken_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="PushToken" Type="Self.PushToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="PushToken">
+              <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1463,6 +1494,7 @@
           <EntitySet Name="OrderDetailModifier" EntityType="Self.OrderDetailModifier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PushToken" EntityType="Self.PushToken" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubUser" EntityType="Self.SubUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TodaySpecialItems" EntityType="Self.TodaySpecialItems" Schema="dbo" store:Type="Tables" />
@@ -1591,6 +1623,10 @@
           <AssociationSet Name="FK_Orders_SubUser1" Association="Self.FK_Orders_SubUser1">
             <End Role="SubUser" EntitySet="SubUser" />
             <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PushToken_Customer" Association="Self.FK_PushToken_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="PushToken" EntitySet="PushToken" />
           </AssociationSet>
           <AssociationSet Name="FK_PushToken_Locations" Association="Self.FK_PushToken_Locations">
             <End Role="Locations" EntitySet="Locations" />
@@ -2170,7 +2206,6 @@
           <EntitySet Name="OrderDetailAddons" EntityType="db_a842e1_mohsinfoodModel.OrderDetailAddon" />
           <EntitySet Name="OrderDetailModifiers" EntityType="db_a842e1_mohsinfoodModel.OrderDetailModifier" />
           <EntitySet Name="Orders" EntityType="db_a842e1_mohsinfoodModel.Order" />
-          <EntitySet Name="PushTokens" EntityType="db_a842e1_mohsinfoodModel.PushToken" />
           <EntitySet Name="Status" EntityType="db_a842e1_mohsinfoodModel.Status" />
           <EntitySet Name="SubUsers" EntityType="db_a842e1_mohsinfoodModel.SubUser" />
           <EntitySet Name="TodaySpecialItems" EntityType="db_a842e1_mohsinfoodModel.TodaySpecialItem" />
@@ -2264,10 +2299,6 @@
             <End Role="Location" EntitySet="Locations" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_PushToken_Locations" Association="db_a842e1_mohsinfoodModel.FK_PushToken_Locations">
-            <End Role="Location" EntitySet="Locations" />
-            <End Role="PushToken" EntitySet="PushTokens" />
-          </AssociationSet>
           <AssociationSet Name="FK_SubUser_Locations" Association="db_a842e1_mohsinfoodModel.FK_SubUser_Locations">
             <End Role="Location" EntitySet="Locations" />
             <End Role="SubUser" EntitySet="SubUsers" />
@@ -2319,6 +2350,16 @@
           <AssociationSet Name="ItemModifiersJunc" Association="db_a842e1_mohsinfoodModel.ItemModifiersJunc">
             <End Role="Item" EntitySet="Items" />
             <End Role="Modifier" EntitySet="Modifiers" />
+          </AssociationSet>
+          <EntitySet Name="PushTokens" EntityType="db_a842e1_mohsinfoodModel.PushToken" />
+          <EntitySet Name="Reservations" EntityType="db_a842e1_mohsinfoodModel.Reservation" />
+          <AssociationSet Name="FK_PushToken_Customer" Association="db_a842e1_mohsinfoodModel.FK_PushToken_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="PushToken" EntitySet="PushTokens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PushToken_Locations" Association="db_a842e1_mohsinfoodModel.FK_PushToken_Locations">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="PushToken" EntitySet="PushTokens" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_authenticateUser_admin_Result">
@@ -3041,6 +3082,7 @@
           <NavigationProperty Name="CustomerAddresses" Relationship="db_a842e1_mohsinfoodModel.FK_CustomerAddresses_Customer" FromRole="Customer" ToRole="CustomerAddress" />
           <NavigationProperty Name="CustomerDetails" Relationship="db_a842e1_mohsinfoodModel.FK_CustomerDetail_Customer" FromRole="Customer" ToRole="CustomerDetail" />
           <NavigationProperty Name="CustomerPayments" Relationship="db_a842e1_mohsinfoodModel.FK_CustomerPayment_Customer" FromRole="Customer" ToRole="CustomerPayment" />
+          <NavigationProperty Name="PushTokens" Relationship="db_a842e1_mohsinfoodModel.FK_PushToken_Customer" FromRole="Customer" ToRole="PushToken" />
         </EntityType>
         <EntityType Name="CustomerAddress">
           <Key>
@@ -3211,10 +3253,10 @@
           <NavigationProperty Name="Categories" Relationship="db_a842e1_mohsinfoodModel.FK_Category_Locations" FromRole="Location" ToRole="Category" />
           <NavigationProperty Name="Customers" Relationship="db_a842e1_mohsinfoodModel.FK_Customer_Locations" FromRole="Location" ToRole="Customer" />
           <NavigationProperty Name="Orders" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_Locations" FromRole="Location" ToRole="Order" />
-          <NavigationProperty Name="PushTokens" Relationship="db_a842e1_mohsinfoodModel.FK_PushToken_Locations" FromRole="Location" ToRole="PushToken" />
           <NavigationProperty Name="SubUsers" Relationship="db_a842e1_mohsinfoodModel.FK_SubUser_Locations" FromRole="Location" ToRole="SubUser" />
           <NavigationProperty Name="TransferOrders" Relationship="db_a842e1_mohsinfoodModel.FK_TransferOrder_Locations" FromRole="Location" ToRole="TransferOrder" />
           <NavigationProperty Name="TransferOrders1" Relationship="db_a842e1_mohsinfoodModel.FK_TransferOrder_Locations1" FromRole="Location" ToRole="TransferOrder" />
+          <NavigationProperty Name="PushTokens" Relationship="db_a842e1_mohsinfoodModel.FK_PushToken_Locations" FromRole="Location" ToRole="PushToken" />
         </EntityType>
         <EntityType Name="Modifier">
           <Key>
@@ -3351,17 +3393,6 @@
           <NavigationProperty Name="SubUser" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_SubUser" FromRole="Order" ToRole="SubUser" />
           <NavigationProperty Name="SubUser1" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_SubUser1" FromRole="Order" ToRole="SubUser" />
           <NavigationProperty Name="TransferOrders" Relationship="db_a842e1_mohsinfoodModel.FK_TransferOrder_Orders" FromRole="Order" ToRole="TransferOrder" />
-        </EntityType>
-        <EntityType Name="PushToken">
-          <Key>
-            <PropertyRef Name="TokenID" />
-          </Key>
-          <Property Name="TokenID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Token" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LocationID" Type="Int32" />
-          <Property Name="StatusID" Type="Int32" />
-          <Property Name="Device" Type="Int32" />
-          <NavigationProperty Name="Location" Relationship="db_a842e1_mohsinfoodModel.FK_PushToken_Locations" FromRole="PushToken" ToRole="Location" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -3694,18 +3725,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PushToken_Locations">
-          <End Type="db_a842e1_mohsinfoodModel.Location" Role="Location" Multiplicity="0..1" />
-          <End Type="db_a842e1_mohsinfoodModel.PushToken" Role="PushToken" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Location">
-              <PropertyRef Name="LocationID" />
-            </Principal>
-            <Dependent Role="PushToken">
-              <PropertyRef Name="LocationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SubUser_Locations">
           <End Type="db_a842e1_mohsinfoodModel.Location" Role="Location" Multiplicity="0..1" />
           <End Type="db_a842e1_mohsinfoodModel.SubUser" Role="SubUser" Multiplicity="*" />
@@ -3845,6 +3864,61 @@
         <Association Name="ItemModifiersJunc">
           <End Type="db_a842e1_mohsinfoodModel.Item" Role="Item" Multiplicity="*" />
           <End Type="db_a842e1_mohsinfoodModel.Modifier" Role="Modifier" Multiplicity="*" />
+        </Association>
+        <EntityType Name="PushToken">
+          <Key>
+            <PropertyRef Name="TokenID" />
+          </Key>
+          <Property Name="TokenID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Token" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="LocationID" Type="Int32" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="Device" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="db_a842e1_mohsinfoodModel.FK_PushToken_Customer" FromRole="PushToken" ToRole="Customer" />
+          <NavigationProperty Name="Location" Relationship="db_a842e1_mohsinfoodModel.FK_PushToken_Locations" FromRole="PushToken" ToRole="Location" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="ReservationID" />
+          </Key>
+          <Property Name="ReservationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BrandID" Type="Int32" />
+          <Property Name="LocationID" Type="Int32" />
+          <Property Name="NumberPerson" Type="Int32" />
+          <Property Name="ReservationDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="SittingArea" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="ReservationStatus" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_PushToken_Customer">
+          <End Type="db_a842e1_mohsinfoodModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="db_a842e1_mohsinfoodModel.PushToken" Role="PushToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="PushToken">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PushToken_Locations">
+          <End Type="db_a842e1_mohsinfoodModel.Location" Role="Location" Multiplicity="0..1" />
+          <End Type="db_a842e1_mohsinfoodModel.PushToken" Role="PushToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="PushToken">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -5056,17 +5130,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PushTokens">
-            <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.PushToken">
-              <MappingFragment StoreEntitySet="PushToken">
-                <ScalarProperty Name="Device" ColumnName="Device" />
-                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="Token" ColumnName="Token" />
-                <ScalarProperty Name="TokenID" ColumnName="TokenID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Status">
             <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Status">
               <MappingFragment StoreEntitySet="Status">
@@ -5146,6 +5209,37 @@
               <ScalarProperty Name="ItemID" ColumnName="ItemID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="PushTokens">
+            <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.PushToken">
+              <MappingFragment StoreEntitySet="PushToken">
+                <ScalarProperty Name="Device" ColumnName="Device" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="TokenID" ColumnName="TokenID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservations">
+            <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Reservation">
+              <MappingFragment StoreEntitySet="Reservation">
+                <ScalarProperty Name="ReservationStatus" ColumnName="ReservationStatus" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="SittingArea" ColumnName="SittingArea" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="ReservationDate" ColumnName="ReservationDate" />
+                <ScalarProperty Name="NumberPerson" ColumnName="NumberPerson" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="ReservationID" ColumnName="ReservationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
