@@ -389,6 +389,7 @@ namespace DAL.Models
     {
         public int OrderID { get; set; }
         public Nullable<int> CustomerID { get; set; }
+        public Nullable<int> DeliveryBoyID { get; set; }
         public Nullable<int> TransactionNo { get; set; }
         public Nullable<int> OrderNo { get; set; }
         public string OrderType { get; set; }

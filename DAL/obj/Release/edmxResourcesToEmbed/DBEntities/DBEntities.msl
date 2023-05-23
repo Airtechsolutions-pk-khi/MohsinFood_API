@@ -1150,29 +1150,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Orders">
-      <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Order">
-        <MappingFragment StoreEntitySet="Orders">
-          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-          <ScalarProperty Name="OrderDoneDate" ColumnName="OrderDoneDate" />
-          <ScalarProperty Name="OrderOFDDate" ColumnName="OrderOFDDate" />
-          <ScalarProperty Name="OrderPreparedDate" ColumnName="OrderPreparedDate" />
-          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-          <ScalarProperty Name="LastUpdateDT" ColumnName="LastUpdateDT" />
-          <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
-          <ScalarProperty Name="DeliverUserID" ColumnName="DeliverUserID" />
-          <ScalarProperty Name="OrderTakerID" ColumnName="OrderTakerID" />
-          <ScalarProperty Name="SessionID" ColumnName="SessionID" />
-          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
-          <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
-          <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
-          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Status">
       <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Status">
         <MappingFragment StoreEntitySet="Status">
@@ -1313,6 +1290,49 @@
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeliveryBoys">
+      <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.DeliveryBoy">
+        <MappingFragment StoreEntitySet="DeliveryBoy">
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="DBImage" ColumnName="DBImage" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="DBCNICNo" ColumnName="DBCNICNo" />
+          <ScalarProperty Name="DBVehicleNo" ColumnName="DBVehicleNo" />
+          <ScalarProperty Name="DBContactNo" ColumnName="DBContactNo" />
+          <ScalarProperty Name="DBAddress" ColumnName="DBAddress" />
+          <ScalarProperty Name="DBName" ColumnName="DBName" />
+          <ScalarProperty Name="DeliveryBoyID" ColumnName="DeliveryBoyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Order">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="OrderDoneDate" ColumnName="OrderDoneDate" />
+          <ScalarProperty Name="OrderOFDDate" ColumnName="OrderOFDDate" />
+          <ScalarProperty Name="OrderPreparedDate" ColumnName="OrderPreparedDate" />
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="LastUpdateDT" ColumnName="LastUpdateDT" />
+          <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+          <ScalarProperty Name="DeliverUserID" ColumnName="DeliverUserID" />
+          <ScalarProperty Name="OrderTakerID" ColumnName="OrderTakerID" />
+          <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+          <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+          <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="DeliveryBoyID" ColumnName="DeliveryBoyID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

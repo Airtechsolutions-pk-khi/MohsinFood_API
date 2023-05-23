@@ -159,13 +159,13 @@ namespace MohsinFoodAPI.Controllers
         /// <param name="statusid"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("orders/admin/update/{orderid}/{statusid}")]
-        public HttpResponseMessage GetOrderUpdateAdmin(int orderid,int statusid)
+        [Route("orders/admin/update/{orderid}/{statusid}/{deliveryboyid}")]
+        public HttpResponseMessage GetOrderUpdateAdmin(int orderid,int statusid, int? deliveryboyid)
         {
             Rsp rsp = new Rsp();
             try
             {
-                rsp = repo.UpdateOrderAdmin(orderid,statusid);
+                rsp = repo.UpdateOrderAdmin(orderid,statusid, deliveryboyid);
             }
             catch (Exception ex)
             {

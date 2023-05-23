@@ -200,6 +200,24 @@
     <Property Name="DeliveryAreaID" Type="int" />
     <Property Name="BrandID" Type="int" />
   </EntityType>
+  <EntityType Name="DeliveryBoy">
+    <Key>
+      <PropertyRef Name="DeliveryBoyID" />
+    </Key>
+    <Property Name="DeliveryBoyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DBName" Type="nvarchar" MaxLength="150" />
+    <Property Name="DBAddress" Type="nvarchar" MaxLength="150" />
+    <Property Name="DBContactNo" Type="nvarchar" MaxLength="150" />
+    <Property Name="DBVehicleNo" Type="nvarchar" MaxLength="150" />
+    <Property Name="DBCNICNo" Type="nvarchar" MaxLength="150" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="150" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="nvarchar" MaxLength="150" />
+    <Property Name="StatusID" Type="int" />
+    <Property Name="DBImage" Type="nvarchar" MaxLength="150" />
+    <Property Name="Amount" Type="int" />
+  </EntityType>
   <EntityType Name="ItemAddonsJunc">
     <Key>
       <PropertyRef Name="ItemID" />
@@ -370,6 +388,7 @@
       <PropertyRef Name="OrderID" />
     </Key>
     <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DeliveryBoyID" Type="int" />
     <Property Name="CustomerID" Type="int" />
     <Property Name="TransactionNo" Type="int" />
     <Property Name="OrderNo" Type="int" />
@@ -807,6 +826,18 @@
       </Principal>
       <Dependent Role="OrderDetailModifier">
         <PropertyRef Name="OrderDetailID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_DeliveryBoy">
+    <End Role="DeliveryBoy" Type="Self.DeliveryBoy" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryBoy">
+        <PropertyRef Name="DeliveryBoyID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="DeliveryBoyID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1428,6 +1459,7 @@
     <Parameter Name="Tax" Type="float" Mode="In" />
     <Parameter Name="IsPickupAllowed" Type="int" Mode="In" />
     <Parameter Name="IsDeliveryAllowed" Type="int" Mode="In" />
+    <Parameter Name="IsDineInAllowed" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_updateModifier_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Name" Type="nvarchar" Mode="In" />
@@ -1478,6 +1510,7 @@
     <EntitySet Name="CustomerPayment" EntityType="Self.CustomerPayment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DeliveryAreaBrandJunc" EntityType="Self.DeliveryAreaBrandJunc" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DeliveryBoy" EntityType="Self.DeliveryBoy" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ItemAddonsJunc" EntityType="Self.ItemAddonsJunc" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ItemModifiersJunc" EntityType="Self.ItemModifiersJunc" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
@@ -1607,6 +1640,10 @@
     <AssociationSet Name="FK_OrderDetailModifier_OrderDetail" Association="Self.FK_OrderDetailModifier_OrderDetail">
       <End Role="OrderDetail" EntitySet="OrderDetail" />
       <End Role="OrderDetailModifier" EntitySet="OrderDetailModifier" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_DeliveryBoy" Association="Self.FK_Orders_DeliveryBoy">
+      <End Role="DeliveryBoy" EntitySet="DeliveryBoy" />
+      <End Role="Orders" EntitySet="Orders" />
     </AssociationSet>
     <AssociationSet Name="FK_Orders_Locations" Association="Self.FK_Orders_Locations">
       <End Role="Locations" EntitySet="Locations" />

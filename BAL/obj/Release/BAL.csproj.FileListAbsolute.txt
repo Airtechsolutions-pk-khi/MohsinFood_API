@@ -367,3 +367,44 @@ D:\Projects\MohsinFoods_API\BAL\obj\Release\BAL.csproj.CoreCompileInputs.cache
 D:\Projects\MohsinFoods_API\BAL\obj\Release\BAL.csproj.CopyComplete
 D:\Projects\MohsinFoods_API\BAL\obj\Release\BAL.dll
 D:\Projects\MohsinFoods_API\BAL\obj\Release\BAL.pdb
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\BAL.dll.config
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\BAL.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\BAL.pdb
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\DAL.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\EntityFramework.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\EntityFramework.SqlServer.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\Microsoft.Web.Infrastructure.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\Newtonsoft.Json.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Configuration.ConfigurationManager.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Net.Http.Formatting.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Security.AccessControl.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Security.Permissions.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Security.Principal.Windows.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Web.Helpers.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Web.Mvc.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Web.Razor.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Web.WebPages.Deployment.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Web.WebPages.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Web.WebPages.Razor.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\WebApiContrib.Formatting.JavaScriptSerializer.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\DAL.pdb
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\DAL.dll.config
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\EntityFramework.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\EntityFramework.SqlServer.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\Newtonsoft.Json.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Configuration.ConfigurationManager.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Net.Http.Formatting.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Security.AccessControl.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Security.Permissions.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Security.Principal.Windows.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Web.Helpers.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Web.Mvc.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Web.Razor.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Web.WebPages.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Web.WebPages.Deployment.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\bin\Release\System.Web.WebPages.Razor.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\obj\Release\BAL.csproj.AssemblyReference.cache
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\obj\Release\BAL.csproj.CoreCompileInputs.cache
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\obj\Release\BAL.csproj.CopyComplete
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\obj\Release\BAL.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\BAL\obj\Release\BAL.pdb

@@ -137,6 +137,9 @@
     <Compile Include="DBEntities\DeliveryAreaBrandJunc.cs">
       <DependentUpon>DBEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBEntities\DeliveryBoy.cs">
+      <DependentUpon>DBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBEntities\Item.cs">
       <DependentUpon>DBEntities.tt</DependentUpon>
     </Compile>

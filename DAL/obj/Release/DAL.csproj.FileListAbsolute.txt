@@ -241,3 +241,30 @@ D:\Projects\MohsinFoods_API\DAL\obj\Release\DAL.csproj.CoreCompileInputs.cache
 D:\Projects\MohsinFoods_API\DAL\obj\Release\DAL.csproj.CopyComplete
 D:\Projects\MohsinFoods_API\DAL\obj\Release\DAL.dll
 D:\Projects\MohsinFoods_API\DAL\obj\Release\DAL.pdb
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\DAL.dll.config
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\DAL.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\DAL.pdb
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\EntityFramework.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\EntityFramework.SqlServer.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\Microsoft.Web.Infrastructure.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\Newtonsoft.Json.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\System.Web.Helpers.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\System.Web.Mvc.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\System.Web.Razor.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\System.Web.WebPages.Deployment.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\System.Web.WebPages.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\System.Web.WebPages.Razor.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\EntityFramework.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\EntityFramework.SqlServer.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\Newtonsoft.Json.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\System.Web.Helpers.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\System.Web.Mvc.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\System.Web.Razor.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\System.Web.WebPages.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\System.Web.WebPages.Deployment.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\bin\Release\System.Web.WebPages.Razor.xml
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\obj\Release\DAL.csproj.AssemblyReference.cache
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\obj\Release\DAL.csproj.CoreCompileInputs.cache
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\obj\Release\DAL.csproj.CopyComplete
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\obj\Release\DAL.dll
+E:\Project\Mohsin Food\MohsinFoodAPI\DAL\obj\Release\DAL.pdb

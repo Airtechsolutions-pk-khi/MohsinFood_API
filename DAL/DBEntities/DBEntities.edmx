@@ -205,6 +205,24 @@
           <Property Name="DeliveryAreaID" Type="int" />
           <Property Name="BrandID" Type="int" />
         </EntityType>
+        <EntityType Name="DeliveryBoy">
+          <Key>
+            <PropertyRef Name="DeliveryBoyID" />
+          </Key>
+          <Property Name="DeliveryBoyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DBName" Type="nvarchar" MaxLength="150" />
+          <Property Name="DBAddress" Type="nvarchar" MaxLength="150" />
+          <Property Name="DBContactNo" Type="nvarchar" MaxLength="150" />
+          <Property Name="DBVehicleNo" Type="nvarchar" MaxLength="150" />
+          <Property Name="DBCNICNo" Type="nvarchar" MaxLength="150" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="StatusID" Type="int" />
+          <Property Name="DBImage" Type="nvarchar" MaxLength="150" />
+          <Property Name="Amount" Type="int" />
+        </EntityType>
         <EntityType Name="ItemAddonsJunc">
           <Key>
             <PropertyRef Name="ItemID" />
@@ -375,6 +393,7 @@
             <PropertyRef Name="OrderID" />
           </Key>
           <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeliveryBoyID" Type="int" />
           <Property Name="CustomerID" Type="int" />
           <Property Name="TransactionNo" Type="int" />
           <Property Name="OrderNo" Type="int" />
@@ -812,6 +831,18 @@
             </Principal>
             <Dependent Role="OrderDetailModifier">
               <PropertyRef Name="OrderDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_DeliveryBoy">
+          <End Role="DeliveryBoy" Type="Self.DeliveryBoy" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryBoy">
+              <PropertyRef Name="DeliveryBoyID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="DeliveryBoyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1433,6 +1464,7 @@
           <Parameter Name="Tax" Type="float" Mode="In" />
           <Parameter Name="IsPickupAllowed" Type="int" Mode="In" />
           <Parameter Name="IsDeliveryAllowed" Type="int" Mode="In" />
+          <Parameter Name="IsDineInAllowed" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_updateModifier_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Name" Type="nvarchar" Mode="In" />
@@ -1483,6 +1515,7 @@
           <EntitySet Name="CustomerPayment" EntityType="Self.CustomerPayment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeliveryAreaBrandJunc" EntityType="Self.DeliveryAreaBrandJunc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryBoy" EntityType="Self.DeliveryBoy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemAddonsJunc" EntityType="Self.ItemAddonsJunc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemModifiersJunc" EntityType="Self.ItemModifiersJunc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
@@ -1612,6 +1645,10 @@
           <AssociationSet Name="FK_OrderDetailModifier_OrderDetail" Association="Self.FK_OrderDetailModifier_OrderDetail">
             <End Role="OrderDetail" EntitySet="OrderDetail" />
             <End Role="OrderDetailModifier" EntitySet="OrderDetailModifier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_DeliveryBoy" Association="Self.FK_Orders_DeliveryBoy">
+            <End Role="DeliveryBoy" EntitySet="DeliveryBoy" />
+            <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Orders_Locations" Association="Self.FK_Orders_Locations">
             <End Role="Locations" EntitySet="Locations" />
@@ -2145,6 +2182,7 @@
             <Parameter Name="Tax" Mode="In" Type="Double" />
             <Parameter Name="IsPickupAllowed" Mode="In" Type="Int32" />
             <Parameter Name="IsDeliveryAllowed" Mode="In" Type="Int32" />
+            <Parameter Name="IsDineInAllowed" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_updateModifier_Admin">
             <Parameter Name="Name" Mode="In" Type="String" />
@@ -2205,7 +2243,6 @@
           <EntitySet Name="OrderDetails" EntityType="db_a842e1_mohsinfoodModel.OrderDetail" />
           <EntitySet Name="OrderDetailAddons" EntityType="db_a842e1_mohsinfoodModel.OrderDetailAddon" />
           <EntitySet Name="OrderDetailModifiers" EntityType="db_a842e1_mohsinfoodModel.OrderDetailModifier" />
-          <EntitySet Name="Orders" EntityType="db_a842e1_mohsinfoodModel.Order" />
           <EntitySet Name="Status" EntityType="db_a842e1_mohsinfoodModel.Status" />
           <EntitySet Name="SubUsers" EntityType="db_a842e1_mohsinfoodModel.SubUser" />
           <EntitySet Name="TodaySpecialItems" EntityType="db_a842e1_mohsinfoodModel.TodaySpecialItem" />
@@ -2259,10 +2296,6 @@
             <End Role="Customer" EntitySet="Customers" />
             <End Role="CustomerPayment" EntitySet="CustomerPayments" />
           </AssociationSet>
-          <AssociationSet Name="FK_CustomerOrders_Orders" Association="db_a842e1_mohsinfoodModel.FK_CustomerOrders_Orders">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="CustomerOrder" EntitySet="CustomerOrders" />
-          </AssociationSet>
           <AssociationSet Name="FK_DeliveryAreaBrandJunc_DeliveryAreaBrandJunc" Association="db_a842e1_mohsinfoodModel.FK_DeliveryAreaBrandJunc_DeliveryAreaBrandJunc">
             <End Role="Delivery" EntitySet="Deliveries" />
             <End Role="DeliveryAreaBrandJunc" EntitySet="DeliveryAreaBrandJuncs" />
@@ -2287,14 +2320,6 @@
             <End Role="Modifier" EntitySet="Modifiers" />
             <End Role="OrderDetailModifier" EntitySet="OrderDetailModifiers" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderCheckout_Orders" Association="db_a842e1_mohsinfoodModel.FK_OrderCheckout_Orders">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="OrderCheckout" EntitySet="OrderCheckouts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetail_Orders" Association="db_a842e1_mohsinfoodModel.FK_OrderDetail_Orders">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="OrderDetail" EntitySet="OrderDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_OrderDetailAddon_OrderDetail" Association="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_OrderDetail">
             <End Role="OrderDetail" EntitySet="OrderDetails" />
             <End Role="OrderDetailAddon" EntitySet="OrderDetailAddons" />
@@ -2302,18 +2327,6 @@
           <AssociationSet Name="FK_OrderDetailModifier_OrderDetail" Association="db_a842e1_mohsinfoodModel.FK_OrderDetailModifier_OrderDetail">
             <End Role="OrderDetail" EntitySet="OrderDetails" />
             <End Role="OrderDetailModifier" EntitySet="OrderDetailModifiers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_SubUser" Association="db_a842e1_mohsinfoodModel.FK_Orders_SubUser">
-            <End Role="SubUser" EntitySet="SubUsers" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_SubUser1" Association="db_a842e1_mohsinfoodModel.FK_Orders_SubUser1">
-            <End Role="SubUser" EntitySet="SubUsers" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TransferOrder_Orders" Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Orders">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="TransferOrder" EntitySet="TransferOrders" />
           </AssociationSet>
           <AssociationSet Name="ItemAddonsJunc" Association="db_a842e1_mohsinfoodModel.ItemAddonsJunc">
             <End Role="Item" EntitySet="Items" />
@@ -2342,10 +2355,6 @@
             <End Role="Location" EntitySet="Locations" />
             <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
-          <AssociationSet Name="FK_Orders_Locations" Association="db_a842e1_mohsinfoodModel.FK_Orders_Locations">
-            <End Role="Location" EntitySet="Locations" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
           <AssociationSet Name="FK_PushToken_Locations" Association="db_a842e1_mohsinfoodModel.FK_PushToken_Locations">
             <End Role="Location" EntitySet="Locations" />
             <End Role="PushToken" EntitySet="PushTokens" />
@@ -2362,7 +2371,41 @@
             <End Role="Location" EntitySet="Locations" />
             <End Role="TransferOrder" EntitySet="TransferOrders" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="DeliveryBoys" EntityType="db_a842e1_mohsinfoodModel.DeliveryBoy" />
+          <EntitySet Name="Orders" EntityType="db_a842e1_mohsinfoodModel.Order" />
+          <AssociationSet Name="FK_CustomerOrders_Orders" Association="db_a842e1_mohsinfoodModel.FK_CustomerOrders_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="CustomerOrder" EntitySet="CustomerOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_DeliveryBoy" Association="db_a842e1_mohsinfoodModel.FK_Orders_DeliveryBoy">
+            <End Role="DeliveryBoy" EntitySet="DeliveryBoys" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Locations" Association="db_a842e1_mohsinfoodModel.FK_Orders_Locations">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderCheckout_Orders" Association="db_a842e1_mohsinfoodModel.FK_OrderCheckout_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderCheckout" EntitySet="OrderCheckouts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Orders" Association="db_a842e1_mohsinfoodModel.FK_OrderDetail_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_SubUser" Association="db_a842e1_mohsinfoodModel.FK_Orders_SubUser">
+            <End Role="SubUser" EntitySet="SubUsers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_SubUser1" Association="db_a842e1_mohsinfoodModel.FK_Orders_SubUser1">
+            <End Role="SubUser" EntitySet="SubUsers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransferOrder_Orders" Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="TransferOrder" EntitySet="TransferOrders" />
+          </AssociationSet>
+          </EntityContainer>
         <ComplexType Name="sp_authenticateUser_admin_Result">
           <Property Type="Int32" Name="BrandID" Nullable="false" />
           <Property Type="String" Name="Username" Nullable="true" MaxLength="200" />
@@ -3291,9 +3334,9 @@
           <Property Name="LastUpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LastUpdateDT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Item" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetail_Items" FromRole="OrderDetail" ToRole="Item" />
-          <NavigationProperty Name="Order" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetail_Orders" FromRole="OrderDetail" ToRole="Order" />
           <NavigationProperty Name="OrderDetailAddons" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetailAddon_OrderDetail" FromRole="OrderDetail" ToRole="OrderDetailAddon" />
           <NavigationProperty Name="OrderDetailModifiers" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetailModifier_OrderDetail" FromRole="OrderDetail" ToRole="OrderDetailModifier" />
+          <NavigationProperty Name="Order" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetail_Orders" FromRole="OrderDetail" ToRole="Order" />
         </EntityType>
         <EntityType Name="OrderDetailAddon">
           <Key>
@@ -3327,35 +3370,6 @@
           <NavigationProperty Name="Modifier" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetailModifier_Modifiers" FromRole="OrderDetailModifier" ToRole="Modifier" />
           <NavigationProperty Name="OrderDetail" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetailModifier_OrderDetail" FromRole="OrderDetailModifier" ToRole="OrderDetail" />
         </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="OrderID" />
-          </Key>
-          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerID" Type="Int32" />
-          <Property Name="TransactionNo" Type="Int32" />
-          <Property Name="OrderNo" Type="Int32" />
-          <Property Name="OrderType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="OrderDate" Type="DateTime" Precision="3" />
-          <Property Name="StatusID" Type="Int32" />
-          <Property Name="SessionID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="OrderTakerID" Type="Int32" />
-          <Property Name="DeliverUserID" Type="Int32" />
-          <Property Name="LastUpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastUpdateDT" Type="DateTime" Precision="3" />
-          <Property Name="LocationID" Type="Int32" />
-          <Property Name="OrderPreparedDate" Type="DateTime" Precision="3" />
-          <Property Name="OrderOFDDate" Type="DateTime" Precision="3" />
-          <Property Name="OrderDoneDate" Type="DateTime" Precision="3" />
-          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CustomerOrders" Relationship="db_a842e1_mohsinfoodModel.FK_CustomerOrders_Orders" FromRole="Order" ToRole="CustomerOrder" />
-          <NavigationProperty Name="OrderCheckouts" Relationship="db_a842e1_mohsinfoodModel.FK_OrderCheckout_Orders" FromRole="Order" ToRole="OrderCheckout" />
-          <NavigationProperty Name="OrderDetails" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetail_Orders" FromRole="Order" ToRole="OrderDetail" />
-          <NavigationProperty Name="SubUser" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_SubUser" FromRole="Order" ToRole="SubUser" />
-          <NavigationProperty Name="SubUser1" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_SubUser1" FromRole="Order" ToRole="SubUser" />
-          <NavigationProperty Name="TransferOrders" Relationship="db_a842e1_mohsinfoodModel.FK_TransferOrder_Orders" FromRole="Order" ToRole="TransferOrder" />
-          <NavigationProperty Name="Location" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_Locations" FromRole="Order" ToRole="Location" />
-        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="ID" />
@@ -3387,10 +3401,10 @@
           <Property Name="LocationID" Type="Int32" />
           <Property Name="BrandID" Type="Int32" />
           <NavigationProperty Name="Brand" Relationship="db_a842e1_mohsinfoodModel.FK_SubUser_Brand" FromRole="SubUser" ToRole="Brand" />
+          <NavigationProperty Name="Location" Relationship="db_a842e1_mohsinfoodModel.FK_SubUser_Locations" FromRole="SubUser" ToRole="Location" />
           <NavigationProperty Name="Orders" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_SubUser" FromRole="SubUser" ToRole="Order" />
           <NavigationProperty Name="Orders1" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_SubUser1" FromRole="SubUser" ToRole="Order" />
-          <NavigationProperty Name="Location" Relationship="db_a842e1_mohsinfoodModel.FK_SubUser_Locations" FromRole="SubUser" ToRole="Location" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="TodaySpecialItem">
           <Key>
             <PropertyRef Name="ID" />
@@ -3408,9 +3422,9 @@
           <Property Name="OrderID" Type="Int32" />
           <Property Name="FromLocationID" Type="Int32" />
           <Property Name="ToLocationID" Type="Int32" />
-          <NavigationProperty Name="Order" Relationship="db_a842e1_mohsinfoodModel.FK_TransferOrder_Orders" FromRole="TransferOrder" ToRole="Order" />
           <NavigationProperty Name="Location" Relationship="db_a842e1_mohsinfoodModel.FK_TransferOrder_Locations" FromRole="TransferOrder" ToRole="Location" />
           <NavigationProperty Name="Location1" Relationship="db_a842e1_mohsinfoodModel.FK_TransferOrder_Locations1" FromRole="TransferOrder" ToRole="Location" />
+          <NavigationProperty Name="Order" Relationship="db_a842e1_mohsinfoodModel.FK_TransferOrder_Orders" FromRole="TransferOrder" ToRole="Order" />
         </EntityType>
         <EntityType Name="Unit">
           <Key>
@@ -3567,18 +3581,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CustomerOrders_Orders">
-          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="0..1" />
-          <End Type="db_a842e1_mohsinfoodModel.CustomerOrder" Role="CustomerOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderID" />
-            </Principal>
-            <Dependent Role="CustomerOrder">
-              <PropertyRef Name="OrderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DeliveryAreaBrandJunc_DeliveryAreaBrandJunc">
           <End Type="db_a842e1_mohsinfoodModel.Delivery" Role="Delivery" Multiplicity="0..1" />
           <End Type="db_a842e1_mohsinfoodModel.DeliveryAreaBrandJunc" Role="DeliveryAreaBrandJunc" Multiplicity="*" />
@@ -3651,30 +3653,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderCheckout_Orders">
-          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="0..1" />
-          <End Type="db_a842e1_mohsinfoodModel.OrderCheckout" Role="OrderCheckout" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderID" />
-            </Principal>
-            <Dependent Role="OrderCheckout">
-              <PropertyRef Name="OrderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetail_Orders">
-          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="0..1" />
-          <End Type="db_a842e1_mohsinfoodModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderID" />
-            </Principal>
-            <Dependent Role="OrderDetail">
-              <PropertyRef Name="OrderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_OrderDetailAddon_OrderDetail">
           <End Type="db_a842e1_mohsinfoodModel.OrderDetail" Role="OrderDetail" Multiplicity="0..1" />
           <End Type="db_a842e1_mohsinfoodModel.OrderDetailAddon" Role="OrderDetailAddon" Multiplicity="*" />
@@ -3696,42 +3674,6 @@
             </Principal>
             <Dependent Role="OrderDetailModifier">
               <PropertyRef Name="OrderDetailID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_SubUser">
-          <End Type="db_a842e1_mohsinfoodModel.SubUser" Role="SubUser" Multiplicity="0..1" />
-          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubUser">
-              <PropertyRef Name="SubUserID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="OrderTakerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_SubUser1">
-          <End Type="db_a842e1_mohsinfoodModel.SubUser" Role="SubUser" Multiplicity="0..1" />
-          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubUser">
-              <PropertyRef Name="SubUserID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="DeliverUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TransferOrder_Orders">
-          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="0..1" />
-          <End Type="db_a842e1_mohsinfoodModel.TransferOrder" Role="TransferOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderID" />
-            </Principal>
-            <Dependent Role="TransferOrder">
-              <PropertyRef Name="OrderID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3820,11 +3762,11 @@
           <NavigationProperty Name="Brand" Relationship="db_a842e1_mohsinfoodModel.FK_Locations_Brand" FromRole="Location" ToRole="Brand" />
           <NavigationProperty Name="Categories" Relationship="db_a842e1_mohsinfoodModel.FK_Category_Locations" FromRole="Location" ToRole="Category" />
           <NavigationProperty Name="Customers" Relationship="db_a842e1_mohsinfoodModel.FK_Customer_Locations" FromRole="Location" ToRole="Customer" />
-          <NavigationProperty Name="Orders" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_Locations" FromRole="Location" ToRole="Order" />
           <NavigationProperty Name="PushTokens" Relationship="db_a842e1_mohsinfoodModel.FK_PushToken_Locations" FromRole="Location" ToRole="PushToken" />
           <NavigationProperty Name="SubUsers" Relationship="db_a842e1_mohsinfoodModel.FK_SubUser_Locations" FromRole="Location" ToRole="SubUser" />
           <NavigationProperty Name="TransferOrders" Relationship="db_a842e1_mohsinfoodModel.FK_TransferOrder_Locations" FromRole="Location" ToRole="TransferOrder" />
           <NavigationProperty Name="TransferOrders1" Relationship="db_a842e1_mohsinfoodModel.FK_TransferOrder_Locations1" FromRole="Location" ToRole="TransferOrder" />
+          <NavigationProperty Name="Orders" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_Locations" FromRole="Location" ToRole="Order" />
         </EntityType>
         <Association Name="FK_Locations_Brand">
           <End Type="db_a842e1_mohsinfoodModel.Brand" Role="Brand" Multiplicity="0..1" />
@@ -3858,18 +3800,6 @@
               <PropertyRef Name="LocationID" />
             </Principal>
             <Dependent Role="Customer">
-              <PropertyRef Name="LocationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_Locations">
-          <End Type="db_a842e1_mohsinfoodModel.Location" Role="Location" Multiplicity="0..1" />
-          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Location">
-              <PropertyRef Name="LocationID" />
-            </Principal>
-            <Dependent Role="Order">
               <PropertyRef Name="LocationID" />
             </Dependent>
           </ReferentialConstraint>
@@ -3922,7 +3852,153 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="DeliveryBoy">
+          <Key>
+            <PropertyRef Name="DeliveryBoyID" />
+          </Key>
+          <Property Name="DeliveryBoyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DBName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DBAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DBContactNo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DBVehicleNo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DBCNICNo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="DBImage" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Int32" />
+          <NavigationProperty Name="Orders" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_DeliveryBoy" FromRole="DeliveryBoy" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeliveryBoyID" Type="Int32" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="TransactionNo" Type="Int32" />
+          <Property Name="OrderNo" Type="Int32" />
+          <Property Name="OrderType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="SessionID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="OrderTakerID" Type="Int32" />
+          <Property Name="DeliverUserID" Type="Int32" />
+          <Property Name="LastUpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastUpdateDT" Type="DateTime" Precision="3" />
+          <Property Name="LocationID" Type="Int32" />
+          <Property Name="OrderPreparedDate" Type="DateTime" Precision="3" />
+          <Property Name="OrderOFDDate" Type="DateTime" Precision="3" />
+          <Property Name="OrderDoneDate" Type="DateTime" Precision="3" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CustomerOrders" Relationship="db_a842e1_mohsinfoodModel.FK_CustomerOrders_Orders" FromRole="Order" ToRole="CustomerOrder" />
+          <NavigationProperty Name="DeliveryBoy" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_DeliveryBoy" FromRole="Order" ToRole="DeliveryBoy" />
+          <NavigationProperty Name="Location" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_Locations" FromRole="Order" ToRole="Location" />
+          <NavigationProperty Name="OrderCheckouts" Relationship="db_a842e1_mohsinfoodModel.FK_OrderCheckout_Orders" FromRole="Order" ToRole="OrderCheckout" />
+          <NavigationProperty Name="OrderDetails" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetail_Orders" FromRole="Order" ToRole="OrderDetail" />
+          <NavigationProperty Name="SubUser" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_SubUser" FromRole="Order" ToRole="SubUser" />
+          <NavigationProperty Name="SubUser1" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_SubUser1" FromRole="Order" ToRole="SubUser" />
+          <NavigationProperty Name="TransferOrders" Relationship="db_a842e1_mohsinfoodModel.FK_TransferOrder_Orders" FromRole="Order" ToRole="TransferOrder" />
+        </EntityType>
+        <Association Name="FK_CustomerOrders_Orders">
+          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="db_a842e1_mohsinfoodModel.CustomerOrder" Role="CustomerOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="CustomerOrder">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_DeliveryBoy">
+          <End Type="db_a842e1_mohsinfoodModel.DeliveryBoy" Role="DeliveryBoy" Multiplicity="0..1" />
+          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryBoy">
+              <PropertyRef Name="DeliveryBoyID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DeliveryBoyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Locations">
+          <End Type="db_a842e1_mohsinfoodModel.Location" Role="Location" Multiplicity="0..1" />
+          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderCheckout_Orders">
+          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="db_a842e1_mohsinfoodModel.OrderCheckout" Role="OrderCheckout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderCheckout">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Orders">
+          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="db_a842e1_mohsinfoodModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_SubUser">
+          <End Type="db_a842e1_mohsinfoodModel.SubUser" Role="SubUser" Multiplicity="0..1" />
+          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubUser">
+              <PropertyRef Name="SubUserID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="OrderTakerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_SubUser1">
+          <End Type="db_a842e1_mohsinfoodModel.SubUser" Role="SubUser" Multiplicity="0..1" />
+          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubUser">
+              <PropertyRef Name="SubUserID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DeliverUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransferOrder_Orders">
+          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="db_a842e1_mohsinfoodModel.TransferOrder" Role="TransferOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="TransferOrder">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -5077,29 +5153,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Order">
-              <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="OrderDoneDate" ColumnName="OrderDoneDate" />
-                <ScalarProperty Name="OrderOFDDate" ColumnName="OrderOFDDate" />
-                <ScalarProperty Name="OrderPreparedDate" ColumnName="OrderPreparedDate" />
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="LastUpdateDT" ColumnName="LastUpdateDT" />
-                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
-                <ScalarProperty Name="DeliverUserID" ColumnName="DeliverUserID" />
-                <ScalarProperty Name="OrderTakerID" ColumnName="OrderTakerID" />
-                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
-                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="OrderType" ColumnName="OrderType" />
-                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
-                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Status">
             <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Status">
               <MappingFragment StoreEntitySet="Status">
@@ -5240,6 +5293,49 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryBoys">
+            <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.DeliveryBoy">
+              <MappingFragment StoreEntitySet="DeliveryBoy">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DBImage" ColumnName="DBImage" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="DBCNICNo" ColumnName="DBCNICNo" />
+                <ScalarProperty Name="DBVehicleNo" ColumnName="DBVehicleNo" />
+                <ScalarProperty Name="DBContactNo" ColumnName="DBContactNo" />
+                <ScalarProperty Name="DBAddress" ColumnName="DBAddress" />
+                <ScalarProperty Name="DBName" ColumnName="DBName" />
+                <ScalarProperty Name="DeliveryBoyID" ColumnName="DeliveryBoyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="OrderDoneDate" ColumnName="OrderDoneDate" />
+                <ScalarProperty Name="OrderOFDDate" ColumnName="OrderOFDDate" />
+                <ScalarProperty Name="OrderPreparedDate" ColumnName="OrderPreparedDate" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="LastUpdateDT" ColumnName="LastUpdateDT" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="DeliverUserID" ColumnName="DeliverUserID" />
+                <ScalarProperty Name="OrderTakerID" ColumnName="OrderTakerID" />
+                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="DeliveryBoyID" ColumnName="DeliveryBoyID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
