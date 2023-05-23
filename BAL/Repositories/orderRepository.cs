@@ -254,15 +254,15 @@ namespace BAL.Repositories
             {
                 var currDate = DateTime.UtcNow.AddMinutes(300);
                 var isAllowcheckout = true;
-                //string pram = "27";
-                //if (obj.AppVersion.Equals(pram))
-                //{
-                //    rsp = new RspOrderPunch();
-                //    rsp.status = 1006;
-                //    rsp.description = "Your App Version is not Updated";
-                //    rsp.OrderID = 0;
-                //    return rsp;
-                //}
+                string pram = "27";
+                if (obj.AppVersion.Equals(pram))
+                {
+                    rsp = new RspOrderPunch();
+                    rsp.status = 1006;
+                    rsp.description = "Your App Version is not Updated";
+                    rsp.OrderID = 0;
+                    return rsp;
+                }
                 if (obj.OrderDetails.Count == 0)
                 {
                     rsp = new RspOrderPunch();
@@ -305,6 +305,14 @@ namespace BAL.Repositories
                             rsp = new RspOrderPunch();
                             rsp.status = (int)eStatus.Exception;
                             rsp.description = "Delivery is temporary closed!";
+                            rsp.OrderID = 0;
+                            return rsp;
+                        }
+                        if (settings.IsDineInAllowed != 1 && obj.OrderType == "3")
+                        {
+                            rsp = new RspOrderPunch();
+                            rsp.status = (int)eStatus.Exception;
+                            rsp.description = "DineIn is temporary closed!";
                             rsp.OrderID = 0;
                             return rsp;
                         }
@@ -379,6 +387,7 @@ namespace BAL.Repositories
                         orders.LastUpdateBy = orders.CustomerID.ToString();
                         orders.LastUpdateDT = DateTime.UtcNow.AddMinutes(300);
                         orders.StatusID = 101;
+                        orders.OrderType = orders.OrderType;
                         foreach (var i in orders.OrderDetails)
                         {
                             i.Price = Math.Round((Convert.ToDouble(i.Quantity) * Convert.ToDouble(i.Price)), 2);

@@ -20,10 +20,10 @@ namespace DAL.DBEntities
             this.Categories = new HashSet<Category>();
             this.Customers = new HashSet<Customer>();
             this.Orders = new HashSet<Order>();
+            this.PushTokens = new HashSet<PushToken>();
             this.SubUsers = new HashSet<SubUser>();
             this.TransferOrders = new HashSet<TransferOrder>();
             this.TransferOrders1 = new HashSet<TransferOrder>();
-            this.PushTokens = new HashSet<PushToken>();
         }
     
         public int LocationID { get; set; }
@@ -52,6 +52,7 @@ namespace DAL.DBEntities
         public Nullable<double> Tax { get; set; }
         public Nullable<int> IsPickupAllowed { get; set; }
         public Nullable<int> IsDeliveryAllowed { get; set; }
+        public Nullable<int> IsDineInAllowed { get; set; }
     
         public virtual Brand Brand { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -61,12 +62,12 @@ namespace DAL.DBEntities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PushToken> PushTokens { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubUser> SubUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TransferOrder> TransferOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TransferOrder> TransferOrders1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PushToken> PushTokens { get; set; }
     }
 }

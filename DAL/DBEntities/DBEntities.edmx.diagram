@@ -20,7 +20,6 @@
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Delivery" Width="1.5" PointX="0.75" PointY="28.125" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.DeliveryAreaBrandJunc" Width="1.5" PointX="3" PointY="33.125" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Item" Width="1.5" PointX="7.5" PointY="36" />
-        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Location" Width="1.5" PointX="3" PointY="50.75" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Modifier" Width="1.5" PointX="12.75" PointY="35.125" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Offer" Width="1.5" PointX="9.75" PointY="35.125" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.OrderCheckout" Width="1.5" PointX="9.75" PointY="56.625" />
@@ -38,13 +37,10 @@
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Category_Brand" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Customer_Brand" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_DeliveryAreaBrandJunc_Brand" />
-        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Locations_Brand" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Modifiers_Brand" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Offers_Brand" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_SubUser_Brand" />
-        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Category_Locations" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Items_Items" />
-        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Customer_Locations" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_CustomerAddresses_Customer" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_CustomerDetail_Customer" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_CustomerPayment_Customer" />
@@ -54,10 +50,6 @@
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Offers_Items" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetail_Items" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TodaySpecialItems_Items" />
-        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Orders_Locations" />
-        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_SubUser_Locations" />
-        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Locations" />
-        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Locations1" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetailModifier_Modifiers" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderCheckout_Orders" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_OrderDetail_Orders" />
@@ -71,7 +63,15 @@
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.PushToken" Width="1.5" PointX="13.5" PointY="48.375" />
         <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Reservation" Width="1.5" PointX="3.375" PointY="4.75" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_PushToken_Customer" />
+        <EntityTypeShape EntityType="db_a842e1_mohsinfoodModel.Location" Width="1.5" PointX="3" PointY="36.25" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Locations_Brand" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Category_Locations" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Customer_Locations" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_Orders_Locations" />
         <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_PushToken_Locations" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_SubUser_Locations" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Locations" />
+        <AssociationConnector Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Locations1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

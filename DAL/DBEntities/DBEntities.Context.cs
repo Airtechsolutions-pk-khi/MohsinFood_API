@@ -42,7 +42,6 @@ namespace DAL.DBEntities
         public virtual DbSet<Delivery> Deliveries { get; set; }
         public virtual DbSet<DeliveryAreaBrandJunc> DeliveryAreaBrandJuncs { get; set; }
         public virtual DbSet<Item> Items { get; set; }
-        public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Modifier> Modifiers { get; set; }
         public virtual DbSet<Offer> Offers { get; set; }
         public virtual DbSet<OrderCheckout> OrderCheckouts { get; set; }
@@ -57,6 +56,7 @@ namespace DAL.DBEntities
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<PushToken> PushTokens { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
+        public virtual DbSet<Location> Locations { get; set; }
     
         public virtual ObjectResult<sp_authenticateUser_admin_Result> sp_authenticateUser_admin(string email, string password)
         {
