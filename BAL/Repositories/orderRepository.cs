@@ -1006,7 +1006,7 @@ namespace BAL.Repositories
             return rsp;
         }
 
-        public Rsp UpdateOrderAdmin(int OrderID, int StatusID, int? DeliveryBoyID)
+        public Rsp UpdateOrderAdmin(int OrderID, int StatusID)
         {
             Rsp rsp = new Rsp();
 
@@ -1027,7 +1027,7 @@ namespace BAL.Repositories
 
                         if (StatusID == 102)
                         {
-                            order.DeliveryBoyID = DeliveryBoyID;
+                            //order.DeliveryBoyID = DeliveryBoyID;
                             order.OrderPreparedDate = currDate;
                             try
                             {
