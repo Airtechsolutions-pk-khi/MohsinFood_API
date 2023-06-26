@@ -143,6 +143,8 @@ namespace BAL.Repositories
                         ocustomer.Name = _OCustomer.Name;
                         ocustomer.CustomerOrderID = _OCustomer.CustomerOrderID;
                         ocustomer.Description = _OCustomer.Description;
+                        ocustomer.TableNo = _OCustomer.TableNo;
+                        ocustomer.DName = _OCustomer.DName;
                         ocustomer.Mobile = _OCustomer.Mobile;
                         ocustomer.Email = _OCustomer.Email;
                         ocustomer.LastUpdatedBy = _OCustomer.LastUpdatedBy;
@@ -254,15 +256,27 @@ namespace BAL.Repositories
             {
                 var currDate = DateTime.UtcNow.AddMinutes(300);
                 var isAllowcheckout = true;
-                string pram = "27";
-                if (obj.AppVersion.Equals(pram))
+                //string pram = "27";
+                //if (obj.AppVersion.Equals(pram))
+                //{
+                //    rsp = new RspOrderPunch();
+                //    rsp.status = 1006;
+                //    rsp.description = "Your App Version is not Updated";
+                //    rsp.OrderID = 0;
+                //    return rsp;
+                //}
+
+                //uncomment and live
+                if (obj.AppVersion != "28")
                 {
                     rsp = new RspOrderPunch();
                     rsp.status = 1006;
-                    rsp.description = "Your App Version is not Updated";
+                    rsp.description = "Alert! Kindly update your app";
                     rsp.OrderID = 0;
                     return rsp;
                 }
+
+
                 if (obj.OrderDetails.Count == 0)
                 {
                     rsp = new RspOrderPunch();
@@ -350,6 +364,8 @@ namespace BAL.Repositories
                                 Description = tempCustomerOrders.Description,
                                 Email = tempCustomerOrders.Email,
                                 Latitude = tempCustomerOrders.Latitude,
+                                TableNo = tempCustomerOrders.TableNo,
+                                DName = tempCustomerOrders.DName,
                                 Longitude = tempCustomerOrders.Longitude,
                                 Mobile = tempCustomerOrders.Mobile,
                                 Name = tempCustomerOrders.Name,
@@ -723,6 +739,8 @@ namespace BAL.Repositories
                         ocustomer.Name = _OCustomer.Name;
                         ocustomer.CustomerOrderID = _OCustomer.CustomerOrderID;
                         ocustomer.Description = _OCustomer.Description;
+                        ocustomer.TableNo = _OCustomer.TableNo;
+                        ocustomer.DName = _OCustomer.DName;
                         ocustomer.Mobile = _OCustomer.Mobile;
                         ocustomer.Email = _OCustomer.Email;
                         ocustomer.LastUpdatedBy = _OCustomer.LastUpdatedBy;
@@ -879,6 +897,8 @@ namespace BAL.Repositories
                         ocustomer.CustomerOrderID = _OCustomer.CustomerOrderID;
                         ocustomer.Description = _OCustomer.Description;
                         ocustomer.Mobile = _OCustomer.Mobile;
+                        ocustomer.TableNo = _OCustomer.TableNo;
+                        ocustomer.DName = _OCustomer.DName;
                         ocustomer.Email = _OCustomer.Email;
                         ocustomer.LastUpdatedBy = _OCustomer.LastUpdatedBy;
                         ocustomer.StatusID = _OCustomer.StatusID;

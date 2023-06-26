@@ -164,6 +164,8 @@
           <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="TableNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="DName" Type="nvarchar" MaxLength="50" />
           <Property Name="Longitude" Type="nvarchar" MaxLength="50" />
           <Property Name="Latitude" Type="nvarchar" MaxLength="50" />
           <Property Name="LocationURL" Type="nvarchar" MaxLength="50" />
@@ -1495,6 +1497,7 @@
           <Parameter Name="date" Type="datetime" Mode="In" />
           <Parameter Name="statusid" Type="int" Mode="In" />
           <Parameter Name="orderid" Type="int" Mode="In" />
+          <Parameter Name="deliveryBoyID" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_UpdateTodaySpecial_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ItemSettingTitle" Type="nvarchar" Mode="In" />
@@ -2213,6 +2216,7 @@
             <Parameter Name="date" Mode="In" Type="DateTime" />
             <Parameter Name="statusid" Mode="In" Type="Int32" />
             <Parameter Name="orderid" Mode="In" Type="Int32" />
+            <Parameter Name="deliveryBoyID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_UpdateTodaySpecial_Admin">
             <Parameter Name="ItemSettingTitle" Mode="In" Type="String" />
@@ -2232,7 +2236,6 @@
           <EntitySet Name="CustomerAddresses" EntityType="db_a842e1_mohsinfoodModel.CustomerAddress" />
           <EntitySet Name="CustomerDetails" EntityType="db_a842e1_mohsinfoodModel.CustomerDetail" />
           <EntitySet Name="CustomerOrderDetails" EntityType="db_a842e1_mohsinfoodModel.CustomerOrderDetail" />
-          <EntitySet Name="CustomerOrders" EntityType="db_a842e1_mohsinfoodModel.CustomerOrder" />
           <EntitySet Name="CustomerPayments" EntityType="db_a842e1_mohsinfoodModel.CustomerPayment" />
           <EntitySet Name="Deliveries" EntityType="db_a842e1_mohsinfoodModel.Delivery" />
           <EntitySet Name="DeliveryAreaBrandJuncs" EntityType="db_a842e1_mohsinfoodModel.DeliveryAreaBrandJunc" />
@@ -2373,10 +2376,6 @@
           </AssociationSet>
           <EntitySet Name="DeliveryBoys" EntityType="db_a842e1_mohsinfoodModel.DeliveryBoy" />
           <EntitySet Name="Orders" EntityType="db_a842e1_mohsinfoodModel.Order" />
-          <AssociationSet Name="FK_CustomerOrders_Orders" Association="db_a842e1_mohsinfoodModel.FK_CustomerOrders_Orders">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="CustomerOrder" EntitySet="CustomerOrders" />
-          </AssociationSet>
           <AssociationSet Name="FK_Orders_DeliveryBoy" Association="db_a842e1_mohsinfoodModel.FK_Orders_DeliveryBoy">
             <End Role="DeliveryBoy" EntitySet="DeliveryBoys" />
             <End Role="Order" EntitySet="Orders" />
@@ -2404,6 +2403,11 @@
           <AssociationSet Name="FK_TransferOrder_Orders" Association="db_a842e1_mohsinfoodModel.FK_TransferOrder_Orders">
             <End Role="Order" EntitySet="Orders" />
             <End Role="TransferOrder" EntitySet="TransferOrders" />
+          </AssociationSet>
+          <EntitySet Name="CustomerOrders" EntityType="db_a842e1_mohsinfoodModel.CustomerOrder" />
+          <AssociationSet Name="FK_CustomerOrders_Orders" Association="db_a842e1_mohsinfoodModel.FK_CustomerOrders_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="CustomerOrder" EntitySet="CustomerOrders" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_authenticateUser_admin_Result">
@@ -3176,27 +3180,6 @@
           <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="CustomerOrder">
-          <Key>
-            <PropertyRef Name="CustomerOrderID" />
-          </Key>
-          <Property Name="CustomerOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LocationURL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StatusID" Type="Int32" />
-          <Property Name="LastUpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="OrderID" Type="Int32" />
-          <Property Name="AddressType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AddressNickName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Order" Relationship="db_a842e1_mohsinfoodModel.FK_CustomerOrders_Orders" FromRole="CustomerOrder" ToRole="Order" />
-        </EntityType>
         <EntityType Name="CustomerPayment">
           <Key>
             <PropertyRef Name="PaymentID" />
@@ -3893,7 +3876,6 @@
           <Property Name="OrderOFDDate" Type="DateTime" Precision="3" />
           <Property Name="OrderDoneDate" Type="DateTime" Precision="3" />
           <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CustomerOrders" Relationship="db_a842e1_mohsinfoodModel.FK_CustomerOrders_Orders" FromRole="Order" ToRole="CustomerOrder" />
           <NavigationProperty Name="DeliveryBoy" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_DeliveryBoy" FromRole="Order" ToRole="DeliveryBoy" />
           <NavigationProperty Name="Location" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_Locations" FromRole="Order" ToRole="Location" />
           <NavigationProperty Name="OrderCheckouts" Relationship="db_a842e1_mohsinfoodModel.FK_OrderCheckout_Orders" FromRole="Order" ToRole="OrderCheckout" />
@@ -3901,19 +3883,8 @@
           <NavigationProperty Name="SubUser" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_SubUser" FromRole="Order" ToRole="SubUser" />
           <NavigationProperty Name="SubUser1" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_SubUser1" FromRole="Order" ToRole="SubUser" />
           <NavigationProperty Name="TransferOrders" Relationship="db_a842e1_mohsinfoodModel.FK_TransferOrder_Orders" FromRole="Order" ToRole="TransferOrder" />
+          <NavigationProperty Name="CustomerOrders" Relationship="db_a842e1_mohsinfoodModel.FK_CustomerOrders_Orders" FromRole="Order" ToRole="CustomerOrder" />
         </EntityType>
-        <Association Name="FK_CustomerOrders_Orders">
-          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="0..1" />
-          <End Type="db_a842e1_mohsinfoodModel.CustomerOrder" Role="CustomerOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderID" />
-            </Principal>
-            <Dependent Role="CustomerOrder">
-              <PropertyRef Name="OrderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Orders_DeliveryBoy">
           <End Type="db_a842e1_mohsinfoodModel.DeliveryBoy" Role="DeliveryBoy" Multiplicity="0..1" />
           <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="*" />
@@ -3994,6 +3965,41 @@
               <PropertyRef Name="OrderID" />
             </Principal>
             <Dependent Role="TransferOrder">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CustomerOrder">
+          <Key>
+            <PropertyRef Name="CustomerOrderID" />
+          </Key>
+          <Property Name="CustomerOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TableNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LocationURL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="AddressType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressNickName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Order" Relationship="db_a842e1_mohsinfoodModel.FK_CustomerOrders_Orders" FromRole="CustomerOrder" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_CustomerOrders_Orders">
+          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="db_a842e1_mohsinfoodModel.CustomerOrder" Role="CustomerOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="CustomerOrder">
               <PropertyRef Name="OrderID" />
             </Dependent>
           </ReferentialConstraint>
@@ -4974,27 +4980,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CustomerOrders">
-            <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.CustomerOrder">
-              <MappingFragment StoreEntitySet="CustomerOrders">
-                <ScalarProperty Name="AddressNickName" ColumnName="AddressNickName" />
-                <ScalarProperty Name="AddressType" ColumnName="AddressType" />
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
-                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
-                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-                <ScalarProperty Name="LocationURL" ColumnName="LocationURL" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="CustomerOrderID" ColumnName="CustomerOrderID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CustomerPayments">
             <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.CustomerPayment">
               <MappingFragment StoreEntitySet="CustomerPayment">
@@ -5336,6 +5321,29 @@
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="DeliveryBoyID" ColumnName="DeliveryBoyID" />
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerOrders">
+            <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.CustomerOrder">
+              <MappingFragment StoreEntitySet="CustomerOrders">
+                <ScalarProperty Name="AddressNickName" ColumnName="AddressNickName" />
+                <ScalarProperty Name="AddressType" ColumnName="AddressType" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="LocationURL" ColumnName="LocationURL" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="DName" ColumnName="DName" />
+                <ScalarProperty Name="TableNo" ColumnName="TableNo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CustomerOrderID" ColumnName="CustomerOrderID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

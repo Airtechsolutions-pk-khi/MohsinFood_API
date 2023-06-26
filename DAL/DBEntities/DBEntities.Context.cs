@@ -37,7 +37,6 @@ namespace DAL.DBEntities
         public virtual DbSet<CustomerAddress> CustomerAddresses { get; set; }
         public virtual DbSet<CustomerDetail> CustomerDetails { get; set; }
         public virtual DbSet<CustomerOrderDetail> CustomerOrderDetails { get; set; }
-        public virtual DbSet<CustomerOrder> CustomerOrders { get; set; }
         public virtual DbSet<CustomerPayment> CustomerPayments { get; set; }
         public virtual DbSet<Delivery> Deliveries { get; set; }
         public virtual DbSet<DeliveryAreaBrandJunc> DeliveryAreaBrandJuncs { get; set; }
@@ -58,6 +57,7 @@ namespace DAL.DBEntities
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<DeliveryBoy> DeliveryBoys { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<CustomerOrder> CustomerOrders { get; set; }
     
         public virtual ObjectResult<sp_authenticateUser_admin_Result> sp_authenticateUser_admin(string email, string password)
         {
@@ -1878,7 +1878,7 @@ namespace DAL.DBEntities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_updateOffers_Admin", nameParameter, descriptionParameter, fromDateParameter, toDateParameter, imageParameter, itemIDParameter, statusIDParameter, lastUpdatedByParameter, lastUpdatedDateParameter, brandIDParameter, offerIDParameter);
         }
     
-        public virtual int sp_updateOrderstatus_Admin(Nullable<System.DateTime> date, Nullable<int> statusid, Nullable<int> orderid)
+        public virtual int sp_updateOrderstatus_Admin(Nullable<System.DateTime> date, Nullable<int> statusid, Nullable<int> orderid, Nullable<int> deliveryBoyID)
         {
             var dateParameter = date.HasValue ?
                 new ObjectParameter("date", date) :
@@ -1892,7 +1892,11 @@ namespace DAL.DBEntities
                 new ObjectParameter("orderid", orderid) :
                 new ObjectParameter("orderid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_updateOrderstatus_Admin", dateParameter, statusidParameter, orderidParameter);
+            var deliveryBoyIDParameter = deliveryBoyID.HasValue ?
+                new ObjectParameter("deliveryBoyID", deliveryBoyID) :
+                new ObjectParameter("deliveryBoyID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_updateOrderstatus_Admin", dateParameter, statusidParameter, orderidParameter, deliveryBoyIDParameter);
         }
     
         public virtual int sp_UpdateTodaySpecial_Admin(string itemSettingTitle, Nullable<bool> isItemSetting)

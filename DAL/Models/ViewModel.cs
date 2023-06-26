@@ -482,6 +482,8 @@ namespace DAL.Models
         public string Email { get; set; }
         public string Mobile { get; set; }
         public string Description { get; set; }
+        public string TableNo { get; set; }
+        public string DName { get; set; }
         public string Address { get; set; }
         public string Longitude { get; set; }
         public string Latitude { get; set; }

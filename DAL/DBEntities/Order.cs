@@ -17,10 +17,10 @@ namespace DAL.DBEntities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Order()
         {
-            this.CustomerOrders = new HashSet<CustomerOrder>();
             this.OrderCheckouts = new HashSet<OrderCheckout>();
             this.OrderDetails = new HashSet<OrderDetail>();
             this.TransferOrders = new HashSet<TransferOrder>();
+            this.CustomerOrders = new HashSet<CustomerOrder>();
         }
     
         public int OrderID { get; set; }
@@ -42,8 +42,6 @@ namespace DAL.DBEntities
         public Nullable<System.DateTime> OrderDoneDate { get; set; }
         public string Remarks { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerOrder> CustomerOrders { get; set; }
         public virtual DeliveryBoy DeliveryBoy { get; set; }
         public virtual Location Location { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -54,5 +52,7 @@ namespace DAL.DBEntities
         public virtual SubUser SubUser1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TransferOrder> TransferOrders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomerOrder> CustomerOrders { get; set; }
     }
 }
