@@ -462,6 +462,7 @@ namespace DAL.Models
     {
         public int OrderCheckoutID { get; set; }
         public Nullable<int> OrderID { get; set; }
+        public Nullable<int> DeliveryAreaID { get; set; }
         public Nullable<int> PaymentMode { get; set; }
         public Nullable<double> AmountPaid { get; set; }
         public Nullable<double> AmountTotal { get; set; }
@@ -474,6 +475,7 @@ namespace DAL.Models
         public Nullable<int> StatusID { get; set; }
         public string LastUpdateBy { get; set; }
         public Nullable<System.DateTime> LastUpdatedDate { get; set; }
+
     }
     public class OrderCustomerBLL
     {

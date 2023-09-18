@@ -346,6 +346,7 @@
           <Property Name="LastUpdateBy" Type="nvarchar" MaxLength="150" />
           <Property Name="LastUpdatedDate" Type="datetime" />
           <Property Name="DiscountAmount" Type="float" />
+          <Property Name="DeliveryAreaID" Type="int" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -1120,6 +1121,7 @@
         </Function>
         <Function Name="sp_GetOrdersbyID_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="OrderID" Type="int" Mode="In" />
+          <Parameter Name="DeliveryBoyID" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_insertAppInfo_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="AppDescription" Type="nvarchar" Mode="In" />
@@ -1497,7 +1499,6 @@
           <Parameter Name="date" Type="datetime" Mode="In" />
           <Parameter Name="statusid" Type="int" Mode="In" />
           <Parameter Name="orderid" Type="int" Mode="In" />
-          <Parameter Name="deliveryBoyID" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_UpdateTodaySpecial_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ItemSettingTitle" Type="nvarchar" Mode="In" />
@@ -1839,6 +1840,7 @@
           </FunctionImport>
           <FunctionImport Name="sp_GetOrdersbyID_Admin" ReturnType="Collection(db_a842e1_mohsinfoodModel.sp_GetOrdersbyID_Admin_Result)">
           <Parameter Name="OrderID" Mode="In" Type="Int32" />
+            <Parameter Name="DeliveryBoyID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_insertAppInfo_Admin">
             <Parameter Name="AppDescription" Mode="In" Type="String" />
@@ -2216,7 +2218,6 @@
             <Parameter Name="date" Mode="In" Type="DateTime" />
             <Parameter Name="statusid" Mode="In" Type="Int32" />
             <Parameter Name="orderid" Mode="In" Type="Int32" />
-            <Parameter Name="deliveryBoyID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_UpdateTodaySpecial_Admin">
             <Parameter Name="ItemSettingTitle" Mode="In" Type="String" />
@@ -2242,7 +2243,6 @@
           <EntitySet Name="Items" EntityType="db_a842e1_mohsinfoodModel.Item" />
           <EntitySet Name="Modifiers" EntityType="db_a842e1_mohsinfoodModel.Modifier" />
           <EntitySet Name="Offers" EntityType="db_a842e1_mohsinfoodModel.Offer" />
-          <EntitySet Name="OrderCheckouts" EntityType="db_a842e1_mohsinfoodModel.OrderCheckout" />
           <EntitySet Name="OrderDetails" EntityType="db_a842e1_mohsinfoodModel.OrderDetail" />
           <EntitySet Name="OrderDetailAddons" EntityType="db_a842e1_mohsinfoodModel.OrderDetailAddon" />
           <EntitySet Name="OrderDetailModifiers" EntityType="db_a842e1_mohsinfoodModel.OrderDetailModifier" />
@@ -2384,10 +2384,6 @@
             <End Role="Location" EntitySet="Locations" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderCheckout_Orders" Association="db_a842e1_mohsinfoodModel.FK_OrderCheckout_Orders">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="OrderCheckout" EntitySet="OrderCheckouts" />
-          </AssociationSet>
           <AssociationSet Name="FK_OrderDetail_Orders" Association="db_a842e1_mohsinfoodModel.FK_OrderDetail_Orders">
             <End Role="Order" EntitySet="Orders" />
             <End Role="OrderDetail" EntitySet="OrderDetails" />
@@ -2408,6 +2404,11 @@
           <AssociationSet Name="FK_CustomerOrders_Orders" Association="db_a842e1_mohsinfoodModel.FK_CustomerOrders_Orders">
             <End Role="Order" EntitySet="Orders" />
             <End Role="CustomerOrder" EntitySet="CustomerOrders" />
+          </AssociationSet>
+          <EntitySet Name="OrderCheckouts" EntityType="db_a842e1_mohsinfoodModel.OrderCheckout" />
+          <AssociationSet Name="FK_OrderCheckout_Orders" Association="db_a842e1_mohsinfoodModel.FK_OrderCheckout_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderCheckout" EntitySet="OrderCheckouts" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_authenticateUser_admin_Result">
@@ -3282,26 +3283,6 @@
           <NavigationProperty Name="Brand" Relationship="db_a842e1_mohsinfoodModel.FK_Offers_Brand" FromRole="Offer" ToRole="Brand" />
           <NavigationProperty Name="Item" Relationship="db_a842e1_mohsinfoodModel.FK_Offers_Items" FromRole="Offer" ToRole="Item" />
         </EntityType>
-        <EntityType Name="OrderCheckout">
-          <Key>
-            <PropertyRef Name="OrderCheckoutID" />
-          </Key>
-          <Property Name="OrderCheckoutID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderID" Type="Int32" />
-          <Property Name="PaymentMode" Type="Int32" />
-          <Property Name="AmountPaid" Type="Double" />
-          <Property Name="AmountTotal" Type="Double" />
-          <Property Name="GrandTotal" Type="Double" />
-          <Property Name="ServiceCharges" Type="Double" />
-          <Property Name="Tax" Type="Double" />
-          <Property Name="CheckoutDate" Type="DateTime" Precision="3" />
-          <Property Name="SessionID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StatusID" Type="Int32" />
-          <Property Name="LastUpdateBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="DiscountAmount" Type="Double" />
-          <NavigationProperty Name="Order" Relationship="db_a842e1_mohsinfoodModel.FK_OrderCheckout_Orders" FromRole="OrderCheckout" ToRole="Order" />
-        </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
             <PropertyRef Name="OrderDetailID" />
@@ -3878,12 +3859,12 @@
           <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DeliveryBoy" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_DeliveryBoy" FromRole="Order" ToRole="DeliveryBoy" />
           <NavigationProperty Name="Location" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_Locations" FromRole="Order" ToRole="Location" />
-          <NavigationProperty Name="OrderCheckouts" Relationship="db_a842e1_mohsinfoodModel.FK_OrderCheckout_Orders" FromRole="Order" ToRole="OrderCheckout" />
           <NavigationProperty Name="OrderDetails" Relationship="db_a842e1_mohsinfoodModel.FK_OrderDetail_Orders" FromRole="Order" ToRole="OrderDetail" />
           <NavigationProperty Name="SubUser" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_SubUser" FromRole="Order" ToRole="SubUser" />
           <NavigationProperty Name="SubUser1" Relationship="db_a842e1_mohsinfoodModel.FK_Orders_SubUser1" FromRole="Order" ToRole="SubUser" />
           <NavigationProperty Name="TransferOrders" Relationship="db_a842e1_mohsinfoodModel.FK_TransferOrder_Orders" FromRole="Order" ToRole="TransferOrder" />
           <NavigationProperty Name="CustomerOrders" Relationship="db_a842e1_mohsinfoodModel.FK_CustomerOrders_Orders" FromRole="Order" ToRole="CustomerOrder" />
+          <NavigationProperty Name="OrderCheckouts" Relationship="db_a842e1_mohsinfoodModel.FK_OrderCheckout_Orders" FromRole="Order" ToRole="OrderCheckout" />
         </EntityType>
         <Association Name="FK_Orders_DeliveryBoy">
           <End Type="db_a842e1_mohsinfoodModel.DeliveryBoy" Role="DeliveryBoy" Multiplicity="0..1" />
@@ -3906,18 +3887,6 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="LocationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderCheckout_Orders">
-          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="0..1" />
-          <End Type="db_a842e1_mohsinfoodModel.OrderCheckout" Role="OrderCheckout" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderID" />
-            </Principal>
-            <Dependent Role="OrderCheckout">
-              <PropertyRef Name="OrderID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4000,6 +3969,39 @@
               <PropertyRef Name="OrderID" />
             </Principal>
             <Dependent Role="CustomerOrder">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderCheckout">
+          <Key>
+            <PropertyRef Name="OrderCheckoutID" />
+          </Key>
+          <Property Name="OrderCheckoutID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="PaymentMode" Type="Int32" />
+          <Property Name="AmountPaid" Type="Double" />
+          <Property Name="AmountTotal" Type="Double" />
+          <Property Name="GrandTotal" Type="Double" />
+          <Property Name="ServiceCharges" Type="Double" />
+          <Property Name="Tax" Type="Double" />
+          <Property Name="CheckoutDate" Type="DateTime" Precision="3" />
+          <Property Name="SessionID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="LastUpdateBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="DiscountAmount" Type="Double" />
+          <Property Name="DeliveryAreaID" Type="Int32" />
+          <NavigationProperty Name="Order" Relationship="db_a842e1_mohsinfoodModel.FK_OrderCheckout_Orders" FromRole="OrderCheckout" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_OrderCheckout_Orders">
+          <End Type="db_a842e1_mohsinfoodModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="db_a842e1_mohsinfoodModel.OrderCheckout" Role="OrderCheckout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderCheckout">
               <PropertyRef Name="OrderID" />
             </Dependent>
           </ReferentialConstraint>
@@ -5072,26 +5074,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OrderCheckouts">
-            <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.OrderCheckout">
-              <MappingFragment StoreEntitySet="OrderCheckout">
-                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
-                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
-                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
-                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
-                <ScalarProperty Name="CheckoutDate" ColumnName="CheckoutDate" />
-                <ScalarProperty Name="Tax" ColumnName="Tax" />
-                <ScalarProperty Name="ServiceCharges" ColumnName="ServiceCharges" />
-                <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
-                <ScalarProperty Name="AmountTotal" ColumnName="AmountTotal" />
-                <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
-                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="OrderCheckoutID" ColumnName="OrderCheckoutID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="OrderDetails">
             <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.OrderDetail">
               <MappingFragment StoreEntitySet="OrderDetail">
@@ -5344,6 +5326,27 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CustomerOrderID" ColumnName="CustomerOrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderCheckouts">
+            <EntityTypeMapping TypeName="db_a842e1_mohsinfoodModel.OrderCheckout">
+              <MappingFragment StoreEntitySet="OrderCheckout">
+                <ScalarProperty Name="DeliveryAreaID" ColumnName="DeliveryAreaID" />
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+                <ScalarProperty Name="CheckoutDate" ColumnName="CheckoutDate" />
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="ServiceCharges" ColumnName="ServiceCharges" />
+                <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
+                <ScalarProperty Name="AmountTotal" ColumnName="AmountTotal" />
+                <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderCheckoutID" ColumnName="OrderCheckoutID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

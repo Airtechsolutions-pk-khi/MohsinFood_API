@@ -377,18 +377,42 @@ namespace BAL.Repositories
                         if (tempCheckout != null)
                         {
                             orders.OrderCheckouts = new List<OrderCheckout>();
-                            orders.OrderCheckouts.Add(new OrderCheckout
+
+                            if (tempCheckout.DeliveryAreaID != null)
                             {
-                                AmountPaid = tempCheckout.AmountPaid,
-                                AmountTotal = tempCheckout.AmountTotal,
-                                CheckoutDate = DateTime.UtcNow.AddMinutes(300),
-                                GrandTotal = tempCheckout.GrandTotal,
-                                ServiceCharges = tempCheckout.ServiceCharges == null ? 0 : tempCheckout.ServiceCharges,
-                                PaymentMode = tempCheckout.PaymentMode,
-                                Tax = tempCheckout.Tax,
-                                DiscountAmount = tempCheckout.DiscountAmount ?? 0,
-                                StatusID = 101
-                            });
+                                var deliveryArea = DBContext.Deliveries.Where(x => x.DeliveryAreaID == tempCheckout.DeliveryAreaID).FirstOrDefault();
+                                var amount = deliveryArea.Amount;
+
+                                orders.OrderCheckouts.Add(new OrderCheckout
+                                {
+                                    AmountPaid = tempCheckout.AmountPaid,
+                                    DeliveryAreaID = tempCheckout.DeliveryAreaID,
+                                    AmountTotal = tempCheckout.AmountTotal,
+                                    CheckoutDate = DateTime.UtcNow.AddMinutes(300),
+                                    GrandTotal = tempCheckout.GrandTotal,
+                                    ServiceCharges = amount,                                    
+                                    PaymentMode = tempCheckout.PaymentMode,
+                                    Tax = tempCheckout.Tax,
+                                    DiscountAmount = tempCheckout.DiscountAmount ?? 0,
+                                    StatusID = 101
+                                });
+                            }
+                            else
+                            {
+                                orders.OrderCheckouts.Add(new OrderCheckout
+                                {
+                                    AmountPaid = tempCheckout.AmountPaid,
+                                    AmountTotal = tempCheckout.AmountTotal,
+                                    CheckoutDate = DateTime.UtcNow.AddMinutes(300),
+                                    GrandTotal = tempCheckout.GrandTotal,
+                                    ServiceCharges = tempCheckout.ServiceCharges == null ? 0 : tempCheckout.ServiceCharges,
+                                    PaymentMode = tempCheckout.PaymentMode,
+                                    Tax = tempCheckout.Tax,
+                                    DiscountAmount = tempCheckout.DiscountAmount ?? 0,
+                                    StatusID = 101
+                                });
+                            }
+
                         }
 
                         orders.TransactionNo = DBContext.Orders.Where(x => x.Location.BrandID == obj.BrandID).Max(x => x.TransactionNo);

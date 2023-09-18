@@ -43,7 +43,6 @@ namespace DAL.DBEntities
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Modifier> Modifiers { get; set; }
         public virtual DbSet<Offer> Offers { get; set; }
-        public virtual DbSet<OrderCheckout> OrderCheckouts { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<OrderDetailAddon> OrderDetailAddons { get; set; }
         public virtual DbSet<OrderDetailModifier> OrderDetailModifiers { get; set; }
@@ -58,6 +57,7 @@ namespace DAL.DBEntities
         public virtual DbSet<DeliveryBoy> DeliveryBoys { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<CustomerOrder> CustomerOrders { get; set; }
+        public virtual DbSet<OrderCheckout> OrderCheckouts { get; set; }
     
         public virtual ObjectResult<sp_authenticateUser_admin_Result> sp_authenticateUser_admin(string email, string password)
         {
@@ -488,13 +488,17 @@ namespace DAL.DBEntities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetOffersbyID_Admin_Result>("sp_GetOffersbyID_Admin", idParameter, brandidParameter);
         }
     
-        public virtual ObjectResult<sp_GetOrdersbyID_Admin_Result> sp_GetOrdersbyID_Admin(Nullable<int> orderID)
+        public virtual ObjectResult<sp_GetOrdersbyID_Admin_Result> sp_GetOrdersbyID_Admin(Nullable<int> orderID, Nullable<int> deliveryBoyID)
         {
             var orderIDParameter = orderID.HasValue ?
                 new ObjectParameter("OrderID", orderID) :
                 new ObjectParameter("OrderID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetOrdersbyID_Admin_Result>("sp_GetOrdersbyID_Admin", orderIDParameter);
+            var deliveryBoyIDParameter = deliveryBoyID.HasValue ?
+                new ObjectParameter("DeliveryBoyID", deliveryBoyID) :
+                new ObjectParameter("DeliveryBoyID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetOrdersbyID_Admin_Result>("sp_GetOrdersbyID_Admin", orderIDParameter, deliveryBoyIDParameter);
         }
     
         public virtual int sp_insertAppInfo_Admin(string appDescription, string facebook, string twitter, string instagram)
@@ -1878,7 +1882,7 @@ namespace DAL.DBEntities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_updateOffers_Admin", nameParameter, descriptionParameter, fromDateParameter, toDateParameter, imageParameter, itemIDParameter, statusIDParameter, lastUpdatedByParameter, lastUpdatedDateParameter, brandIDParameter, offerIDParameter);
         }
     
-        public virtual int sp_updateOrderstatus_Admin(Nullable<System.DateTime> date, Nullable<int> statusid, Nullable<int> orderid, Nullable<int> deliveryBoyID)
+        public virtual int sp_updateOrderstatus_Admin(Nullable<System.DateTime> date, Nullable<int> statusid, Nullable<int> orderid)
         {
             var dateParameter = date.HasValue ?
                 new ObjectParameter("date", date) :
@@ -1892,11 +1896,7 @@ namespace DAL.DBEntities
                 new ObjectParameter("orderid", orderid) :
                 new ObjectParameter("orderid", typeof(int));
     
-            var deliveryBoyIDParameter = deliveryBoyID.HasValue ?
-                new ObjectParameter("deliveryBoyID", deliveryBoyID) :
-                new ObjectParameter("deliveryBoyID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_updateOrderstatus_Admin", dateParameter, statusidParameter, orderidParameter, deliveryBoyIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_updateOrderstatus_Admin", dateParameter, statusidParameter, orderidParameter);
         }
     
         public virtual int sp_UpdateTodaySpecial_Admin(string itemSettingTitle, Nullable<bool> isItemSetting)
